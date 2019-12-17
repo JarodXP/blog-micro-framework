@@ -1,0 +1,8 @@
+#PhpStorm
+.idea/
+.idea/**
+
+# Composer #
+composer.phar
+vendor/
+vendor/**
