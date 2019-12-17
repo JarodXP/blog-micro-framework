@@ -1,0 +1,12 @@
+{
+  "name": "jarod-xp/blog-micro-framework",
+  "description": "Micro framework for blog usage",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "jarod",
+      "email": "gregory@jarod-xp.com"
+    }
+  ]
+}
