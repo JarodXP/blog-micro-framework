@@ -10,6 +10,8 @@
     }
   ],
   "require": {
-    "twig/twig": "^3.0"
+    "twig/twig": "^3.0",
+    "ext-yaml": "*",
+    "keradus/psr4autoloader": "^2.0"
   }
 }
