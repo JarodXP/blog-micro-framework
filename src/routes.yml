@@ -1,0 +1,84 @@
+#Routes
+---
+#FRONT OFFICE#######################
+-
+  uri: ^/$
+  module: index
+  action: home
+-
+  uri: ^/profile[/]?$
+  module: profile
+  action: displayProfile
+-
+  uri: ^/contact[/]?$
+  module: profile
+  action: displayContactForm
+-
+  uri: ^/blog[/]?$
+  module: posts
+  action: postList
+-
+  uri: ^/blog/\?order=([a-zA-Z_\-0-9]{1,30})&?(?:direction=)?(asc|desc)?$
+  module: posts
+  action: postList
+-
+  uri: ^/blog/post-([0-9]+)$
+  module: posts
+  action: displayPost
+
+  #BACKOFFICE POSTS#######################
+-
+  uri: ^/admin[/]?$
+  module: index
+  action: home
+-
+  uri: ^/admin/posts[/]?$
+  module: posts
+  action: postList
+-
+  uri: ^/admin/posts/post-([0-9]+)$
+  module: posts
+  action: editPost
+-
+  uri: ^/admin/posts/new-post$
+  module: posts
+  action: newPost
+-
+  uri: ^/admin/posts/\?remove=([0-9]+)$
+  module: posts
+  action: removePost
+
+  #PROFILE#######################
+-
+  uri: ^/admin/my-profile$
+  module: profile
+  action: editProfile
+
+  #COMMENTS#######################
+-
+  uri: ^/admin/comments[/]?$
+  module: comments
+  action: commentsList
+-
+  uri: ^/admin/comments/comment-([0-9]+)$
+  module: comments
+  action: editComment
+-
+  uri: ^/admin/comments/\?remove=([0-9]+)$
+  module: comments
+  action: removeComment
+
+#AUTHENTICATION#######################
+-
+  uri: ^/admin/signin[/]?$
+  module: authentication
+  action: signin
+-
+  uri: ^/admin/change-password$
+  module: authentication
+  action: changePassword
+
+
+
+
+
