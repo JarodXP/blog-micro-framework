@@ -22,11 +22,6 @@
   controller: blog
   action: postList
 -
-  uri: ^/blog/\?order=([a-zA-Z_\-0-9]{1,30})&?(?:direction=)?(asc|desc)?$
-  package: front
-  controller: blog
-  action: postList
--
   uri: ^/blog/post-([0-9]+)$
   package: front
   controller: blog

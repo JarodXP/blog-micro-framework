@@ -69,7 +69,7 @@ class Route
      */
     protected function setAction($action): void
     {
-        $this->action = $action;
+        $this->action = $action.'Action';
     }
 
 }
