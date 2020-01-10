@@ -14,7 +14,7 @@ class Route
     {
         $this->setRequestedUri($route['requestedUri']);
 
-        $this->setController($route['controller']);
+        $this->setController($route['package'],$route['controller']);
 
         $this->setAction($route['action']);
     }
@@ -56,11 +56,12 @@ class Route
     }
 
     /**
+     * @param $package
      * @param string $controller
      */
-    protected function setController($controller): void
+    protected function setController($package,$controller): void
     {
-        $this->controller = $controller.'Controller';
+        $this->controller = ucfirst($package).'\\'.ucfirst($controller).'Controller';
     }
 
     /**

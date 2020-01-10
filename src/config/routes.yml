@@ -3,78 +3,97 @@
 #FRONT OFFICE#######################
 -
   uri: ^/$
+  package: front
   controller: index
   action: home
 -
   uri: ^/profile[/]?$
+  package: front
   controller: profile
   action: displayProfile
 -
   uri: ^/contact[/]?$
+  package: front
   controller: profile
   action: displayContactForm
 -
   uri: ^/blog[/]?$
-  controller: posts
+  package: front
+  controller: blog
   action: postList
 -
   uri: ^/blog/\?order=([a-zA-Z_\-0-9]{1,30})&?(?:direction=)?(asc|desc)?$
-  controller: posts
+  package: front
+  controller: blog
   action: postList
 -
   uri: ^/blog/post-([0-9]+)$
-  controller: posts
+  package: front
+  controller: blog
   action: displayPost
 
-  #BACKOFFICE POSTS#######################
+  #BACKOFFICE #######################
+
+  #POSTS
 -
   uri: ^/admin[/]?$
+  package: back
   controller: index
   action: home
 -
   uri: ^/admin/posts[/]?$
+  package: back
   controller: posts
   action: postList
 -
   uri: ^/admin/posts/post-([0-9]+)$
+  package: back
   controller: posts
   action: editPost
 -
   uri: ^/admin/posts/new-post$
+  package: back
   controller: posts
   action: newPost
 -
   uri: ^/admin/posts/\?remove=([0-9]+)$
+  package: back
   controller: posts
   action: removePost
 
-  #PROFILE#######################
+  #PROFILE
 -
   uri: ^/admin/my-profile$
+  package: back
   controller: profile
   action: editProfile
 
-  #COMMENTS#######################
+  #COMMENTS
 -
   uri: ^/admin/comments[/]?$
+  package: back
   controller: comments
   action: commentsList
 -
   uri: ^/admin/comments/comment-([0-9]+)$
+  package: back
   controller: comments
   action: editComment
 -
   uri: ^/admin/comments/\?remove=([0-9]+)$
+  package: back
   controller: comments
   action: removeComment
 
 #AUTHENTICATION#######################
 -
   uri: ^/admin/signin[/]?$
+  package: authentication
   controller: authentication
   action: signin
 -
   uri: ^/admin/change-password$
+  package: authentication
   controller: authentication
   action: changePassword
 
