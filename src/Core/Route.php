@@ -60,7 +60,7 @@ class Route
      */
     protected function setController($controller): void
     {
-        $this->controller = $controller;
+        $this->controller = $controller.'Controller';
     }
 
     /**
