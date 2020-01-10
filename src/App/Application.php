@@ -1,7 +1,9 @@
 <?php
+namespace App;
 
 
 use Core\Router;
+use InvalidArgumentException;
 
 class Application
 {
@@ -46,7 +48,7 @@ class Application
     {
         $router = new Router($_SERVER['REQUEST_URI']);
 
-        //Instantiates the Controller
+        //Instantiates the IndexController
         $controllerName = $router->getRoute()->getController();
 
         $controller = new $controllerName();

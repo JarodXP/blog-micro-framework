@@ -61,7 +61,7 @@ class Route
      */
     protected function setController($package,$controller): void
     {
-        $this->controller = ucfirst($package).'\\'.ucfirst($controller).'Controller';
+        $this->controller = ucfirst($package).'\\'.ucfirst($controller).'IndexController';
     }
 
     /**
