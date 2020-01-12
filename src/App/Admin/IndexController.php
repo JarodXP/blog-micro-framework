@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Front;
+namespace Admin;
 
 
 class IndexController
 {
     public function homeAction()
     {
-        header('location:/profile/');
+        header('location:/admin/posts');
         exit();
     }
 }

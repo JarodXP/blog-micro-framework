@@ -6,7 +6,18 @@ namespace Front;
 
 class ProfileController
 {
-    public function displayProfile(){}
+    public function displayProfileAction()
+    {
+        require __DIR__.'/Views/myProfile.html';
+    }
 
-    public function displayContactForm(){}
+    public function displayContactFormAction()
+    {
+        require __DIR__.'/Views/contact.html';
+    }
+
+    public function sendContactFormActionAction()
+    {
+        require __DIR__.'/Views/thankYou.html';
+    }
 }

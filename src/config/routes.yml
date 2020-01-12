@@ -17,6 +17,11 @@
   controller: profile
   action: displayContactForm
 -
+  uri: ^/contact/send?$
+  package: front
+  controller: profile
+  action: sendContactForm
+-
   uri: ^/blog[/]?$
   package: front
   controller: blog
@@ -32,51 +37,51 @@
   #POSTS
 -
   uri: ^/admin[/]?$
-  package: back
+  package: admin
   controller: index
   action: home
 -
   uri: ^/admin/posts[/]?$
-  package: back
+  package: admin
   controller: posts
   action: postList
 -
   uri: ^/admin/posts/post-([0-9]+)$
-  package: back
+  package: admin
   controller: posts
   action: editPost
 -
   uri: ^/admin/posts/new-post$
-  package: back
+  package: admin
   controller: posts
   action: newPost
 -
   uri: ^/admin/posts/\?remove=([0-9]+)$
-  package: back
+  package: admin
   controller: posts
   action: removePost
 
   #PROFILE
 -
   uri: ^/admin/my-profile$
-  package: back
+  package: admin
   controller: profile
   action: editProfile
 
   #COMMENTS
 -
   uri: ^/admin/comments[/]?$
-  package: back
+  package: admin
   controller: comments
   action: commentsList
 -
   uri: ^/admin/comments/comment-([0-9]+)$
-  package: back
+  package: admin
   controller: comments
   action: editComment
 -
   uri: ^/admin/comments/\?remove=([0-9]+)$
-  package: back
+  package: admin
   controller: comments
   action: removeComment
 
