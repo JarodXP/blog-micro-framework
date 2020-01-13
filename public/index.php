@@ -37,6 +37,9 @@ $configDirectory = __DIR__ .'/../src/config';
 //Sets a global variable for the routes parsed file
 $routes = yaml_parse_file($configDirectory.'/routes.yml');
 
+//Sets a global variable for the config parsed file
+$config = yaml_parse_file($configDirectory.'/config.yml');
+
 ///RUN//////
 
 $app = new Application(Application::DEVELOPMENT_STAGE);

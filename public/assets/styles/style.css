@@ -1,0 +1,48 @@
+/*********GENERAL*****************************/
+
+#wrapper-front {
+    padding-top: 50px;
+}
+
+#leftBrand{
+    margin-right: 0;
+    margin-left: 1rem;
+}
+
+.under-header{
+    margin-top: 20px;
+}
+
+#footer{
+    background-color: #343a40 ;
+    color: white;
+}
+
+#footer a{
+    color: white;
+}
+
+
+#avatar {
+    background-image: url('/assets/uploads/photoProfile.png');
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#ownerName {
+    font-size: 2rem;
+}
+
+#ownerTitle {
+    font-size: 1.5rem;
+}
+
+#baseline{
+    font-style: italic;
+}
+
+#eyeUpload{
+    padding-left: 10px;
+}
