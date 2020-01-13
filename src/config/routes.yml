@@ -4,8 +4,8 @@
 -
   uri: ^/$
   package: front
-  controller: index
-  action: home
+  controller: profile
+  action: displayProfile
 -
   uri: ^/profile[/]?$
   package: front
@@ -38,8 +38,8 @@
 -
   uri: ^/admin[/]?$
   package: admin
-  controller: index
-  action: home
+  controller: posts
+  action: postList
 -
   uri: ^/admin/posts[/]?$
   package: admin

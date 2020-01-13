@@ -32,6 +32,7 @@ class Application
      */
     protected function setStage(int $stage = self::DEVELOPMENT_STAGE): void
     {
+        //Checks if the stage is valid
         if(!isset($stage) || !($stage == self::DEVELOPMENT_STAGE || $stage == self::PRODUCTION_STAGE))
         {
             throw new InvalidArgumentException('The application $stage argument should be one of the 
@@ -49,12 +50,12 @@ class Application
         $router = new Router($_SERVER['REQUEST_URI']);
 
         //Instantiates the IndexController
-        $controllerName = $router->getRoute()->getController();
+        $controllerName = $router->getRoute()->getControllerName();
 
         $controller = new $controllerName();
 
         //Starts the action
-        $actionName = $router->getRoute()->getAction();
+        $actionName = $router->getRoute()->getActionName();
 
         $controller->$actionName();
     }

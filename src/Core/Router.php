@@ -13,6 +13,18 @@ class Router
         $this->setRoute($uri);
     }
 
+    //PUBLIC METHODS/////////////////////////
+
+    /**
+     * @return Route|null
+     */
+    public function getRoute():?Route
+    {
+        return $this->route;
+    }
+
+    //SUB METHODS//////////////////////////
+
     /**
      * Looks into routes.yml file and sets the Route.
      * @param string $uri
@@ -25,22 +37,9 @@ class Router
             //If matches pattern, sets the $route attribute
             if(preg_match('~^'.$route['uri'].'$~', $uri))
             {
-                //Defines the requested URI
-                $route['requestedUri'] = $uri;
-
                 //Sets the route
                 $this->route = new Route($route);
             }
         }
     }
-
-    /**
-     * @return Route|null
-     */
-    public function getRoute():?Route
-    {
-        return $this->route;
-    }
-
-
 }

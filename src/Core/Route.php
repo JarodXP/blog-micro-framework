@@ -6,15 +6,12 @@ namespace Core;
 
 class Route
 {
-    protected string $requestedUri;
     protected string $controller;
     protected string $action;
 
     public function __construct(array $route)
     {
-        $this->setRequestedUri($route['requestedUri']);
-
-        $this->setController($route['package'],$route['controller']);
+        $this->setControllerName($route['package'],$route['controller']);
 
         $this->setAction($route['action']);
     }
@@ -22,25 +19,19 @@ class Route
     // GETTERS//////////////
 
     /**
+     * Gets the Controller Name
      * @return string
      */
-    public function getRequestedUri():string
-    {
-        return $this->requestedUri;
-    }
-
-    /**
-     * @return string
-     */
-    public function getController():string
+    public function getControllerName():string
     {
         return $this->controller;
     }
 
     /**
+     * Gets the action Name
      * @return string
      */
-    public function getAction():string
+    public function getActionName():string
     {
         return $this->action;
     }
@@ -48,27 +39,23 @@ class Route
     //SETTERS///////
 
     /**
-     * @param string $uri
-     */
-    protected function setRequestedUri($uri): void
-    {
-        $this->requestedUri = $uri;
-    }
-
-    /**
+     * Sets the controller name
      * @param $package
      * @param string $controller
      */
-    protected function setController($package,$controller): void
+    protected function setControllerName($package, $controller): void
     {
+        //Creates a string representing Namespace\Controller
         $this->controller = ucfirst($package).'\\'.ucfirst($controller).'Controller';
     }
 
     /**
+     * Sets the action name
      * @param string $action
      */
     protected function setAction($action): void
     {
+        //Creates a string representing the action method name
         $this->action = $action.'Action';
     }
 
