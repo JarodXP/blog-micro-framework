@@ -43,11 +43,29 @@ class ProfileController extends Controller
 
     public function displayContactFormAction()
     {
-        require __DIR__.'/Views/contact.html';
+        $twig = new Environment($this->twigLoader,$this->app->getEnvironmentOptions());
+
+        try
+        {
+            echo $twig->render('/contact.html.twig');
+        }
+        catch (LoaderError | RuntimeError | SyntaxError $e)
+        {
+            print_r($e->getMessage());
+        }
     }
 
-    public function sendContactFormActionAction()
+    public function sendContactFormAction()
     {
-        require __DIR__.'/Views/thankYou.html';
+        $twig = new Environment($this->twigLoader,$this->app->getEnvironmentOptions());
+
+        try
+        {
+            echo $twig->render('/thankYou.html.twig');
+        }
+        catch (LoaderError | RuntimeError | SyntaxError $e)
+        {
+            print_r($e->getMessage());
+        }
     }
 }
