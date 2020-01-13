@@ -16,6 +16,8 @@ class Router
     //PUBLIC METHODS/////////////////////////
 
     /**
+     * Gets the matching Route stored.
+     * To be used by Application to get route information
      * @return Route|null
      */
     public function getRoute():?Route

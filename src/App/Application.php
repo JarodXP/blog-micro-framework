@@ -19,6 +19,7 @@ class Application
     }
 
     /**
+     * Gets the stage of the app (Development or Production)
      * @return int
      */
     public function getStage():int
@@ -27,6 +28,7 @@ class Application
     }
 
     /**
+     * Sets the stage of the app (Development or Production)
      * @param int $stage
      * @return void
      */

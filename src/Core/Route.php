@@ -20,6 +20,7 @@ class Route
 
     /**
      * Gets the Controller Name
+     * Used by Application to instantiate the controller corresponding to the route
      * @return string
      */
     public function getControllerName():string
@@ -29,6 +30,7 @@ class Route
 
     /**
      * Gets the action Name
+     * Used by Application to call the action corresponding to the route
      * @return string
      */
     public function getActionName():string
@@ -39,7 +41,7 @@ class Route
     //SETTERS///////
 
     /**
-     * Sets the controller name
+     * Sets the controller name corresponding to the route
      * @param $package
      * @param string $controller
      */
@@ -50,7 +52,7 @@ class Route
     }
 
     /**
-     * Sets the action name
+     * Sets the action name corresponding to the route
      * @param string $action
      */
     protected function setAction($action): void
