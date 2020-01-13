@@ -43,6 +43,15 @@ class BlogController extends Controller
 
     public function displayPostAction()
     {
-        require __DIR__.'/Views/post.html';
+        $twig = new Environment($this->twigLoader,$this->app->getEnvironmentOptions());
+
+        try
+        {
+            echo $twig->render('/post.html.twig');
+        }
+        catch (LoaderError | RuntimeError | SyntaxError $e)
+        {
+            print_r($e->getMessage());
+        }
     }
 }
