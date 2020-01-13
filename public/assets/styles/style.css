@@ -1,7 +1,7 @@
 /*********GENERAL*****************************/
 
 #wrapper-front {
-    padding-top: 50px;
+    padding-top: 40px;
 }
 
 #leftBrand{
@@ -23,6 +23,7 @@
     color: white;
 }
 
+/*********FRONT***************************/
 
 #avatar {
     background-image: url('/assets/uploads/photoProfile.png');
@@ -46,4 +47,10 @@
 
 #eyeUpload{
     padding-left: 10px;
+}
+
+/******************ADMIN************************/
+#sidebar-nav{
+    height: 100vh;
+
 }
