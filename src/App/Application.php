@@ -8,6 +8,7 @@ use InvalidArgumentException;
 class Application
 {
     protected int $stage;
+    protected array $environmentOptions;
 
     public const DEVELOPMENT_STAGE = 0,
         PRODUCTION_STAGE = 1;
@@ -16,10 +17,11 @@ class Application
     {
         $this->setStage($stage);
 
+        $this->setEnvironmentOptions();
+
     }
 
     /**
-     * Gets the stage of the app (Development or Production)
      * @return int
      */
     public function getStage():int
@@ -28,7 +30,14 @@ class Application
     }
 
     /**
-     * Sets the stage of the app (Development or Production)
+     * @return array
+     */
+    public function getEnvironmentOptions(): array
+    {
+        return $this->environmentOptions;
+    }
+
+    /**
      * @param int $stage
      * @return void
      */
@@ -44,6 +53,34 @@ class Application
     }
 
     /**
+     * Sets the Twig Environment options depending on the app stage
+     */
+    protected function setEnvironmentOptions():void
+    {
+        //Sets the cache directory
+        $pathToCacheFiles = $_SERVER['DOCUMENT_ROOT'].$GLOBALS['config']['cacheDirectory'];
+
+        //Checks stage status and sets cache and debug attributes for instance of Twig Environment
+        if($this->stage == self::PRODUCTION_STAGE)
+        {
+            $twigEnvironmentOptions = [
+                'cache' => $pathToCacheFiles,
+                'debug' => false
+            ];
+        }
+
+        else
+        {
+            $twigEnvironmentOptions = [
+                'cache' => false,
+                'debug' => true
+            ];
+        }
+
+        $this->environmentOptions = $twigEnvironmentOptions;
+    }
+
+    /**
      * Runs the app
      * @return void
      */
@@ -54,7 +91,7 @@ class Application
         //Instantiates the IndexController
         $controllerName = $router->getRoute()->getControllerName();
 
-        $controller = new $controllerName();
+        $controller = new $controllerName($this);
 
         //Starts the action
         $actionName = $router->getRoute()->getActionName();
