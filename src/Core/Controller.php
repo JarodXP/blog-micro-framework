@@ -25,7 +25,7 @@ class Controller
      */
     protected function setTwigLoader(array $templatesDirectories):void
     {
-        //Instanciates Twig Loader
+        //Instantiates Twig Loader
         $this->twigLoader = new FilesystemLoader($templatesDirectories[0]);
 
         //Add other paths if specified
