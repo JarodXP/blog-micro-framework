@@ -22,6 +22,7 @@ class Application
     }
 
     /**
+     * Gets the stage of the app (Development or Production)
      * @return int
      */
     public function getStage():int
@@ -30,6 +31,7 @@ class Application
     }
 
     /**
+     * Sets the Twig Environment options depending on the app stage
      * @return array
      */
     public function getEnvironmentOptions(): array
@@ -38,6 +40,7 @@ class Application
     }
 
     /**
+     * Sets the stage of the app (Development or Production)
      * @param int $stage
      * @return void
      */
@@ -57,14 +60,11 @@ class Application
      */
     protected function setEnvironmentOptions():void
     {
-        //Sets the cache directory
-        $pathToCacheFiles = $_SERVER['DOCUMENT_ROOT'].$GLOBALS['config']['cacheDirectory'];
-
         //Checks stage status and sets cache and debug attributes for instance of Twig Environment
         if($this->stage == self::PRODUCTION_STAGE)
         {
             $twigEnvironmentOptions = [
-                'cache' => $pathToCacheFiles,
+                'cache' => $_ENV['cacheDirectory'],
                 'debug' => false
             ];
         }
@@ -88,12 +88,12 @@ class Application
     {
         $router = new Router($_SERVER['REQUEST_URI']);
 
-        //Instantiates the IndexController
+        //Instantiates the right controller with the name got from the route
         $controllerName = $router->getRoute()->getControllerName();
 
         $controller = new $controllerName($this);
 
-        //Starts the action
+        //Starts the right action with the name got from the route
         $actionName = $router->getRoute()->getActionName();
 
         $controller->$actionName();

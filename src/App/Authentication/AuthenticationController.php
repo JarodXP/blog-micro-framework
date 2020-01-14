@@ -4,15 +4,34 @@
 namespace Authentication;
 
 
-class AuthenticationController
+use Core\Controller;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+
+class AuthenticationController extends Controller
 {
-    public function signinAction()
+    public function signInAction()
     {
-        require __DIR__.'/Views/signIn.html';
+        try
+        {
+            echo $this->twigEnvironment->render('/changePassword.html.twig');
+        }
+        catch (LoaderError | RuntimeError | SyntaxError $e)
+        {
+            print_r($e->getMessage());
+        }
     }
 
     public function changePassword()
     {
-        require __DIR__.'/Views/changePassword.html';
+        try
+        {
+            echo $this->twigEnvironment->render('/signIn.html.twig');
+        }
+        catch (LoaderError | RuntimeError | SyntaxError $e)
+        {
+            print_r($e->getMessage());
+        }
     }
 }

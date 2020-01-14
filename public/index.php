@@ -29,19 +29,24 @@ $authenticationLoader = new Psr4Autoloader();
 $authenticationLoader->register();
 $authenticationLoader->addNamespace('Authentication', __DIR__ . '/../src/App/Authentication');
 
+///ENVIRONMENT VARIABLES///////
+$_ENV['cacheDirectory'] = __DIR__ .'/../cache/';
+
+$_ENV['configDirectory'] = __DIR__ .'/../src/config';
+
 ///GLOBALS VARIABLES//////////
 
-//Sets a global variable for the config directory
-$configDirectory = __DIR__ .'/../src/config';
-
 //Sets a global variable for the routes parsed file
-$routes = yaml_parse_file($configDirectory.'/routes.yml');
+$routes = yaml_parse_file($_ENV['configDirectory'].'/routes.yml');
 
 //Sets a global variable for the config parsed file
-$config = yaml_parse_file($configDirectory.'/config.yml');
+$config = yaml_parse_file($_ENV['configDirectory'].'/config.yml');
 
 ///RUN//////
 
-$app = new Application(Application::DEVELOPMENT_STAGE);
+//Gets the application stage to set Twig environment
+$stage = $config['applicationStage'];
+
+$app = new Application($stage);
 
 $app->run();

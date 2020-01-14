@@ -1,2 +1,3 @@
-#Path to Cache Directory
-cacheDirectory: '/../cache/'
+#Application Stage
+# 0 : Development, 1: Production
+applicationStage : 0
