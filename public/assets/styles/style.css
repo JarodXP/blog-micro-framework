@@ -1,4 +1,18 @@
 /*********GENERAL*****************************/
+html{
+    height: 100%;
+
+}
+
+body{
+    height: 100%;
+}
+
+#mainContainer{
+    width: 100vw;
+    min-height: 100%;
+    padding-bottom: 40px;
+}
 
 #wrapper-front {
     padding-top: 40px;
@@ -14,13 +28,24 @@
     width: 100%;
 }
 
-#footer{
+footer{
+    width: 100vw;
     background-color: #343a40 ;
+    color: white;
+    height: 40px;
+    margin-top: -40px;
+}
+
+footer a{
     color: white;
 }
 
-#footer a{
-    color: white;
+footer p{
+    margin-bottom: 0;
+}
+
+footer .row{
+    margin: 0;
 }
 
 /*********FRONT***************************/
@@ -49,8 +74,91 @@
     padding-left: 10px;
 }
 
+#thanksRow{
+    height: 100%;
+}
+
 /******************ADMIN************************/
+
+/*General*/
+.admin-content{
+    padding-top: 30px;
+}
+
+.admin-table,.admin-form{
+    margin-top: 50px;
+}
+
+
+/*Header*/
+#header-back>p{
+    margin-bottom: 0;
+}
+
+#avatarHeader{
+    width: 30px;
+    height: 30px;
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/*Sidebar*/
 #sidebar-nav{
     height: 100vh;
 
 }
+
+#header-back{
+    color: white;
+}
+
+/*Admin tables*/
+.table-image>div{
+    width: 90%;
+    height: 30px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+/*Admin forms*/
+
+.admin-form section{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.form-section{
+    border-bottom: solid 1px darkgray;
+}
+
+/*Admin Edit Post*/
+
+#adminPostHeader{
+    height: 100px;
+}
+
+/*Admin Profile*/
+#adminProfileAvatar{
+    height: 6rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#resumePdf{
+    width: 800px;
+    height: 1000px;
+}
+
+/*Admin Professional*/
+.admin-social-icon{
+    width: 2rem;
+    height: 2rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+

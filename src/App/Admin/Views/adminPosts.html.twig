@@ -2,9 +2,64 @@
 
 {% block mainContent %}
 
-    <div class="row">
-        <!-- Blog Entries Column -->
+    <div class="row admin-content">
+
         <h1 class="col-12 text-center">Liste des articles</h1>
+
+        <table class="col-10 offset-1 table table-hover table-responsive-lg table-sm admin-table">
+            <thead>
+            <tr>
+                <th><a href = ""> Titre </a></th>
+                <th><a href = ""> Auteur</a></th>
+                <th><a href = ""> Créé le </a></th>
+                <th><a href = ""> Modifié le </a></th>
+                <th><a href = ""> Statut </a></th>
+                <th scope="col">Image</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td class="align-middle">Un article</td>
+                <td class="align-middle">Greg</td>
+                <td class="align-middle">14/01/20</td>
+                <td class="align-middle">15/01/20</td>
+                <td class="align-middle">Publié</td>
+                <td class="align-middle table-image"><div style="background-image: url('/assets/uploads/postHeader.jpg')"></div></td>
+                <td class="icon-edit">
+                    <a href = "/admin/posts/post-0"><i class="far fa-edit"></i></a>
+                    <a href = "/admin/posts/remove=0"><i class="far fa-trash-alt"></i></a>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="align-middle">Un article</td>
+                <td class="align-middle">Greg</td>
+                <td class="align-middle">14/01/20</td>
+                <td class="align-middle">15/01/20</td>
+                <td class="align-middle">Brouillon</td>
+                <td class="align-middle table-image"><div style="background-image: url('/assets/uploads/postHeader.jpg')"></div></td>
+                <td class="icon-edit">
+                    <a href = "/admin/posts/post-0"><i class="far fa-edit"></i></a>
+                    <a href = "/admin/posts/remove=0"><i class="far fa-trash-alt"></i></a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div id="tableRange" class="col-12 text-center">
+            <!--Displays the anchor arrows in regards of the number of posts-->
+            <p>
+                <a href=""><i class="far fa-caret-square-left"></i></a>
+                0 - 10
+                <a href=""><i class="far fa-caret-square-right"></i></a>
+            </p>
+        </div>
+
+
+
     </div>
 
 {% endblock %}

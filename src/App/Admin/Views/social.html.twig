@@ -1,0 +1,48 @@
+{% extends 'mainBack.html.twig' %}
+
+{% block mainContent %}
+
+    <div class="row admin-content" xmlns="http://www.w3.org/1999/html">
+
+        <h1 class="col-12 text-center">Ajouter un Réseau social</h1>
+
+        <form action="" method="post" id="socialForm" class="col-10 offset-1 admin-form" enctype="multipart/form-data">
+
+            <section id="socialSectionName" class="row form-section">
+                <div class="col-8 offset-2 my-2">
+                    <div class="row">
+                        <label for="networkName" class="col-12">Nom du réseau social</label>
+                        <input id="networkName" type="text" name="networkName" class="col-11 form-control " value="">
+                    </div>
+                </div>
+            </section>
+
+            <section id="socialSectionIcon" class="row form-section">
+                <div class="col-2">
+                    <div class="row">
+                        <label for="networkIcon" class="col-12">Icone</label>
+                        <div id="networkIcon" class="col-12" style="background-image: url('/assets/images/icons/empty-image.png');">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-10">
+                    <div class="form-group col-10 offset-1">
+                        <label for="mainImageFile" class="col-12">Télécharger un fichier</label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
+                        <input id="imageFile" name="mainImageFile" type="file" class="col-12 form-control">
+                    </div>
+                </div>
+            </section>
+
+            <section id="professionalSectionButtons" class="row">
+                <div class="col-12 form-group text-center">
+                    <button type="submit" class="btn btn-success">Enregistrer</button>
+                    <button type="submit" class="btn btn-secondary" formaction="/admin/professional">Retour</button>
+                </div>
+            </section>
+
+        </form>
+    </div>
+
+{% endblock %}

@@ -2,9 +2,65 @@
 
 {% block mainContent %}
 
-    <div class="row">
-        <!-- Blog Entries Column -->
-        <h1 class="col-12 text-center">Liste des commentaires</h1>
+    <div class="row admin-content">
+
+        <h1 class="col-12 text-center">Liste des Commentaires</h1>
+
+        <table class="col-10 offset-1 table table-hover table-responsive-lg table-sm admin-table">
+            <thead>
+            <tr>
+                <th><a href = ""> N° Article </a></th>
+                <th><a href = ""> Article </a></th>
+                <th><a href = ""> Pseudo </a></th>
+                <th><a href = ""> Extrait </a></th>
+                <th><a href = ""> Posté le </a></th>
+                <th><a href = ""> Statut </a></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td class="align-middle">1</td>
+                <td class="align-middle">Un article</td>
+                <td class="align-middle">Wawa</td>
+                <td class="align-middle">Très bon article</td>
+                <td class="align-middle">14/01/20</td>
+                <td class="align-middle">Publié</td>
+                <td class="icon-edit">
+                    <a href = "/admin/comments/comment-0"><i class="far fa-edit"></i></a>
+                    <a href = "/admin/comments/remove=0"><i class="far fa-trash-alt"></i></a>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="align-middle">2</td>
+                <td class="align-middle">Deuxième article</td>
+                <td class="align-middle">Gigi</td>
+                <td class="align-middle">Excellente analyse</td>
+                <td class="align-middle">12/01/20</td>
+                <td class="align-middle">Non publié</td>
+                <td class="icon-edit">
+                    <a href = "/admin/comments/comment-0"><i class="far fa-edit"></i></a>
+                    <a href = "/admin/comments/remove=0"><i class="far fa-trash-alt"></i></a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div id="tableRange" class="col-12 text-center">
+            <!--Displays the anchor arrows in regards of the number of posts-->
+            <p>
+                <a href=""><i class="far fa-caret-square-left"></i></a>
+                0 - 10
+                <a href=""><i class="far fa-caret-square-right"></i></a>
+            </p>
+        </div>
+
+
+
     </div>
 
 {% endblock %}
+

@@ -1,0 +1,56 @@
+{% extends 'mainBack.html.twig' %}
+
+{% block mainContent %}
+
+    <div class="row admin-content">
+
+        <h1 class="col-12 text-center">Renseignements professionnels</h1>
+
+        <form action="" method="post" id="professionalForm" class="col-10 offset-1 admin-form" enctype="multipart/form-data">
+
+            <section id="professionalSectionSocial" class="row form-section">
+                <div class="col-8 offset-2 my-2">
+                    <div class="row">
+                        <label for="github" class="col-12">Github</label>
+                        <div class="col-1 admin-social-icon" style="background-image: url('/assets/images/icons/Github.png')"></div>
+                        <input id="github" type="url" name="github" class="col-10 form-control " value="">
+                        <p class="col-1"><a href = "/admin/professional/network/remove=0"><i class="far fa-trash-alt"></i></a></p>
+                    </div>
+                </div>
+                <div class="col-8 offset-2 my-2">
+                    <div class="row">
+                        <label for="linkedin" class="col-12">LinkedIn</label>
+                        <div class="col-1 admin-social-icon" style="background-image: url('/assets/images/icons/Linkedin-icon.png')"></div>
+                        <input id="linkedin" type="url" name="linkedin" class="col-10 form-control" value="">
+                        <p class="col-1"><a href = "/admin/professional/network/remove=0"><i class="far fa-trash-alt"></i></a></p>
+                    </div>
+                </div>
+                <div class="col-12 text-center my-4">
+                    <button type="submit" class="btn btn-info" formaction="/admin/professional/social">Ajouter un réseau</button>
+                </div>
+            </section>
+
+            <section id="professionalSectionResume" class="row form-section ">
+                <div class="col-10 offset-1 d-flex justify-content-center align-items-center">
+                    <p class="col-3">Fichier actuel: <br><a href='/assets/uploads/resume.pdf' target="_blank">resume.pdf</a></p>
+
+                    <div class="form-group col-9">
+                        <label for="resumeFile" class="col-12">Télécharger votre CV en PDF</label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
+                        <input id="resumeFile" name="resumeFile" type="file" class="col-12 form-control">
+                    </div>
+                </div>
+                <iframe id="resumePdf" class="col-10 offset-1" src='/assets/uploads/resume.pdf'></iframe>
+            </section>
+
+            <section id="professionalSectionButtons" class="row">
+                <div class="col-12 form-group text-center">
+                    <button type="submit" class="btn btn-success">Enregistrer</button>
+                    <button type="submit" class="btn btn-secondary" formaction="/admin/">Retour</button>
+                </div>
+            </section>
+
+        </form>
+    </div>
+
+{% endblock %}

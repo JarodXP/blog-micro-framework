@@ -2,9 +2,47 @@
 
 {% block mainContent %}
 
-    <div class="row">
-        <!-- Blog Entries Column -->
-        <h1 class="col-12 text-center">Modifier le commentaire</h1>
+    <div class="row admin-content">
+
+        <h1 class="col-12 text-center">
+            Modérer le commentaire 1 de l'article "Un article"
+        </h1>
+
+        <h2 class="col-12 text-center">Commentaire ajouté le 14/01/2020
+            par Wawa</h2>
+
+        <form action="" method="post" id="postForm" class="col-10 offset-1 admin-form">
+
+            <section class="row form-section">
+                <div class="form-group col-10 offset-1">
+                    <label for="content" class="col-12">Commentaire</label>
+                    <input id="content" type="text" name="content" class="col-12 form-control" value="Très bon article">
+                </div>
+            </section>
+
+            <section class="row form-section">
+                <div class="col-12 form-group text-center">
+                    <p>
+                        <label for="check-visible">Actuellement : Publié</label>
+                    </p>
+                    <p><span class="font-italic">Changer le statut : </span>
+                        <input id="check-visible" type="checkbox" name="status" value=1 data-toggle="toggle"
+                               data-offstyle="dark">
+                    </p>
+                </div>
+            </section>
+
+            <section class="row form-section">
+                <div class="col-12 form-group text-center">
+                    <button type="submit" class="btn btn-success">Enregistrer</button>
+                    <button type="submit" class="btn btn-danger" formaction="/admin/comments/remove=1"
+                            formmethod="post">Supprimer</button>
+                    <button type="submit" class="btn btn-secondary" formaction="/admin/comments">Retour</button>
+                </div>
+            </section>
+
+        </form>
+
     </div>
 
 {% endblock %}
