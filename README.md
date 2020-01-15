@@ -6,6 +6,7 @@ This project aims to set the basis for a personal blog.
 <strong>Main criterias:</strong>
 - Pure PHP (no framework)
 - MVC structure
+- Use of Twig as template engine
 - External libraries through Composer
 - Automated code review tool : Codeclimate (Maintainability) and Sonar Cloud (security) used.
 

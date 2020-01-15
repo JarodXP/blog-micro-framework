@@ -1,0 +1,57 @@
+{% extends 'baseLayout.html.twig' %}
+
+{% block header %}
+    {% include 'headerFront.html.twig' %}
+{% endblock %}
+
+{% block content %}
+
+    <!--Main area -->
+    <div id="front-content-wrapper" class="col-10 col-md-7 offset-1">
+
+    {% block mainContent %}
+    {% endblock %}
+
+    </div>
+    <!-- /#page-content-wrapper -->
+
+    <!-- Sidebar -->
+    <div class="col-10 col-md-3 offset-1">
+
+    {% block sideBar %}
+
+        <!-- Networks Widget -->
+        <div class="card my-4">
+            <h5 class="card-header">Réseaux</h5>
+            <div class="card-body">
+                <img src="/assets/images/icons/Github.png" width="30px" height="30px">
+                <img src="/assets/images/icons/Linkedin-icon.png" width="30px" height="30px">
+
+            </div>
+        </div>
+
+        <div class="card my-4">
+            <h5 class="card-header">Télécharger CV <a href="/assets/uploads/resume.pdf" target="_blank"><i id="eyeUpload" class="fas fa-eye"></i></a></h5>
+        </div>
+
+        <div class="card my-4">
+            <h5 class="card-header">Derniers articles</h5>
+            <div class="card-body">
+                <p><a href="">Un article</a></p>
+                <p><a href="">Un autre article</a></p>
+                <p><a href="">Et encore un</a></p>
+            </div>
+        </div>
+
+    {% endblock %}
+
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'footerFront.html.twig' %}
+{% endblock %}

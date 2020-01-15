@@ -1,0 +1,38 @@
+{% extends 'baseLayout.html.twig' %}
+
+{% block header %}
+    {% include 'headerBack.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-nav">
+            <div class="list-group list-group-flush">
+                <a href="/admin/posts" class="list-group-item list-group-item-action bg-light">Articles</a>
+                <a href="/admin/comments" class="list-group-item list-group-item-action bg-light">Commentaires</a>
+                <a href="/admin/my-profile" class="list-group-item list-group-item-action bg-light">
+                    Mon profil</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!--Main area -->
+        <div id="page-content-wrapper">
+
+            {% block mainContent %}
+            {% endblock %}
+
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+{% endblock %}
+
+
+{% block footer %}
+    {% include 'footerBack.html.twig' %}
+{% endblock %}

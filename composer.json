@@ -8,5 +8,10 @@
       "name": "jarod",
       "email": "gregory@jarod-xp.com"
     }
-  ]
+  ],
+  "require": {
+    "twig/twig": "^3.0",
+    "ext-yaml": "*",
+    "keradus/psr4autoloader": "^2.0"
+  }
 }
