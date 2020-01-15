@@ -1,4 +1,4 @@
-#Application Stage
+#Application Env
 # dev : Development, prod: Production
 APP_ENV : prod
 

@@ -26,11 +26,9 @@ class ProfileController extends Controller
 
     public function displayContactFormAction()
     {
-        $twig = new Environment($this->twigLoader,$this->app->getEnvironmentOptions());
-
         try
         {
-            echo $twig->render('/contact.html.twig');
+            echo $this->twigEnvironment->render('/contact.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {

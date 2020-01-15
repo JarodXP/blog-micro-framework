@@ -45,10 +45,10 @@ $config = yaml_parse_file($_ENV['configDirectory'].'/config.yml');
 $_ENV['locale'] = $config['APP_LOCALE'];
 $_ENV['charset'] = $config['APP_CHARSET'];
 
-//Gets the application stage to set Twig environment
-$_ENV['stage'] = $config['APP_ENV'];
+//Gets the application env to set Twig environment
+$_ENV['env'] = $config['APP_ENV'];
 
-$app = new Application($_ENV['stage']);
+$app = new Application($_ENV['env']);
 
 ///RUN//////
 $app->run();

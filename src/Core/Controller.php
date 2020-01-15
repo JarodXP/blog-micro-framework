@@ -32,7 +32,7 @@ abstract class Controller
         //Set globals variables to use on all templates
         $this->twigEnvironment->addGlobal('locale', $_ENV['locale']);
         $this->twigEnvironment->addGlobal('charset', $_ENV['charset']);
-        $this->twigEnvironment->addGlobal('charset', $_ENV['stage']);
+        $this->twigEnvironment->addGlobal('env', $_ENV['env']);
     }
 
     /**

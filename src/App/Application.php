@@ -7,30 +7,30 @@ use InvalidArgumentException;
 
 class Application
 {
-    protected string $stage;
+    protected string $env;
     protected array $environmentOptions;
 
     public const DEVELOPMENT_ENV = "dev",
         PRODUCTION_ENV = "prod";
 
-    public function __construct(string $stage)
+    public function __construct(string $env)
     {
-        $this->setStage($stage);
+        $this->setEnv($env);
 
         $this->setEnvironmentOptions();
     }
 
     /**
-     * Gets the stage of the app (Development or Production)
+     * Gets the env of the app (Development or Production)
      * @return string
      */
-    public function getStage():string
+    public function getEnv():string
     {
-        return $this->stage;
+        return $this->env;
     }
 
     /**
-     * Sets the Twig Environment options depending on the app stage
+     * Sets the Twig Environment options depending on the app env
      * @return array
      */
     public function getEnvironmentOptions(): array
@@ -39,28 +39,28 @@ class Application
     }
 
     /**
-     * Sets the stage of the app (Development or Production)
-     * @param string $stage
+     * Sets the env of the app (Development or Production)
+     * @param string $env
      * @return void
      */
-    protected function setStage(string $stage = self::DEVELOPMENT_ENV): void
+    protected function setEnv(string $env = self::DEVELOPMENT_ENV): void
     {
-        //Checks if the stage is valid
-        if(!($stage == self::DEVELOPMENT_ENV || $stage == self::PRODUCTION_ENV))
+        //Checks if the env is valid
+        if(!($env == self::DEVELOPMENT_ENV || $env == self::PRODUCTION_ENV))
         {
-            throw new InvalidArgumentException('The application $stage argument should be one of the 
+            throw new InvalidArgumentException('The application $env argument should be one of the 
             following constant : DEVELOPMENT_ENV or PRODUCTION_ENV');
         }
-        $this->stage = $stage;
+        $this->env = $env;
     }
 
     /**
-     * Sets the Twig Environment options depending on the app stage
+     * Sets the Twig Environment options depending on the app env
      */
     protected function setEnvironmentOptions():void
     {
-        //Checks stage status and sets cache and debug attributes for instance of Twig Environment
-        if($this->stage == self::PRODUCTION_ENV)
+        //Checks env status and sets cache and debug attributes for instance of Twig Environment
+        if($this->env == self::PRODUCTION_ENV)
         {
             $twigEnvironmentOptions = [
                 'cache' => $_ENV['cacheDirectory'],
