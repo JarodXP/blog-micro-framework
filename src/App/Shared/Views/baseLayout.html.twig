@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{locale}}">
 
 <head>
 
-    <meta charset="utf-8">
+    <meta charset="{{charset}}">
+    <title>{% block title %}Mon Profil{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="{% block metaDescription %}{% endblock %}">
+    <meta name="author" content="{% block author %}{% endblock %}">
 
-    <link href="/assets/styles/style.css" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap core CSS-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    {% block styles %}
+        <link href="/assets/styles/style.css" rel="stylesheet" type="text/css">
+        <!-- Bootstrap core CSS-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% endblock %}
 
     <!--Fontawesome-->
-    <script src="https://kit.fontawesome.com/ed9e7cb288.js" crossorigin="anonymous"></script>
-
-    <title>Mon Profil</title>
-
+    {% block headScripts %}
+        <script src="https://kit.fontawesome.com/ed9e7cb288.js" crossorigin="anonymous"></script>
+    {% endblock %}
 </head>
 
 <body>
@@ -30,9 +31,7 @@
     <div class="d-flex" id="wrapper">
 
         <div class="under-header row" id="wrapper-front">
-
             {% block content %}{% endblock %}
-
         </div>
     </div>
     <!-- /.row -->
@@ -42,7 +41,7 @@
 
 {% block footer %}{% endblock %}
 
-{% block scripts %}
+{% block footerScripts %}
     <!-- Bootstrap core JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

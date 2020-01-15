@@ -1,9 +1,6 @@
 #Application Stage
 # dev : Development, prod: Production
-APP_ENV : dev
-
-APP_LOCALE : EN
-APP_CHARSET : utf-8
+APP_ENV : prod
 
 DATABASE_HOST : 127.0.0.1
 DATABASE_PORT : 3306

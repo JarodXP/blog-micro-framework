@@ -7,25 +7,24 @@ use InvalidArgumentException;
 
 class Application
 {
-    protected int $stage;
+    protected string $stage;
     protected array $environmentOptions;
 
-    public const DEVELOPMENT_STAGE = 0,
-        PRODUCTION_STAGE = 1;
+    public const DEVELOPMENT_ENV = "dev",
+        PRODUCTION_ENV = "prod";
 
-    public function __construct(int $stage)
+    public function __construct(string $stage)
     {
         $this->setStage($stage);
 
         $this->setEnvironmentOptions();
-
     }
 
     /**
      * Gets the stage of the app (Development or Production)
-     * @return int
+     * @return string
      */
-    public function getStage():int
+    public function getStage():string
     {
         return $this->stage;
     }
@@ -41,16 +40,16 @@ class Application
 
     /**
      * Sets the stage of the app (Development or Production)
-     * @param int $stage
+     * @param string $stage
      * @return void
      */
-    protected function setStage(int $stage = self::DEVELOPMENT_STAGE): void
+    protected function setStage(string $stage = self::DEVELOPMENT_ENV): void
     {
         //Checks if the stage is valid
-        if(!isset($stage) || !($stage == self::DEVELOPMENT_STAGE || $stage == self::PRODUCTION_STAGE))
+        if(!($stage == self::DEVELOPMENT_ENV || $stage == self::PRODUCTION_ENV))
         {
             throw new InvalidArgumentException('The application $stage argument should be one of the 
-            following constant : DEVELOPMENT_STAGE or PRODUCTION STAGE');
+            following constant : DEVELOPMENT_ENV or PRODUCTION_ENV');
         }
         $this->stage = $stage;
     }
@@ -61,11 +60,12 @@ class Application
     protected function setEnvironmentOptions():void
     {
         //Checks stage status and sets cache and debug attributes for instance of Twig Environment
-        if($this->stage == self::PRODUCTION_STAGE)
+        if($this->stage == self::PRODUCTION_ENV)
         {
             $twigEnvironmentOptions = [
                 'cache' => $_ENV['cacheDirectory'],
-                'debug' => false
+                'debug' => false,
+                'charset' => $_ENV['charset']
             ];
         }
 
@@ -73,7 +73,8 @@ class Application
         {
             $twigEnvironmentOptions = [
                 'cache' => false,
-                'debug' => true
+                'debug' => true,
+                'charset' => $_ENV['charset']
             ];
         }
 
