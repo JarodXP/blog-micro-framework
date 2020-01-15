@@ -1,21 +1,18 @@
 /*********GENERAL*****************************/
 html{
+    min-height: 100%;
     height: 100%;
-
 }
 
 body{
-    height: 100%;
+    position: absolute;
+    min-height: 100vh;
 }
 
 #mainContainer{
     width: 100vw;
-    min-height: 100%;
+    min-height: 100vh;
     padding-bottom: 40px;
-}
-
-#wrapper-front {
-    padding-top: 40px;
 }
 
 #leftBrand{
@@ -24,8 +21,14 @@ body{
 }
 
 .under-header{
-    margin-top: 20px;
     width: 100%;
+    min-height: 100vh;
+    padding-top: 40px;
+    margin-bottom: -40px;
+}
+
+#page-content-wrapper{
+    padding-bottom: 40px;
 }
 
 footer{
@@ -49,6 +52,28 @@ footer .row{
 }
 
 /*********FRONT***************************/
+#front-nav{
+    height: 50px;
+}
+
+.front-content{
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+
+.front-content h1{
+    font-weight: bold;
+}
+
+.front-content h1, .front-content h2{
+    margin: 5% 0;
+}
+
+.front-content h3{
+    margin: 5% 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
 
 #avatar {
     background-image: url('/assets/uploads/photoProfile.png');
@@ -91,6 +116,10 @@ footer .row{
 
 
 /*Header*/
+#header-back{
+    height: 40px;
+}
+
 #header-back>p{
     margin-bottom: 0;
 }
@@ -103,10 +132,15 @@ footer .row{
     background-repeat: no-repeat;
 }
 
-/*Sidebar*/
-#sidebar-nav{
-    height: 100vh;
+#menu-toggle{
+    padding: 0;
+}
 
+/*Sidebar*/
+
+#sidebar-nav{
+    min-height: 100%;
+    margin-bottom: 40px;
 }
 
 #header-back{
@@ -120,6 +154,14 @@ footer .row{
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.admin-table th,.admin-table a{
+    color: darkorange;
+}
+
+.admin-table{
+    text-align: center;
 }
 
 
@@ -160,5 +202,22 @@ footer .row{
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+/******DESKTOP***********/
+@media (min-width:768px) {
+
+    /*Front*/
+    .front-content h1{
+        font-size: 2.5rem;
+    }
+
+    .front-content h1,.front-content h2{
+        margin: 3% 0;
+    }
+
+    #baseline{
+        font-size: 1.3rem;
+    }
 }
 

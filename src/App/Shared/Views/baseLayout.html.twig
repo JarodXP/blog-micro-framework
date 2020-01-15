@@ -27,11 +27,8 @@
 
     {% block header %}{% endblock %}
 
-    <div class="d-flex" id="wrapper">
-
-        <div class="under-header row" id="wrapper-front">
-            {% block content %}{% endblock %}
-        </div>
+    <div class="d-flex under-header" id="wrapper">
+        {% block content %}{% endblock %}
     </div>
     <!-- /.row -->
 
