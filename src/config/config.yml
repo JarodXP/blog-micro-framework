@@ -2,7 +2,7 @@
 # dev : Development, prod: Production
 APP_ENV : dev
 
-APP_LOCALE : en
+APP_LOCALE : fr
 APP_CHARSET : utf-8
 
 DATABASE_HOST : 127.0.0.1
