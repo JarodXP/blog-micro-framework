@@ -33,6 +33,13 @@ $authenticationLoader->addNamespace('Authentication', __DIR__ . '/../src/App/Aut
 $_ENV['cacheDirectory'] = __DIR__ .'/../cache/';
 $_ENV['configDirectory'] = __DIR__ .'/../src/config';
 
+//Enviroment variables for Twig Views
+$_ENV['locale'] = $config['APP_LOCALE'];
+$_ENV['charset'] = $config['APP_CHARSET'];
+
+//Gets the application env to set Twig environment
+$_ENV['env'] = $config['APP_ENV'];
+
 ///GLOBALS VARIABLES//////////
 
 //Sets a global variable for the routes parsed file
@@ -40,13 +47,6 @@ $routes = yaml_parse_file($_ENV['configDirectory'].'/routes.yml');
 
 //Sets a global variable for the config parsed file
 $config = yaml_parse_file($_ENV['configDirectory'].'/config.yml');
-
-//ENVIRONMENT VARIABLES FOR TWIG VIEWS////
-$_ENV['locale'] = $config['APP_LOCALE'];
-$_ENV['charset'] = $config['APP_CHARSET'];
-
-//Gets the application env to set Twig environment
-$_ENV['env'] = $config['APP_ENV'];
 
 $app = new Application($_ENV['env']);
 
