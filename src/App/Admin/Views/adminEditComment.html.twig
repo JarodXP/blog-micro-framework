@@ -8,15 +8,15 @@
             Modérer le commentaire 1 de l'article "Un article"
         </h1>
 
-        <h2 class="col-12 text-center">Commentaire ajouté le 14/01/2020
+        <h2 class="col-12 text-center mt-4 mt-md-5">Commentaire ajouté le 14/01/2020
             par Wawa</h2>
 
-        <form action="" method="post" id="postForm" class="col-10 offset-1 admin-form">
+        <form action="" method="post" id="postForm" class="col-12 col-md-10 offset-md-1 admin-form">
 
             <section class="row form-section">
-                <div class="form-group col-10 offset-1">
+                <div class="form-group col-12 col-md-10 offset-md-1">
                     <label for="content" class="col-12">Commentaire</label>
-                    <input id="content" type="text" name="content" class="col-12 form-control" value="Très bon article">
+                    <textarea id="content" name="content" rows="5" class="col-12 form-control">Très bon article</textarea>
                 </div>
             </section>
 
@@ -33,11 +33,13 @@
             </section>
 
             <section class="row form-section">
-                <div class="col-12 form-group text-center">
-                    <button type="submit" class="btn btn-success">Enregistrer</button>
-                    <button type="submit" class="btn btn-danger" formaction="/admin/comments/remove=1"
-                            formmethod="post">Supprimer</button>
-                    <button type="submit" class="btn btn-secondary" formaction="/admin/comments">Retour</button>
+                <div class="col-10 offset-1">
+                    <div class="form-submit">
+                        <p><button type="submit" class="btn btn-success">Enregistrer</button></p>
+                        <p><button type="submit" class="btn btn-danger" formaction="/admin/comments/remove=1"
+                                   formmethod="post">Supprimer</button></p>
+                        <p><button type="submit" class="btn btn-secondary" formaction="/admin/comments">Retour</button></p>
+                    </div>
                 </div>
             </section>
 

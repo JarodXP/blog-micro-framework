@@ -6,22 +6,22 @@
 
         <h1 class="col-12 text-center">Mon Profil</h1>
 
-        <h2 class="col-12 text-center">Greg</h2>
+        <h2 class="col-12 text-center mt-4 mt-md-5">Greg</h2>
 
-        <form action="" method="post" id="profileForm" class="col-10 offset-1 admin-form" enctype="multipart/form-data">
+        <form action="" method="post" id="profileForm" class="col-12 col-md-10 offset-md-1 admin-form" enctype="multipart/form-data">
 
             <section id="profileSectionAvatar" class="row form-section d-flex align-items-center ">
 
-                <div class="col-2">
+                <div class="col-12 col-md-2">
                     <div class="row">
                         <label for="avatar" class="col-12">Avatar</label>
-                        <div id="adminProfileAvatar" class="col-12" style="background-image: url('/assets/uploads/photoProfile.png');">
+                        <div id="adminProfileAvatar" class="col-12 imageDiv" style="background-image: url('/assets/uploads/photoProfile.png');">
                         </div>
                     </div>
                 </div>
 
-                <div class="col-10">
-                    <div class="form-group col-10 offset-1">
+                <div class="col-12 col-md-10">
+                    <div class="form-group col-12 col-md-10 offset-md-1">
                         <label for="mainImageFile" class="col-12">Télécharger un fichier</label>
                         <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
                         <input id="imageFile" name="mainImageFile" type="file" class="col-12 form-control">
@@ -32,24 +32,24 @@
             <section id="profileSectionInfo" class="row form-section ">
                 <div class="col-12">
                     <div class="row d-flex justify-content-between align-items-center">
-                        <div class="form-group col-6">
+                        <div class="form-group col-12 col-md-6">
                             <label for="firstName" class="col-12 text-center">Prénom</label>
-                            <input id="firstName" type="text" name="firstName" class="col-8 offset-2 form-control text-center" value="Grégory">
+                            <input id="firstName" type="text" name="firstName" class="col-12 col-md-8 offset-md-2 form-control text-center" value="Grégory">
                         </div>
 
-                        <div class="form-group col-6">
+                        <div class="form-group col-12 col-md-6">
                             <label for="lastName" class="col-12 text-center">Nom</label>
-                            <input id="lastName" type="text" name="lastName" class="col-8 offset-2 form-control text-center" value="Barile">
+                            <input id="lastName" type="text" name="lastName" class="col-12 col-md-8 offset-md-2 form-control text-center" value="Barile">
                         </div>
 
-                        <div class="form-group col-6">
+                        <div class="form-group col-12 col-md-6">
                             <label for="email" class="col-12 text-center">Email</label>
-                            <input id="email" type="email" name="email" class="col-8 offset-2 form-control text-center" value="gregory.barile@gmail.com">
+                            <input id="email" type="email" name="email" class="col-12 col-md-8 offset-md-2 form-control text-center" value="gregory.barile@gmail.com">
                         </div>
 
-                        <div class="form-group col-6">
+                        <div class="form-group col-12 col-md-6">
                             <label for="phone" class="col-12 text-center">Nom</label>
-                            <input id="phone" type="tel" name="phone" class="col-8 offset-2 form-control text-center" value="06 64 22 28 11">
+                            <input id="phone" type="tel" name="phone" class="col-12 col-md-8 offset-md-2 form-control text-center" value="06 64 22 28 11">
                         </div>
 
                         <div class="form-group col-12 text-center">
@@ -61,12 +61,12 @@
             </section>
 
             <section id="profileSectionText" class="row form-section ">
-                <div class="form-group col-10 offset-1">
+                <div class="form-group col-12 col-md-10 offset-md-1">
                     <label for="baseline" class="col-12">Phrase d'accroche</label>
                     <input id="baseline" type="text" name="baseline" class="col-12 form-control" value="Rock N' Work: Audace, Engagement et Esprit d'équipe">
                 </div>
 
-                <div class="form-group col-10 offset-1">
+                <div class="form-group col-12 col-md-10 offset-md-1">
                     <label for="introduction" class="col-12">Présentation</label>
                     <textarea id="introduction"  name="introduction" class="col-12 form-control tiny-area" rows="30">
 
@@ -81,9 +81,11 @@
             </section>
 
             <section id="profileSectionButtons" class="row">
-                <div class="col-12 form-group text-center">
-                    <button type="submit" class="btn btn-success">Enregistrer</button>
-                    <button type="submit" class="btn btn-secondary" formaction="/admin/">Retour</button>
+                <div class="col-10 offset-1">
+                    <div class="form-submit">
+                        <p><button type="submit" class="btn btn-success">Enregistrer</button></p>
+                        <p><button type="submit" class="btn btn-secondary" formaction="/admin/">Retour</button></p>
+                    </div>
                 </div>
             </section>
 

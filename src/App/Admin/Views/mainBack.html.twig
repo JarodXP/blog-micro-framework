@@ -6,7 +6,7 @@
 
 {% block content %}
     <!-- Sidebar -->
-    <div class="bg-light border-right col-2" id="sidebar-nav">
+    <div class="bg-light border-right col-9 col-md-2" id="sidebar-nav">
         <div class="list-group list-group-flush">
             <a href="/admin/posts" class="list-group-item list-group-item-action bg-light">Articles</a>
             <a href="/admin/comments" class="list-group-item list-group-item-action bg-light">Commentaires</a>
@@ -18,7 +18,7 @@
     <!-- /#sidebar-wrapper -->
 
     <!--Main area -->
-    <div id="page-content-wrapper" class="col-10">
+    <div id="page-content-wrapper" class="col-12 col-md-10 offset-md-2">
 
         {% block mainContent %}
         {% endblock %}
@@ -31,6 +31,11 @@
 
 {% block footer %}
     {% include 'footerBack.html.twig' %}
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="/assets/js/admin-sidebar-toggle.js"></script>
 {% endblock %}
 
 
