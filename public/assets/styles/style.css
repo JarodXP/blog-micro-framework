@@ -59,6 +59,7 @@ footer{
     color: white;
     height: 40px;
     margin-top: -40px;
+    font-size: 0.8rem;
 }
 
 footer a{
@@ -322,6 +323,10 @@ footer .row{
 
     .btn{
         font-size: 1rem!important;
+    }
+
+    footer{
+        font-size: 1rem;
     }
 
     /*Front*/
