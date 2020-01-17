@@ -23,11 +23,11 @@ class AuthenticationController extends Controller
         }
     }
 
-    public function changePassword()
+    public function changePasswordAction()
     {
         try
         {
-            echo $this->twigEnvironment->render('/signIn.html.twig');
+            echo $this->twigEnvironment->render('/changePassword.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {
