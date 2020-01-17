@@ -31,6 +31,11 @@
   package: front
   controller: blog
   action: displayPost
+-
+  uri: ^/blog/post-([0-9]+)/send-comment$
+  package: front
+  controller: blog
+  action: sendComment
 
   #BACKOFFICE #######################
 

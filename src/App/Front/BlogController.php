@@ -35,4 +35,16 @@ class BlogController extends Controller
             print_r($e->getMessage());
         }
     }
+
+    public function sendCommentAction()
+    {
+        try
+        {
+            echo $this->twigEnvironment->render('/thankYouComment.html.twig');
+        }
+        catch (LoaderError | RuntimeError | SyntaxError $e)
+        {
+            print_r($e->getMessage());
+        }
+    }
 }
