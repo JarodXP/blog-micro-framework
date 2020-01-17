@@ -21,7 +21,7 @@ body{
 }
 
 .under-header{
-    width: 100%;
+    width: 100vw;
     min-height: 100vh;
     padding-top: 40px;
     margin-bottom: -40px;
@@ -29,7 +29,6 @@ body{
 
 #page-content-wrapper{
     padding-bottom: 40px;
-    margin-left: 5%;
     transition: margin 0.25s ease-out;
 }
 
@@ -96,6 +95,11 @@ footer .row{
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.sidebar-network{
+    height: 30px;
+    width: 30px;
 }
 
 #leftBrand{
@@ -207,12 +211,9 @@ footer .row{
 
 /*Admin forms*/
 
-.admin-form section{
+.form-section{
     padding-top: 20px;
     padding-bottom: 20px;
-}
-
-.form-section{
     border-bottom: solid 1px darkgray;
 }
 
@@ -256,6 +257,10 @@ footer .row{
 /******DESKTOP***********/
 @media (min-width:768px) {
 
+    .under-header{
+        width: 100%;
+    }
+
     /*General*/
     h1{
         font-size: 2.5rem!important;
@@ -284,14 +289,6 @@ footer .row{
     }
 
     /*Admin*/
-
-    #page-content-wrapper{
-        margin-left: 16.67%;
-    }
-
-    #page-content-wrapper.hidden {
-        margin-left: 5%;
-    }
 
     #sidebar-nav.hidden{
         margin-left: -16.66%;

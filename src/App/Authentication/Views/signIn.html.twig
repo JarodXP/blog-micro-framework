@@ -1,10 +1,21 @@
-{% extends 'mainBack.html.twig' %}
+{% extends 'mainAuth.html.twig' %}
 
-{% block mainContent %}
+{% block content %}
 
-    <div class="row">
-        <!-- Blog Entries Column -->
-        <h1 class="col-12 text-center">Signin</h1>
-    </div>
+    <h1 class="mt-4 col-12 text-center">Sign In</h1>
+
+    <form method="post" action="/admin/authentication" class="col-4 offset-4">
+        <div class="form-group">
+            <label for = "login">Identifiant</label>
+            <input id="login" type="text" name="login" placeholder="Identifiant" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for = "loginPassword">Mot de passe</label>
+            <input id="loginPassword" type="password" name="loginPassword" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+
+    </form>
+
 
 {% endblock %}

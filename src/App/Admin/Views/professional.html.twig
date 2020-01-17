@@ -6,9 +6,9 @@
 
         <h1 class="col-12 text-center">Renseignements professionnels</h1>
 
-        <form action="" method="post" id="professionalForm" class="col-12 col-md-10 offset-md-1 admin-form" enctype="multipart/form-data">
+        <form action="/admin/professional" method="post" id="professionalForm" class="col-12 col-md-10 offset-md-1 admin-form" enctype="multipart/form-data">
 
-            <section id="professionalSectionSocial" class="row form-section">
+            <div id="professionalSectionSocial" class="row form-section">
                 <div class="col-12 col-md-8 offset-md-2 my-2">
                     <div class="row">
                         <label for="github" class="col-12">Github</label>
@@ -29,9 +29,9 @@
                 <div class="col-12 text-center my-4">
                     <button type="submit" class="btn btn-info" formaction="/admin/professional/social">Ajouter un réseau</button>
                 </div>
-            </section>
+            </div>
 
-            <section id="professionalSectionResume" class="row form-section ">
+            <div id="professionalSectionResume" class="row form-section ">
                 <div class="col-12 col-md-10 offset-md-1">
                     <div class="row flex-column-reverse flex-md-row">
                         <p class="col-12 col-md-3 text-center">Fichier actuel: <br><a href='/assets/uploads/resume.pdf' target="_blank">resume.pdf</a></p>
@@ -44,14 +44,14 @@
                     </div>
                 </div>
                 <iframe id="resumePdf" class="col-12 col-md-10 offset-md-1 mt-4 mt-md-5" src='/assets/uploads/resume.pdf'></iframe>
-            </section>
+            </div>
 
-            <section id="professionalSectionButtons" class="row">
+            <div id="professionalSectionButtons" class="row">
                 <div class="col-12 form-group text-center">
                     <button type="submit" class="btn btn-success">Enregistrer</button>
                     <button type="submit" class="btn btn-secondary" formaction="/admin/">Retour</button>
                 </div>
-            </section>
+            </div>
 
         </form>
     </div>
