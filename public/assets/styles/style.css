@@ -96,6 +96,56 @@ footer .row{
     background-repeat: no-repeat;
     background-position: center;
 }
+#frontToggleBtn{
+    position: fixed;
+    top: 100px;
+    width:20px;
+    height: 100px;
+    left: calc(16.66% - 19px);
+    background-color:darkorange;
+    color: white;
+    padding: 2px;
+    border-radius: 5% 0 0 5%;
+    -webkit-transition: left .25s ease-out;
+    -moz-transition: left .25s ease-out;
+    -o-transition: left .25s ease-out;
+    transition: left .25s ease-out;
+}
+
+#frontToggleBtn.hidden{
+    left: calc(100% - 19px);
+}
+
+#frontToggleBtn > span{
+    line-height: 5px;
+    font-size: 1.5rem;
+}
+
+#front-sidebar{
+    position: fixed;
+    left: 8.33%;
+    background-color: #343a40;
+    font-size: 0.8rem;
+    padding: 1rem 0.5rem;
+    -webkit-transition: left .25s ease-out;
+    -moz-transition: left .25s ease-out;
+    -o-transition: left .25s ease-out;
+    transition: left .25s ease-out;
+
+}
+
+#front-sidebar.hidden{
+    left: 100%;
+}
+
+#front-sidebar h5{
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#front-sidebar .card-body{
+    padding: 1rem;
+}
 
 .sidebar-network{
     height: 30px;
@@ -275,6 +325,26 @@ footer .row{
     }
 
     /*Front*/
+    #front-sidebar, #front-sidebar.hidden{
+        position: fixed;
+        left: 66.67%;
+        background-color: transparent;
+        font-size: 1rem;
+        padding: 1.25rem 0.75rem
+    }
+
+    #frontToggleBtn,#frontToggleBtn.hidden{
+        display: none!important;
+    }
+
+    #front-sidebar h5{
+        font-size: 1.25rem;
+        font-weight: normal;
+    }
+
+    #front-sidebar .card-body{
+        padding: 1.25rem;
+    }
 
     #leftBrand{
         font-size: 1.25rem;

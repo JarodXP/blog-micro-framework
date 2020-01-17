@@ -16,7 +16,9 @@
     <!-- /#page-content-wrapper -->
 
     <!-- Sidebar -->
-    <div class="col-10 col-md-3 offset-1">
+    <div id="frontToggleBtn" class="d-flex align-items-center hidden"><span> > </span></div>
+
+    <div id="front-sidebar" class="col-10 col-md-3 offset-1 hidden">
 
     {% block sideBar %}
 
@@ -54,4 +56,9 @@
 
 {% block footer %}
     {% include 'footerFront.html.twig' %}
+{% endblock %}
+
+{% block footerScripts %}
+    {{ parent() }}
+    <script src="/assets/js/sidebar-toggle.js"></script>
 {% endblock %}
