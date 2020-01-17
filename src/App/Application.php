@@ -3,6 +3,7 @@ namespace App;
 
 
 use Core\Router;
+use Exceptions\RoutingException;
 use InvalidArgumentException;
 
 class Application

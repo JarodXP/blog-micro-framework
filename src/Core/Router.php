@@ -4,13 +4,23 @@
 namespace Core;
 
 
+use Exceptions\RoutingException;
+
 class Router
 {
     protected Route $route;
 
     public function __construct(string $uri)
     {
-        $this->setRoute($uri);
+        try
+        {
+            $this->setRoute($uri);
+        }
+        catch (RoutingException $e)
+        {
+            print_r($e->getMessage());
+            exit();
+        }
     }
 
     //PUBLIC METHODS/////////////////////////
@@ -42,6 +52,12 @@ class Router
                 //Sets the route
                 $this->route = new Route($route);
             }
+        }
+
+        //Throws error in case of route not found
+        if(empty($this->route))
+        {
+            throw new RoutingException('The requested page doesn\'t exist');
         }
     }
 }

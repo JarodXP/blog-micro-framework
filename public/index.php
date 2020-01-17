@@ -29,6 +29,10 @@ $authenticationLoader = new Psr4Autoloader();
 $authenticationLoader->register();
 $authenticationLoader->addNamespace('Authentication', __DIR__ . '/../src/App/Authentication');
 
+$exceptionLoader = new Psr4Autoloader();
+$exceptionLoader->register();
+$exceptionLoader->addNamespace('Exceptions', __DIR__ . '/../src/Exceptions');
+
 ///ENVIRONMENT VARIABLES///////
 $_ENV['cacheDirectory'] = __DIR__ .'/../cache/';
 $_ENV['configDirectory'] = __DIR__ .'/../src/config';
