@@ -12,6 +12,7 @@
   "require": {
     "twig/twig": "^3.0",
     "ext-yaml": "*",
-    "keradus/psr4autoloader": "^2.0"
+    "keradus/psr4autoloader": "^2.0",
+    "ext-pdo": "*"
   }
 }
