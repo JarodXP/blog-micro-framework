@@ -1,5 +1,7 @@
 {% extends 'mainBack.html.twig' %}
 
+{% block title %}Admin - Mon Profil{% endblock %}
+
 {% block mainContent %}
 
     <div class="row admin-content">
@@ -48,7 +50,7 @@
                         </div>
 
                         <div class="form-group col-12 col-md-6">
-                            <label for="phone" class="col-12 text-center">Nom</label>
+                            <label for="phone" class="col-12 text-center">Téléphone</label>
                             <input id="phone" type="tel" name="phone" class="col-12 col-md-8 offset-md-2 form-control text-center" value="06 64 22 28 11">
                         </div>
 
@@ -80,7 +82,7 @@
                 </div>
             </div>
 
-            <div id="profileSectionButtons" class="row">
+            <div id="profileSectionButtons" class="row form-section">
                 <div class="col-10 offset-1">
                     <div class="form-submit">
                         <p><button type="submit" class="btn btn-success">Enregistrer</button></p>

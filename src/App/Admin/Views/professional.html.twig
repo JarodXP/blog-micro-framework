@@ -1,5 +1,7 @@
 {% extends 'mainBack.html.twig' %}
 
+{% block title %}Admin - Professionnel{% endblock %}
+
 {% block mainContent %}
 
     <div class="row admin-content">
@@ -46,7 +48,7 @@
                 <iframe id="resumePdf" class="col-12 col-md-10 offset-md-1 mt-4 mt-md-5" src='/assets/uploads/resume.pdf'></iframe>
             </div>
 
-            <div id="professionalSectionButtons" class="row">
+            <div id="professionalSectionButtons" class="row form-section">
                 <div class="col-12 form-group text-center">
                     <button type="submit" class="btn btn-success">Enregistrer</button>
                     <button type="submit" class="btn btn-secondary" formaction="/admin/">Retour</button>

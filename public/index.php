@@ -35,7 +35,7 @@ $exceptionLoader->addNamespace('Exceptions', __DIR__ . '/../src/Exceptions');
 
 ///ENVIRONMENT VARIABLES///////
 $_ENV['cacheDirectory'] = __DIR__ .'/../cache/';
-$_ENV['configDirectory'] = __DIR__ .'/../src/config';
+$_ENV['configDirectory'] = __DIR__ . '/../config';
 
 
 ///GLOBALS VARIABLES//////////
