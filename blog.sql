@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  ven. 17 jan. 2020 à 16:41
+-- Généré le :  sam. 18 jan. 2020 à 16:33
 -- Version du serveur :  5.7.28
 -- Version de PHP :  7.4.0
 
@@ -68,30 +68,15 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `title` varchar(300) DEFAULT NULL,
+  `header_id` int(11) DEFAULT NULL,
   `extract` mediumtext,
   `content` mediumtext,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   `status` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `posts_uploads`
---
-
-DROP TABLE IF EXISTS `posts_uploads`;
-CREATE TABLE IF NOT EXISTS `posts_uploads` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `post_id` int(11) NOT NULL,
-  `upload_id` int(11) NOT NULL,
-  `used_as` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `post_id` (`post_id`),
-  KEY `upload_id` (`upload_id`)
+  KEY `user_id` (`user_id`),
+  KEY `header_id` (`header_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -121,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `uploads` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `file_name` varchar(300) NOT NULL DEFAULT 'NULL',
   `original_name` varchar(300) NOT NULL DEFAULT 'NULL',
+  `alt` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `file_name` (`file_name`),
   UNIQUE KEY `original_name` (`original_name`)
@@ -139,34 +125,38 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(300) NOT NULL DEFAULT 'NULL',
   `password` varchar(300) NOT NULL,
   `role` tinyint(4) NOT NULL,
+  `avatar_id` int(11) DEFAULT NULL,
   `first_name` varchar(300) DEFAULT NULL,
   `last_name` varchar(500) DEFAULT NULL,
   `title` varchar(300) DEFAULT NULL,
   `phone` varchar(300) DEFAULT NULL,
   `baseline` mediumtext,
   `introduction` mediumtext,
+  `resume_id` int(11) DEFAULT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `username` (`username`)
+  UNIQUE KEY `username` (`username`),
+  KEY `avatar_id` (`avatar_id`),
+  KEY `resume_id` (`resume_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Structure de la table `users_uploads`
+-- Contraintes pour les tables déchargées
 --
 
-DROP TABLE IF EXISTS `users_uploads`;
-CREATE TABLE IF NOT EXISTS `users_uploads` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `upload_id` int(11) NOT NULL,
-  `used_as` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `upload_id` (`upload_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--
+-- Contraintes pour la table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`header_id`) REFERENCES `uploads` (`id`);
+
+--
+-- Contraintes pour la table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`avatar_id`) REFERENCES `uploads` (`id`),
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`resume_id`) REFERENCES `uploads` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
