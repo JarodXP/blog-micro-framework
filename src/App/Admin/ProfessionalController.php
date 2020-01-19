@@ -15,7 +15,7 @@ class ProfessionalController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/professional.html.twig');
+            echo $this->twigEnvironment->render('/adminProfessional.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {
@@ -32,7 +32,7 @@ class ProfessionalController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/social.html.twig');
+            echo $this->twigEnvironment->render('/adminSocial.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {

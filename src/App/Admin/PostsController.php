@@ -39,7 +39,7 @@ class PostsController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/newPost.html.twig');
+            echo $this->twigEnvironment->render('/adminNewPost.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {
@@ -51,7 +51,7 @@ class PostsController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/removePost.html.twig');
+            echo $this->twigEnvironment->render('/adminRemovePost.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {
