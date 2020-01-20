@@ -58,7 +58,7 @@ class NetworkManager extends Manager
 
         $q->execute();
 
-        return $q->fetchAll(PDO::FETCH_ASSOC);
+        return $q->fetch(PDO::FETCH_ASSOC);
     }
 
     /**

@@ -60,7 +60,7 @@ class CommentManager extends Manager
 
         $q->execute();
 
-        return $q->fetchAll(PDO::FETCH_ASSOC);
+        return $q->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -71,12 +71,14 @@ class CommentManager extends Manager
     public function updateComment(Comment $comment)
     {
         $q = $this->dao->prepare('UPDATE '.self::COMMENTS_TABLE.' SET '
-                                    .self::POST_ID.'= :postId'.self::PSEUDO.'= :pseudo, '.self::CONTENT.' = :content, '
+                                    .self::POST_ID.'= :postId, '.self::PSEUDO.'= :pseudo, '.self::CONTENT.' = :content, '
                                     .self::STATUS.' = :status WHERE id = :id');
 
         $q->bindValue(':id', $comment->getId(),PDO::PARAM_INT);
 
         $this->bindAllFields($q,$comment);
+
+        $q->debugDumpParams();
 
         return $q->execute();
     }

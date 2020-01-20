@@ -62,8 +62,7 @@ class PostManager extends Manager
         $q->bindValue(':id', $postId, PDO::PARAM_INT);
 
         $q->execute();
-
-        return $q->fetchAll(PDO::FETCH_ASSOC);
+        return $q->fetch(PDO::FETCH_ASSOC);
     }
 
     /**

@@ -8,7 +8,10 @@ use Core\Entity;
 
 class Upload extends Entity
 {
-    protected string $file_name, $originalName, $alt;
+    protected string $file_name, $originalName;
+
+    protected ?string $alt;
+
 
     //GETTERS
 
@@ -31,7 +34,7 @@ class Upload extends Entity
     /**
      * @return string
      */
-    public function getAlt(): string
+    public function getAlt(): ?string
     {
         return $this->alt;
     }
@@ -57,7 +60,7 @@ class Upload extends Entity
     /**
      * @param string $alt
      */
-    public function setAlt(string $alt): void
+    public function setAlt(string $alt = null): void
     {
         $this->alt = $alt;
     }

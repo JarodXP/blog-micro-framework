@@ -12,7 +12,7 @@ use PDOStatement;
 class UserManager extends Manager
 {
     public const USERS_TABLE = 'users',
-        USERNAME = 'title',
+        USERNAME = 'username',
         EMAIL = 'email',
         PASSWORD = 'password',
         ROLE = 'role',
@@ -51,7 +51,7 @@ class UserManager extends Manager
                             .self::ROLE.', '.self::AVATAR_ID.', '.self::FIRST_NAME.', '.self::LAST_NAME.', '
                             .self::TITLE.', '.self::PHONE.', '.self::BASELINE.', '.self::INTRODUCTION.', '.self::RESUME_ID.') 
                         VALUES(:username, :email, :password, :role, :avatarId, :firstName, :lastName, 
-                            :title, :phone, :baseline, :introduction, : resumeId)');
+                            :title, :phone, :baseline, :introduction, :resumeId)');
 
         $this->bindAllFields($q, $user);
 
@@ -71,7 +71,7 @@ class UserManager extends Manager
 
         $q->execute();
 
-        return $q->fetchAll(PDO::FETCH_ASSOC);
+        return $q->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -83,8 +83,8 @@ class UserManager extends Manager
     {
         $q = $this->dao->prepare('UPDATE '.self::USERS_TABLE.' 
         SET '.self::USERNAME.' = :username, '.self::EMAIL.' = :email, '.self::PASSWORD.' = :password, '
-            .self::ROLE.' = role, '.self::AVATAR_ID.' = avatarId, '.self::FIRST_NAME.' = :firstName, '
-            .self::LAST_NAME.' = lastName, '.self::TITLE.' = :title, '.self::PHONE.' = :phone, '
+            .self::ROLE.' = :role, '.self::AVATAR_ID.' = :avatarId, '.self::FIRST_NAME.' = :firstName, '
+            .self::LAST_NAME.' = :lastName, '.self::TITLE.' = :title, '.self::PHONE.' = :phone, '
             .self::BASELINE.' = :baseline, '.self::INTRODUCTION.' = :introduction, '
             .self::RESUME_ID.' = :resumeId WHERE id = :id');
 
@@ -128,5 +128,6 @@ class UserManager extends Manager
         $q->bindValue(':baseline',$user->getBaseline());
         $q->bindValue(':introduction',$user->getIntroduction());
         $q->bindValue(':resumeId',$user->getResumeId(),PDO::PARAM_INT);
+
     }
 }

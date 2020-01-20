@@ -8,9 +8,14 @@ use Core\Entity;
 
 class Post extends Entity
 {
-    protected int $userId, $headerId, $status;
+    protected int $userId, $status;
 
-    protected string $title, $extract, $content, $dateAdded, $dateModified;
+    protected ?int $headerId;
+
+    protected ?string $title, $extract, $content;
+
+    protected string $dateAdded, $dateModified;
+
 
     //GETTERS
 
@@ -25,11 +30,10 @@ class Post extends Entity
     /**
      * @return int
      */
-    public function getHeaderId(): int
+    public function getHeaderId(): ?int
     {
         return $this->headerId;
     }
-
 
     /**
      * @return int
@@ -42,7 +46,7 @@ class Post extends Entity
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -50,7 +54,7 @@ class Post extends Entity
     /**
      * @return string
      */
-    public function getExtract(): string
+    public function getExtract(): ?string
     {
         return $this->extract;
     }
@@ -58,7 +62,7 @@ class Post extends Entity
     /**
      * @return string
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -92,7 +96,7 @@ class Post extends Entity
     /**
      * @param int $headerId
      */
-    public function setHeaderId(int $headerId): void
+    public function setHeaderId(int $headerId = null): void
     {
         $this->headerId = $headerId;
     }
@@ -108,7 +112,7 @@ class Post extends Entity
     /**
      * @param string $title
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title = null): void
     {
         $this->title = $title;
     }
@@ -116,7 +120,7 @@ class Post extends Entity
     /**
      * @param string $extract
      */
-    public function setExtract(string $extract): void
+    public function setExtract(string $extract = null): void
     {
         $this->extract = $extract;
     }
@@ -124,7 +128,7 @@ class Post extends Entity
     /**
      * @param string $content
      */
-    public function setContent(string $content): void
+    public function setContent(string $content = null): void
     {
         $this->content = $content;
     }

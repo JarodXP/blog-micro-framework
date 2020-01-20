@@ -8,10 +8,20 @@ use Core\Entity;
 
 class User extends Entity
 {
-    protected int $role, $avatarId, $resumeId;
+    protected int $role;
+    protected ?int $avatarId;
+    protected ?int $resumeId;
 
-    protected string $username, $email, $password, $firstName,
-        $lastName, $title, $phone, $baseline, $introduction, $dateAdded;
+    protected string $email, $password, $dateAdded;
+
+    protected ?string $username;
+    protected ?string $lastName;
+    protected ?string $firstName;
+    protected ?string $title;
+    protected ?string $phone;
+    protected ?string $baseline;
+    protected ?string$introduction;
+
 
     //GETTERS
 
@@ -26,7 +36,7 @@ class User extends Entity
     /**
      * @return int
      */
-    public function getAvatarId(): int
+    public function getAvatarId(): ?int
     {
         return $this->avatarId;
     }
@@ -34,7 +44,7 @@ class User extends Entity
     /**
      * @return int
      */
-    public function getResumeId(): int
+    public function getResumeId(): ?int
     {
         return $this->resumeId;
     }
@@ -42,7 +52,7 @@ class User extends Entity
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -66,7 +76,7 @@ class User extends Entity
     /**
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
@@ -74,7 +84,7 @@ class User extends Entity
     /**
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
@@ -82,7 +92,7 @@ class User extends Entity
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -90,7 +100,7 @@ class User extends Entity
     /**
      * @return string
      */
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -98,7 +108,7 @@ class User extends Entity
     /**
      * @return string
      */
-    public function getBaseline(): string
+    public function getBaseline(): ?string
     {
         return $this->baseline;
     }
@@ -106,7 +116,7 @@ class User extends Entity
     /**
      * @return string
      */
-    public function getIntroduction(): string
+    public function getIntroduction(): ?string
     {
         return $this->introduction;
     }
@@ -132,7 +142,7 @@ class User extends Entity
     /**
      * @param int $avatarId
      */
-    public function setAvatarId(int $avatarId): void
+    public function setAvatarId(int $avatarId = null): void
     {
         $this->avatarId = $avatarId;
     }
@@ -140,7 +150,7 @@ class User extends Entity
     /**
      * @param int $resumeId
      */
-    public function setResumeId(int $resumeId): void
+    public function setResumeId(int $resumeId = null): void
     {
         $this->resumeId = $resumeId;
     }
@@ -148,7 +158,7 @@ class User extends Entity
     /**
      * @param string $username
      */
-    public function setUsername(string $username): void
+    public function setUsername(string $username = null): void
     {
         $this->username = $username;
     }
@@ -172,7 +182,7 @@ class User extends Entity
     /**
      * @param string $firstName
      */
-    public function setFirstName(string $firstName): void
+    public function setFirstName(string $firstName = null): void
     {
         $this->firstName = $firstName;
     }
@@ -180,7 +190,7 @@ class User extends Entity
     /**
      * @param string $lastName
      */
-    public function setLastName(string $lastName): void
+    public function setLastName(string $lastName = null): void
     {
         $this->lastName = $lastName;
     }
@@ -188,7 +198,7 @@ class User extends Entity
     /**
      * @param string $title
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title = null): void
     {
         $this->title = $title;
     }
@@ -196,7 +206,7 @@ class User extends Entity
     /**
      * @param string $phone
      */
-    public function setPhone(string $phone): void
+    public function setPhone(string $phone = null): void
     {
         $this->phone = $phone;
     }
@@ -204,7 +214,7 @@ class User extends Entity
     /**
      * @param string $baseline
      */
-    public function setBaseline(string $baseline): void
+    public function setBaseline(string $baseline = null): void
     {
         $this->baseline = $baseline;
     }
@@ -212,7 +222,7 @@ class User extends Entity
     /**
      * @param string $introduction
      */
-    public function setIntroduction(string $introduction): void
+    public function setIntroduction(string $introduction = null): void
     {
         $this->introduction = $introduction;
     }

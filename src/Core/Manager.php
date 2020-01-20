@@ -33,4 +33,13 @@ abstract class Manager
 
     public abstract function findListOf(string $requestParameters);
 
+    /**
+     * Gets the last inserted id
+     * @return int
+     */
+    public function lastId():int
+    {
+        return $this->dao->lastInsertId();
+    }
+
 }
