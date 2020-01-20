@@ -33,27 +33,23 @@ $exceptionLoader = new Psr4Autoloader();
 $exceptionLoader->register();
 $exceptionLoader->addNamespace('Exceptions', __DIR__ . '/../src/Exceptions');
 
-///ENVIRONMENT VARIABLES///////
-$_ENV['cacheDirectory'] = __DIR__ . '/../var/cache/';
-$_ENV['configDirectory'] = __DIR__ . '/../config';
-
-
 ///GLOBALS VARIABLES//////////
+$cacheDirectory = __DIR__ . '/../var/cache/';
+$configDirectory = __DIR__ . '/../config';
 
 //Sets a global variable for the routes parsed file
-$routes = yaml_parse_file($_ENV['configDirectory'].'/routes.yml');
+$routes = yaml_parse_file($configDirectory.'/routes.yml');
 
 //Sets a global variable for the config parsed file
-$config = yaml_parse_file($_ENV['configDirectory'].'/config.yml');
+$config = yaml_parse_file($configDirectory.'/config.yml');
 
-//Enviroment variables for Twig Views
-$_ENV['locale'] = $config['APP_LOCALE'];
-$_ENV['charset'] = $config['APP_CHARSET'];
+//Global environment variables for Twig Views
+$locale = $config['APP_LOCALE'];
+$charset = $config['APP_CHARSET'];
+$env = $config['APP_ENV'];
 
-//Gets the application env to set Twig environment
-$_ENV['env'] = $config['APP_ENV'];
-
-$app = new Application($_ENV['env']);
+//Sends the application environment for the Twig Environment instance
+$app = new Application($env);
 
 ///RUN//////
 $app->run();

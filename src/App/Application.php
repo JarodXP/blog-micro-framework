@@ -3,7 +3,6 @@ namespace App;
 
 
 use Core\Router;
-use Exceptions\RoutingException;
 use InvalidArgumentException;
 
 class Application
@@ -64,9 +63,9 @@ class Application
         if($this->env == self::PRODUCTION_ENV)
         {
             $twigEnvironmentOptions = [
-                'cache' => $_ENV['cacheDirectory'],
+                'cache' => $GLOBALS['cacheDirectory'],
                 'debug' => false,
-                'charset' => $_ENV['charset']
+                'charset' => $GLOBALS['charset']
             ];
         }
 
@@ -75,7 +74,7 @@ class Application
             $twigEnvironmentOptions = [
                 'cache' => false,
                 'debug' => true,
-                'charset' => $_ENV['charset']
+                'charset' => $GLOBALS['charset']
             ];
         }
 
