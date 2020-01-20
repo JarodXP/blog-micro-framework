@@ -1,7 +1,18 @@
 /*********GENERAL*****************************/
+html{
+    min-height: 100%;
+    height: 100%;
+}
 
-#wrapper-front {
-    padding-top: 40px;
+body{
+    position: absolute;
+    min-height: 100vh;
+    width: 100%;
+}
+
+#mainContainer{
+    min-height: 100vh;
+    padding-bottom: 70px;
 }
 
 #leftBrand{
@@ -10,20 +21,74 @@
 }
 
 .under-header{
-    margin-top: 20px;
-    width: 100%;
+    width: 100vw;
+    min-height: 100vh;
+    padding-top: 40px;
+    margin-bottom: -40px;
 }
 
-#footer{
+#page-content-wrapper{
+    padding-bottom: 40px;
+    transition: margin 0.25s ease-out;
+}
+
+h1{
+    font-size: 1.7rem!important;
+    font-weight: bold!important;
+}
+
+h2{
+    font-size: 1.2rem!important;
+    font-style: italic!important;
+}
+
+.btn{
+    font-size: 0.8rem!important;
+}
+
+.modif-icon{
+    font-size: 1.3rem;
+}
+
+.imageDiv{
+    box-shadow: 5px 5px 10px gray;
+}
+
+footer{
     background-color: #343a40 ;
     color: white;
+    height: 40px;
+    margin-top: -40px;
+    font-size: 0.8rem;
 }
 
-#footer a{
+footer a{
     color: white;
+}
+
+footer p{
+    margin-bottom: 0;
+}
+
+footer .row{
+    margin: 0;
 }
 
 /*********FRONT***************************/
+.front-content{
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+
+.front-content h1, .front-content h2{
+    margin: 5% 0;
+}
+
+.front-content h3{
+    margin: 5% 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
 
 #avatar {
     background-image: url('/assets/uploads/photoProfile.png');
@@ -31,6 +96,65 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+#frontToggleBtn{
+    position: fixed;
+    top: 100px;
+    width:20px;
+    height: 100px;
+    left: calc(16.66% - 19px);
+    background-color:darkorange;
+    color: white;
+    padding: 2px;
+    border-radius: 5% 0 0 5%;
+    -webkit-transition: left .25s ease-out;
+    -moz-transition: left .25s ease-out;
+    -o-transition: left .25s ease-out;
+    transition: left .25s ease-out;
+}
+
+#frontToggleBtn.hidden{
+    left: calc(100% - 19px);
+}
+
+#frontToggleBtn > span{
+    line-height: 5px;
+    font-size: 1.5rem;
+}
+
+#front-sidebar{
+    position: fixed;
+    left: 8.33%;
+    background-color: #343a40;
+    font-size: 0.8rem;
+    padding: 1rem 0.5rem;
+    -webkit-transition: left .25s ease-out;
+    -moz-transition: left .25s ease-out;
+    -o-transition: left .25s ease-out;
+    transition: left .25s ease-out;
+
+}
+
+#front-sidebar.hidden{
+    left: 100%;
+}
+
+#front-sidebar h5{
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#front-sidebar .card-body{
+    padding: 1rem;
+}
+
+.sidebar-network{
+    height: 30px;
+    width: 30px;
+}
+
+#leftBrand{
+    font-size: 1rem;
 }
 
 #ownerName {
@@ -49,8 +173,213 @@
     padding-left: 10px;
 }
 
-/******************ADMIN************************/
-#sidebar-nav{
-    height: 100vh;
-
+#thanksRow{
+    height: 100%;
 }
+
+/******************ADMIN************************/
+
+/*General*/
+.admin-content{
+    padding-top: 30px;
+}
+
+.admin-table,.admin-form{
+    margin-top: 20px;
+}
+
+.table-image .imageDiv{
+    height: 3.5rem;
+    width: 4.5rem;
+}
+
+/*Header*/
+#header-back{
+    height: 40px;
+}
+
+#header-back>p{
+    margin-bottom: 0;
+}
+
+#avatarHeader{
+    width: 30px;
+    height: 30px;
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#adminToggleBtn{
+    padding: 0;
+}
+
+/*Sidebar*/
+
+#sidebar-nav{
+    position: fixed;
+    z-index: 99;
+    min-height: calc(100% - 40px);
+    height: calc(100% - 40px)   ;
+    margin-bottom: 40px;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
+}
+
+#sidebar-nav.hidden{
+    margin-left: -75%;
+}
+
+.fa-bars{
+    padding: 1px 3px;
+}
+
+#header-back{
+    color: white;
+    background-color: #343a40;
+}
+
+/*Admin tables*/
+.table-image>div{
+    width: 90%;
+    height: 30px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.admin-table th,.admin-table a{
+    color: darkorange;
+}
+
+.admin-table,.admin-table-header{
+    text-align: center;
+    font-size: 0.8rem;
+    vertical-align: middle!important;
+}
+
+/*Admin forms*/
+
+.form-section{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: solid 1px darkgray;
+}
+
+.form-submit{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*Admin Edit Post*/
+
+#adminPostHeader{
+    height: 100px;
+}
+
+/*Admin Profile*/
+#adminProfileAvatar,#networkIcon{
+    height: 6rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#resumePdf{
+    width: 80vw;
+    height: 80vh;
+    border: none;
+    box-shadow: 10px 10px 10px
+    gray;
+}
+
+/*Admin Professional*/
+.admin-social-icon{
+    width: 2rem;
+    height: 2rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/******DESKTOP***********/
+@media (min-width:768px) {
+
+    .under-header{
+        width: 100%;
+    }
+
+    /*General*/
+    h1{
+        font-size: 2.5rem!important;
+    }
+
+    h2{
+        font-size: 2rem!important;
+    }
+
+    .btn{
+        font-size: 1rem!important;
+    }
+
+    footer{
+        font-size: 1rem;
+    }
+
+    /*Front*/
+    #front-sidebar, #front-sidebar.hidden{
+        position: fixed;
+        left: 66.67%;
+        background-color: transparent;
+        font-size: 1rem;
+        padding: 1.25rem 0.75rem
+    }
+
+    #frontToggleBtn,#frontToggleBtn.hidden{
+        display: none!important;
+    }
+
+    #front-sidebar h5{
+        font-size: 1.25rem;
+        font-weight: normal;
+    }
+
+    #front-sidebar .card-body{
+        padding: 1.25rem;
+    }
+
+    #leftBrand{
+        font-size: 1.25rem;
+    }
+
+    .front-content h1,.front-content h2{
+        margin: 3% 0;
+    }
+
+    #baseline{
+        font-size: 1.3rem;
+    }
+
+    /*Admin*/
+
+    #sidebar-nav.hidden{
+        margin-left: -16.66%;
+    }
+
+    .admin-table,.admin-form{
+        margin-top: 50px;
+    }
+
+    .admin-table, .admin-table-header{
+        font-size: 1rem;
+    }
+
+    .form-submit{
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}
+

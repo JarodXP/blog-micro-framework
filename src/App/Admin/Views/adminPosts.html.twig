@@ -1,10 +1,77 @@
-{% extends 'mainBack.html.twig' %}
+{% extends 'mainAdmin.html.twig' %}
+
+{% block title %}Admin - Articles{% endblock %}
 
 {% block mainContent %}
 
-    <div class="row">
-        <!-- Blog Entries Column -->
+    <div class="row admin-content">
+
         <h1 class="col-12 text-center">Liste des articles</h1>
+
+        <p class="col-12 col-md-10 offset-md-1 text-left mt-4 mt-md-5"><a class="btn btn-info" href="/admin/posts/new-post">Nouvel article</a></p>
+
+        <table class="col-12 col-md-10 offset-md-1 table table-hover table-responsive-lg table-sm admin-table">
+            <thead>
+            <tr>
+                <th class="col-2 admin-table-header"><a href = ""> Titre </a></th>
+                <th class="col-2 admin-table-header"><a href = ""> Auteur</a></th>
+                <th class="col-2 admin-table-header"><a href = ""> Créé le </a></th>
+                <th class="col-2 admin-table-header"><a href = ""> Modifié le </a></th>
+                <th class="col-2 admin-table-header"><a href = ""> Statut </a></th>
+                <th class="col-2 admin-table-header" scope="col">Image</th>
+                <th class="col-2 admin-table-header" scope="col"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td class="col-2 align-middle">Un article</td>
+                <td class="col-2 align-middle">Greg</td>
+                <td class="col-2 align-middle">14/01/20</td>
+                <td class="col-2 align-middle">15/01/20</td>
+                <td class="col-2 align-middle">Publié</td>
+                <td class="col-2 align-middle table-image">
+                    <div class="imageDiv" style="background-image: url('/assets/uploads/postHeader.jpg')"></div>
+                </td>
+                <td class="col-2 icon-edit">
+                    <div class="d-flex flex-row justify-content-between">
+                        <p class="modif-icon mx-2"><a href = "/admin/posts/post-0"><i class="far fa-edit"></i></a></p>
+                        <p class="modif-icon mx-2"><a href = "/admin/posts/remove=0"><i class="far fa-trash-alt"></i></a></p>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-2 align-middle">Un article</td>
+                <td class="col-2 align-middle">Greg</td>
+                <td class="col-2 align-middle">14/01/20</td>
+                <td class="col-2 align-middle">15/01/20</td>
+                <td class="col-2 align-middle">Brouillon</td>
+                <td class="col-2 align-middle table-image">
+                    <div class="imageDiv" style="background-image: url('/assets/uploads/postHeader.jpg')"></div>
+                </td>
+                <td class="col-2 icon-edit">
+                    <div class="d-flex flex-row justify-content-between">
+                        <p class="modif-icon mx-2"><a href = "/admin/posts/post-0"><i class="far fa-edit"></i></a></p>
+                        <p class="modif-icon mx-2"><a href = "/admin/posts/remove=0"><i class="far fa-trash-alt"></i></a></p>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div id="tableRange" class="col-12 text-center">
+            <!--Displays the anchor arrows in regards of the number of posts-->
+            <p>
+                <a href=""><i class="far fa-caret-square-left"></i></a>
+                0 - 10
+                <a href=""><i class="far fa-caret-square-right"></i></a>
+            </p>
+        </div>
+
+
+
     </div>
 
 {% endblock %}

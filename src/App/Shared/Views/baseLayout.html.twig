@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="{{charset}}">
-    <title>{% block title %}Mon Profil{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{% block metaDescription %}{% endblock %}">
     <meta name="author" content="{% block author %}{% endblock %}">
@@ -23,15 +23,12 @@
 
 <body>
 <!-- Page Content -->
-<div class="container-flex">
+<div id="mainContainer" class="container-fluid">
 
     {% block header %}{% endblock %}
 
-    <div class="d-flex" id="wrapper">
-
-        <div class="under-header row" id="wrapper-front">
-            {% block content %}{% endblock %}
-        </div>
+    <div class="d-flex under-header row" id="wrapper">
+        {% block content %}{% endblock %}
     </div>
     <!-- /.row -->
 
@@ -51,6 +48,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+
 {% endblock %}
 
 </body>

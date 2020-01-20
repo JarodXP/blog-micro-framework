@@ -1,10 +1,93 @@
-{% extends 'mainBack.html.twig' %}
+{% extends 'mainAdmin.html.twig' %}
+
+{% block title %}Admin - Modifier Article{% endblock %}
 
 {% block mainContent %}
 
-<div class="row">
-    <!-- Blog Entries Column -->
-    <h1 class="col-12 text-center">Modifier l'article</h1>
+<div class="row admin-content">
+
+    <h1 class="col-12 text-center">Modifier l'article : 1</h1>
+
+    <h2 class="col-12 text-center mt-4 mt-md-5">Par Greg , dernière modification le 14 / 01 / 2020</h2>
+
+    <form action="/admin/posts/post-0" method="post" id="postForm" class="col-12 col-md-10 offset-md-1 admin-form" enctype="multipart/form-data">
+
+        <div id="postSectionInfo" class="row form-section ">
+            <div class="form-group col-12 col-md-10 offset-md-1">
+                <label for="author" class="col-12">Auteur</label>
+                <input id="author" type="text" name="author" class="col-12 form-control"
+                       value ="Greg" readonly>
+            </div>
+
+            <div class="form-group col-12 col-md-10 offset-md-1">
+                <label for="title" class="col-12">Titre</label>
+                <input id="title" type="text" name="title" class="col-12 form-control" value="Un article">
+            </div>
+        </div>
+
+        <div id="postSectionText" class="row form-section ">
+            <div class="form-group col-12 col-md-10 offset-md-1">
+                <label for="extract" class="col-12">Extrait / Meta</label>
+                <textarea id="extract" name="extract" class="col-12 form-control" rows="5">Nulla volutpat finibus vehicula. Aliquam maximus sapien ut arcu rhoncus vulputate. Ut accumsan amet...</textarea>
+            </div>
+
+            <div class="form-group col-12 col-md-10 offset-md-1">
+                <label for="content" class="col-12">Contenu</label>
+                <textarea id="content" name="content" class="col-12 form-control tiny-area" rows="30">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum mollis gravida. Proin consequat tincidunt leo, vitae iaculis mi tempus eu. Maecenas pellentesque ut lectus id suscipit. Sed blandit, lectus in efficitur interdum, diam felis imperdiet massa, fringilla porta felis mauris ut nisi. Nunc fringilla, diam non blandit consequat, leo tellus malesuada odio, at vehicula enim sapien accumsan dui. Praesent aliquam, urna quis dictum ornare, diam orci ornare sem, a varius lacus nisi vitae diam. Curabitur neque enim, pretium non tellus eget, rhoncus ultricies nisi. Praesent efficitur, lectus et semper ornare, odio est sodales dui, sed consectetur magna metus et mi. Quisque ut tempus lorem, vitae pellentesque elit. Aliquam erat volutpat. In vitae felis in lectus sollicitudin facilisis. Cras lobortis, lorem nec dapibus finibus, erat risus sagittis ex, quis feugiat lectus metus vehicula diam. Nullam mattis tortor ac ligula scelerisque lacinia. Vestibulum mauris turpis, tincidunt et condimentum ac, sagittis et nulla.
+
+                    Duis consequat, turpis vitae tempus eleifend, metus odio suscipit eros, ut molestie neque nibh et urna. Nunc eget dui et erat dictum varius elementum a diam. Fusce et tempor sem. Aliquam cursus luctus magna, eu dignissim lectus vehicula in. Maecenas vulputate non velit sit amet condimentum. Donec nulla nisl, malesuada in velit ac, auctor volutpat quam. Proin lacinia, nunc sit amet consequat facilisis, sapien nulla gravida mi, non varius mi sem ac justo. Aenean fermentum a lectus ac luctus. Etiam ullamcorper pharetra tortor vitae malesuada. Praesent accumsan quam et neque egestas accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam molestie, justo sit amet convallis congue, ipsum dui sollicitudin ex, eget mattis quam orci dapibus ex. Fusce eget sollicitudin mauris. Ut eu fringilla elit. Aenean in lectus imperdiet, condimentum turpis sit amet, luctus quam.
+
+                    Pellentesque tincidunt eu arcu vitae fermentum. Nullam eu rutrum nunc. Suspendisse non nunc feugiat, dictum neque in, ultrices ipsum. Donec rhoncus pretium orci, mollis gravida ligula convallis eget. Donec dapibus sapien leo, at malesuada mi blandit eget. Aliquam quis elementum sem, id commodo sapien. Quisque tristique ut turpis in fringilla. Nam aliquam consectetur malesuada. Etiam pellentesque urna in dui consectetur lacinia nec eu massa. Pellentesque scelerisque quam vel erat congue gravida. Morbi in molestie ex. Fusce sagittis rhoncus metus nec congue. Proin consectetur elit at volutpat sollicitudin. Sed aliquet finibus iaculis. Sed vel libero at enim tristique iaculis.
+
+                    Nulla molestie nulla massa, at pretium est aliquet eu. Vivamus sit amet lectus turpis. Curabitur aliquam magna tempor, condimentum felis id, feugiat nulla. Praesent accumsan at urna efficitur pretium. Aliquam pharetra quis nunc non iaculis. Donec mollis vel lectus quis finibus. Proin congue ipsum ac fermentum euismod.
+                </textarea>
+            </div>
+        </div>
+
+        <div id="postSectionMainImage" class="row form-section ">
+            <div class="col-12 col-md-10 offset-md-1">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-2">
+                        <p class="col-12">Image du post</p>
+                        <div id="adminPostHeader" class="col-12 imageDiv" style="background-image: url('/assets/uploads/postHeader.jpg');
+                        background-size: cover"></div>
+                    </div>
+                    <div class="col-12 col-md-10">
+                        <div class="form-group col-12 col-md-10 offset-md-1">
+                            <label for="mainImageFile" class="col-12">Télécharger un fichier</label>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
+                            <input id="mainImageFile" name="mainImageFile" type="file" class="col-12 form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="postSectionStatus" class="row form-section ">
+            <div class="form-group col-12 text-center">
+                <p>
+                    <label for="check-visible">Actuellement : Publié</label>
+                </p>
+                <p><span class="font-italic">Changer le statut : </span>
+                    <input id="check-visible" type="checkbox" name="status" value=1 data-toggle="toggle"
+                           data-offstyle="dark">
+                </p>
+            </div>
+        </div>
+
+        <div id="postSectionSubmit" class="row form-section">
+            <div class="col-10 offset-1">
+                <div class="form-submit">
+                    <p><button type="submit" class="btn btn-success">Enregistrer</button></p>
+                    <p><button type="submit" class="btn btn-danger" formaction="/admin/posts/remove=0"
+                                                       formmethod="post">Supprimer</button></p>
+                    <p><button type="submit" class="btn btn-secondary" formaction="/admin/">Retour</button></p>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
 </div>
 
 {% endblock %}

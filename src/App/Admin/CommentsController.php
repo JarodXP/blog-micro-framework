@@ -40,7 +40,7 @@ class CommentsController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/removeComment.html.twig');
+            echo $this->twigEnvironment->render('/adminRemoveComment.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {

@@ -5,7 +5,6 @@ namespace Front;
 
 
 use Core\Controller;
-use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -16,7 +15,7 @@ class ProfileController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/myProfile.html.twig');
+            echo $this->twigEnvironment->render('/frontMyProfile.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {
@@ -28,7 +27,7 @@ class ProfileController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/contact.html.twig');
+            echo $this->twigEnvironment->render('/frontContact.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {
@@ -40,7 +39,7 @@ class ProfileController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/thankYou.html.twig');
+            echo $this->twigEnvironment->render('/frontThankYouContact.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {

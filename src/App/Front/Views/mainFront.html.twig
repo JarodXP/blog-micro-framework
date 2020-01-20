@@ -1,13 +1,13 @@
 {% extends 'baseLayout.html.twig' %}
 
 {% block header %}
-    {% include 'headerFront.html.twig' %}
+    {% include 'frontHeader.html.twig' %}
 {% endblock %}
 
 {% block content %}
 
     <!--Main area -->
-    <div id="front-content-wrapper" class="col-10 col-md-7 offset-1">
+    <div id="front-content-wrapper" class="col-12 col-md-7 offset-md-1">
 
     {% block mainContent %}
     {% endblock %}
@@ -16,7 +16,9 @@
     <!-- /#page-content-wrapper -->
 
     <!-- Sidebar -->
-    <div class="col-10 col-md-3 offset-1">
+    <div id="frontToggleBtn" class="d-flex align-items-center hidden"><span> > </span></div>
+
+    <div id="front-sidebar" class="col-10 col-md-3 offset-1 hidden">
 
     {% block sideBar %}
 
@@ -24,8 +26,8 @@
         <div class="card my-4">
             <h5 class="card-header">Réseaux</h5>
             <div class="card-body">
-                <img src="/assets/images/icons/Github.png" width="30px" height="30px">
-                <img src="/assets/images/icons/Linkedin-icon.png" width="30px" height="30px">
+                <img class="sidebar-network" src="/assets/images/icons/Github.png" alt="github">
+                <img class="sidebar-network" src="/assets/images/icons/Linkedin-icon.png" alt="linkedin">
 
             </div>
         </div>
@@ -53,5 +55,10 @@
 {% endblock %}
 
 {% block footer %}
-    {% include 'footerFront.html.twig' %}
+    {% include 'frontFooter.html.twig' %}
+{% endblock %}
+
+{% block footerScripts %}
+    {{ parent() }}
+    <script src="/assets/js/sidebar-toggle.js"></script>
 {% endblock %}

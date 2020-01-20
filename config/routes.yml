@@ -31,6 +31,11 @@
   package: front
   controller: blog
   action: displayPost
+-
+  uri: ^/blog/post-([0-9]+)/send-comment$
+  package: front
+  controller: blog
+  action: sendComment
 
   #BACKOFFICE #######################
 
@@ -56,7 +61,7 @@
   controller: posts
   action: newPost
 -
-  uri: ^/admin/posts/\?remove=([0-9]+)$
+  uri: ^/admin/posts/remove=([0-9]+)$
   package: admin
   controller: posts
   action: removePost
@@ -67,6 +72,28 @@
   package: admin
   controller: profile
   action: editProfile
+
+  #PROFESSIONAL
+-
+  uri: ^/admin/professional$
+  package: admin
+  controller: professional
+  action: displayProfessional
+-
+  uri: ^/admin/professional/social$
+  package: admin
+  controller: professional
+  action: displayNetworks
+-
+  uri: ^/admin/professional/social/add=([0-9]+)$
+  package: admin
+  controller: professional
+  action: addNetwork
+-
+  uri: ^/admin/professional/social/remove=([0-9]+)$
+  package: admin
+  controller: professional
+  action: removeNetwork
 
   #COMMENTS
 -
@@ -80,7 +107,7 @@
   controller: comments
   action: editComment
 -
-  uri: ^/admin/comments/\?remove=([0-9]+)$
+  uri: ^/admin/comments/remove=([0-9]+)$
   package: admin
   controller: comments
   action: removeComment

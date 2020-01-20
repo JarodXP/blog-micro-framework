@@ -1,0 +1,53 @@
+{% extends 'baseLayout.html.twig' %}
+
+{% block styles %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+    {% include 'adminHeader.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <!-- Sidebar -->
+    <div class="bg-light border-right col-9 col-md-2" id="sidebar-nav">
+        <div class="list-group list-group-flush">
+            <a href="/admin/posts" class="list-group-item list-group-item-action bg-light">Articles</a>
+            <a href="/admin/comments" class="list-group-item list-group-item-action bg-light">Commentaires</a>
+            <a href="/admin/my-profile" class="list-group-item list-group-item-action bg-light">
+                Mon profil</a>
+            <a href="/admin/professional" class="list-group-item list-group-item-action bg-light">Professionnel</a>
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!--Main area -->
+    <div id="page-content-wrapper" class="col-12 col-md-10 offset-md-2">
+
+        {% block mainContent %}
+        {% endblock %}
+
+    </div>
+    <!-- /#page-content-wrapper -->
+
+{% endblock %}
+
+
+{% block footer %}
+    {% include 'adminFooter.html.twig' %}
+{% endblock %}
+
+{% block footerScripts %}
+    {{ parent() }}
+    <script src="/assets/js/sidebar-toggle.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/5wssjxvguotys7da1sjed9fyyrjavpfxmi2v8emgh1b9tx3i/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '.tiny-area'
+        });
+    </script>
+{% endblock %}
+
+

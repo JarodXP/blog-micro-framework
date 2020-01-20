@@ -16,7 +16,7 @@ class BlogController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/blog.html.twig');
+            echo $this->twigEnvironment->render('/frontBlog.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {
@@ -28,7 +28,19 @@ class BlogController extends Controller
     {
         try
         {
-            echo $this->twigEnvironment->render('/post.html.twig');
+            echo $this->twigEnvironment->render('/frontPost.html.twig');
+        }
+        catch (LoaderError | RuntimeError | SyntaxError $e)
+        {
+            print_r($e->getMessage());
+        }
+    }
+
+    public function sendCommentAction()
+    {
+        try
+        {
+            echo $this->twigEnvironment->render('/frontThankYouComment.html.twig');
         }
         catch (LoaderError | RuntimeError | SyntaxError $e)
         {

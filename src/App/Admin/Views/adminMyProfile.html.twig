@@ -1,10 +1,97 @@
-{% extends 'mainBack.html.twig' %}
+{% extends 'mainAdmin.html.twig' %}
+
+{% block title %}Admin - Mon Profil{% endblock %}
 
 {% block mainContent %}
 
-    <div class="row">
-        <!-- Blog Entries Column -->
-        <h1 class="col-12 text-center">Mon profil</h1>
+    <div class="row admin-content">
+
+        <h1 class="col-12 text-center">Mon Profil</h1>
+
+        <h2 class="col-12 text-center mt-4 mt-md-5">Greg</h2>
+
+        <form action="/admin/my-profile" method="post" id="profileForm" class="col-12 col-md-10 offset-md-1 admin-form" enctype="multipart/form-data">
+
+            <div id="profileSectionAvatar" class="row form-section d-flex align-items-center ">
+
+                <div class="col-12 col-md-2">
+                    <div class="row">
+                        <p class="col-12">Avatar</p>
+                        <div id="adminProfileAvatar" class="col-12 imageDiv" style="background-image: url('/assets/uploads/photoProfile.png');">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-10">
+                    <div class="form-group col-12 col-md-10 offset-md-1">
+                        <label for="mainImageFile" class="col-12">Télécharger un fichier</label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
+                        <input id="mainImageFile" name="mainImageFile" type="file" class="col-12 form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div id="profileSectionInfo" class="row form-section ">
+                <div class="col-12">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="form-group col-12 col-md-6">
+                            <label for="firstName" class="col-12 text-center">Prénom</label>
+                            <input id="firstName" type="text" name="firstName" class="col-12 col-md-8 offset-md-2 form-control text-center" value="Grégory">
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+                            <label for="lastName" class="col-12 text-center">Nom</label>
+                            <input id="lastName" type="text" name="lastName" class="col-12 col-md-8 offset-md-2 form-control text-center" value="Barile">
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+                            <label for="email" class="col-12 text-center">Email</label>
+                            <input id="email" type="email" name="email" class="col-12 col-md-8 offset-md-2 form-control text-center" value="gregory.barile@gmail.com">
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+                            <label for="phone" class="col-12 text-center">Téléphone</label>
+                            <input id="phone" type="tel" name="phone" class="col-12 col-md-8 offset-md-2 form-control text-center" value="06 64 22 28 11">
+                        </div>
+
+                        <div class="form-group col-12 text-center">
+                            <button type="submit" class="btn btn-danger" formaction="/admin/change-password=0"
+                                    formmethod="post">Changer mon mot de passe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="profileSectionText" class="row form-section ">
+                <div class="form-group col-12 col-md-10 offset-md-1">
+                    <label for="baseline" class="col-12">Phrase d'accroche</label>
+                    <input id="baseline" type="text" name="baseline" class="col-12 form-control" value="Rock N' Work: Audace, Engagement et Esprit d'équipe">
+                </div>
+
+                <div class="form-group col-12 col-md-10 offset-md-1">
+                    <label for="introduction" class="col-12">Présentation</label>
+                    <textarea id="introduction"  name="introduction" class="col-12 form-control tiny-area" rows="30">
+
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sodales dapibus libero, a convallis purus dictum lacinia. Nulla pharetra nisi sit amet orci consequat, eget rhoncus enim rhoncus. Sed ornare porttitor finibus. Vestibulum porttitor, orci volutpat ultrices tempus, nisi nisl malesuada turpis, sed pretium elit tellus vitae diam. Vivamus ut est id neque lacinia gravida. In hac habitasse platea dictumst. Mauris sit amet orci in est luctus dapibus et id elit. Suspendisse potenti. In dictum magna a lectus aliquam, quis accumsan est maximus. Phasellus at rhoncus mi, ac fringilla diam. Sed porta eleifend lectus, quis scelerisque magna malesuada et. Sed molestie, orci non sollicitudin dignissim, ex libero maximus mi, in maximus turpis turpis at mauris. Phasellus gravida sem vitae lacus consectetur viverra ut eget mauris. Morbi faucibus felis a imperdiet convallis. Nulla auctor sodales massa, eu sollicitudin augue rutrum sit amet.
+
+                        Donec non volutpat mauris, sed tempus ligula. Sed vestibulum urna vitae diam gravida euismod. Donec commodo erat ut metus accumsan placerat. Cras sagittis, orci eget cursus bibendum, ante risus aliquam augue, a blandit nisl sem sit amet libero. Praesent nec massa quis ex scelerisque vulputate. Nulla consectetur, ante sed semper ultricies, mi ex condimentum augue, eu lacinia risus libero sed nisl. Donec dignissim ac lacus ut tempor. Proin mollis orci quis elit fermentum consectetur. Nullam nec malesuada risus. Fusce sit amet augue id diam dapibus faucibus. Quisque posuere ut metus nec tincidunt.
+
+                        Suspendisse tempus eleifend purus, ut ultricies metus tempor a. Maecenas mattis lacinia purus non laoreet. Ut tincidunt nunc neque, in maximus diam placerat eget. Nulla purus justo, euismod sit amet molestie at, volutpat vel ex. Aliquam egestas imperdiet diam, sit amet tempus risus scelerisque ut. Mauris urna felis, commodo sit amet mi nec, aliquam ornare nisi. Aliquam in lacus nec lacus rutrum porta. Proin malesuada nisl dolor, ac faucibus ex dictum et. Vestibulum sem sem, lobortis vitae imperdiet sed, mattis nec est. Curabitur ullamcorper, justo cursus ullamcorper lobortis, est dolor posuere augue, a vestibulum magna metus eget diam.
+
+                        </textarea>
+                </div>
+            </div>
+
+            <div id="profileSectionButtons" class="row form-section">
+                <div class="col-10 offset-1">
+                    <div class="form-submit">
+                        <p><button type="submit" class="btn btn-success">Enregistrer</button></p>
+                        <p><button type="submit" class="btn btn-secondary" formaction="/admin/">Retour</button></p>
+                    </div>
+                </div>
+            </div>
+
+        </form>
     </div>
 
 {% endblock %}

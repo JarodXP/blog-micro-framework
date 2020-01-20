@@ -30,9 +30,9 @@ abstract class Controller
         $this->twigEnvironment = new Environment($this->twigLoader,$this->app->getEnvironmentOptions());
 
         //Set globals variables to use on all templates
-        $this->twigEnvironment->addGlobal('locale', $_ENV['locale']);
-        $this->twigEnvironment->addGlobal('charset', $_ENV['charset']);
-        $this->twigEnvironment->addGlobal('env', $_ENV['env']);
+        $this->twigEnvironment->addGlobal('locale', $GLOBALS['locale']);
+        $this->twigEnvironment->addGlobal('charset', $GLOBALS['charset']);
+        $this->twigEnvironment->addGlobal('env', $GLOBALS['env']);
     }
 
     /**
