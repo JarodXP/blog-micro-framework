@@ -44,7 +44,6 @@ class Entity
      */
     public function hydrate(array $data)
     {
-        var_dump($data);
         //Gets the attribute and corresponding value
         foreach ($data as $attribute=>$value)
         {
@@ -57,8 +56,6 @@ class Entity
                 $this->$setter($value);
             }
         }
-
-        var_dump($this);
     }
 
     /**

@@ -11,7 +11,7 @@ use PDOStatement;
 
 class UserManager extends Manager
 {
-    public const USERS_TABLE = 'users',
+    public const TABLE = 'users',
         USERNAME = 'username',
         EMAIL = 'email',
         PASSWORD = 'password',
@@ -25,19 +25,6 @@ class UserManager extends Manager
         INTRODUCTION = 'introduction',
         RESUME_ID = 'resume_id';
 
-    /**
-     * Gets a list of Users with the requested parameters.
-     * @param string|null $requestParameters
-     * @return array
-     */
-    public function findListOf(string $requestParameters = null):array
-    {
-        $q = $this->dao->prepare('SELECT * FROM '.self::USERS_TABLE.' '.$requestParameters);
-
-        $q->execute();
-
-        return $q->fetchAll(PDO::FETCH_ASSOC);
-    }
 
     /**
      * Inserts a post in database
@@ -47,7 +34,7 @@ class UserManager extends Manager
     public function insertUser(User $user):bool
     {
         $q = $this->dao->prepare(
-            'INSERT INTO '.self::USERS_TABLE.'('.self::USERNAME.', '.self::EMAIL.', '.self::PASSWORD.', '
+            'INSERT INTO '.self::TABLE.'('.self::USERNAME.', '.self::EMAIL.', '.self::PASSWORD.', '
                             .self::ROLE.', '.self::AVATAR_ID.', '.self::FIRST_NAME.', '.self::LAST_NAME.', '
                             .self::TITLE.', '.self::PHONE.', '.self::BASELINE.', '.self::INTRODUCTION.', '.self::RESUME_ID.') 
                         VALUES(:username, :email, :password, :role, :avatarId, :firstName, :lastName, 
@@ -59,29 +46,13 @@ class UserManager extends Manager
     }
 
     /**
-     * Gets a single post using its id
-     * @param int $userId
-     * @return array
-     */
-    public function findUser(int $userId):array
-    {
-        $q = $this->dao->prepare('SELECT * FROM '.self::USERS_TABLE.' WHERE id = :id');
-
-        $q->bindValue(':id', $userId, PDO::PARAM_INT);
-
-        $q->execute();
-
-        return $q->fetch(PDO::FETCH_ASSOC);
-    }
-
-    /**
      * Updates a given post
      * @param User $user
      * @return bool
      */
     public function updateUser(User $user)
     {
-        $q = $this->dao->prepare('UPDATE '.self::USERS_TABLE.' 
+        $q = $this->dao->prepare('UPDATE '.self::TABLE.' 
         SET '.self::USERNAME.' = :username, '.self::EMAIL.' = :email, '.self::PASSWORD.' = :password, '
             .self::ROLE.' = :role, '.self::AVATAR_ID.' = :avatarId, '.self::FIRST_NAME.' = :firstName, '
             .self::LAST_NAME.' = :lastName, '.self::TITLE.' = :title, '.self::PHONE.' = :phone, '
@@ -91,20 +62,6 @@ class UserManager extends Manager
         $q->bindValue(':id', $user->getId(),PDO::PARAM_INT);
 
         $this->bindAllFields($q, $user);
-
-        return $q->execute();
-    }
-
-    /**
-     * Removes a specific post
-     * @param int $userId
-     * @return bool
-     */
-    public function removeUser(int $userId):bool
-    {
-        $q = $this->dao->prepare('DELETE FROM '.self::USERS_TABLE.' WHERE id = :id');
-
-        $q->bindValue(':id',$userId,PDO::PARAM_INT);
 
         return $q->execute();
     }
