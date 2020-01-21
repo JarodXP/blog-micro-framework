@@ -43,6 +43,10 @@ $modelsLoader = new Psr4Autoloader();
 $modelsLoader->register();
 $modelsLoader->addNamespace('Models', __DIR__ . '/../src/Models');
 
+$serviceLoader = new Psr4Autoloader();
+$serviceLoader->register();
+$serviceLoader->addNamespace('Services', __DIR__ . '/../src/Services');
+
 ///GLOBALS VARIABLES//////////
 $cacheDirectory = __DIR__ . '/../var/cache/';
 $configDirectory = __DIR__ . '/../config';

@@ -5,6 +5,7 @@ namespace Core;
 
 
 use PDO;
+use Services\ListHandler;
 
 abstract class Manager
 {
@@ -20,32 +21,21 @@ abstract class Manager
 
     /**
      * Gets a list of elements with the requested parameters.
-     * @param string|null $requestParameters
+     * @param array $conditions
+     * @param array $options
      * @return array
      */
-    public function findListOf(string $requestParameters = null):array
+    public function findListBy(array $conditions = null, array $options = null):array
     {
+        $listManager = new ListHandler($this);
+
+        $requestParameters = $listManager->getRequestParameters($conditions,$options);
+
         $q = $this->dao->prepare('SELECT * FROM '.static::TABLE.' '.$requestParameters);
 
         $q->execute();
 
         return $q->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Gets a single element by its id
-     * @param int $elementId
-     * @return array
-     */
-    public function findById(int $elementId):array
-    {
-        $q = $this->dao->prepare('SELECT * FROM '.static::TABLE.' WHERE id = :id');
-
-        $q->bindValue(':id', $elementId, PDO::PARAM_INT);
-
-        $q->execute();
-
-        return $q->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
