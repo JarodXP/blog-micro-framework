@@ -2,6 +2,8 @@
 
 //Sets the autoload for composer packages
 
+declare(strict_types=1);
+
 require __DIR__ .'/../vendor/autoload.php';
 
 use App\Application;
@@ -32,6 +34,18 @@ $authenticationLoader->addNamespace('Authentication', __DIR__ . '/../src/App/Aut
 $exceptionLoader = new Psr4Autoloader();
 $exceptionLoader->register();
 $exceptionLoader->addNamespace('Exceptions', __DIR__ . '/../src/Exceptions');
+
+$entitiesLoader = new Psr4Autoloader();
+$entitiesLoader->register();
+$entitiesLoader->addNamespace('Entities', __DIR__ . '/../src/Entities');
+
+$modelsLoader = new Psr4Autoloader();
+$modelsLoader->register();
+$modelsLoader->addNamespace('Models', __DIR__ . '/../src/Models');
+
+$serviceLoader = new Psr4Autoloader();
+$serviceLoader->register();
+$serviceLoader->addNamespace('Services', __DIR__ . '/../src/Services');
 
 ///GLOBALS VARIABLES//////////
 $cacheDirectory = __DIR__ . '/../var/cache/';
