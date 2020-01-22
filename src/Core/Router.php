@@ -6,10 +6,14 @@ namespace Core;
 
 use Entities\User;
 use Exceptions\RoutingException;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 
 class Router
 {
     protected Route $route;
+
+    protected array $httpParameters = [];
 
     public function __construct(string $uri)
     {
@@ -34,6 +38,15 @@ class Router
     public function getRoute():?Route
     {
         return $this->route;
+    }
+
+    /**
+     * Gets the sanitized HTTP parameters
+     * @return array|null
+     */
+    public function getHttpParameters():?array
+    {
+        return $this->httpParameters;
     }
 
     //SUB METHODS//////////////////////////
@@ -63,6 +76,9 @@ class Router
         {
             throw new RoutingException('The requested page doesn\'t exist');
         }
+
+        //Sets the httpParameters
+        $this->sanitizeHttpParams();
     }
 
     /**
@@ -81,6 +97,30 @@ class Router
 
                 $response->redirect('/auth',HttpResponse::AUTH);
             }
+        }
+    }
+
+    /**
+     * Sets an array with both GET and POST params sanitized with HTML Purifier
+     * @return void
+     */
+    private function sanitizeHttpParams():void
+    {
+        //Sets the config for HTML Purifier
+        $config = HTMLPurifier_Config::createDefault();
+
+        $purifier = new HTMLPurifier($config);
+
+        //Sanitizes every GET parameter
+        foreach ($_GET as $item => $value)
+        {
+            $this->httpParameters[$item] = $purifier->purify($value);
+        }
+
+        //Sanitizes every POST parameter
+        foreach ($_POST as $item => $value)
+        {
+            $this->httpParameters[$item] = $purifier->purify($value);
         }
     }
 }

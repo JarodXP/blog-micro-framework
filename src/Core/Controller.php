@@ -15,8 +15,10 @@ abstract class Controller
     protected Application $app;
     protected FilesystemLoader $twigLoader;
     protected Environment $twigEnvironment;
+    protected ?array $httpParameters;
+    protected HttpResponse $response;
 
-    public function __construct(Application $app)
+    public function __construct(Application $app, array $httpParameters)
     {
         $this->app = $app;
 
@@ -33,6 +35,12 @@ abstract class Controller
         $this->twigEnvironment->addGlobal('locale', $GLOBALS['locale']);
         $this->twigEnvironment->addGlobal('charset', $GLOBALS['charset']);
         $this->twigEnvironment->addGlobal('env', $GLOBALS['env']);
+
+        //Sets the parameters to be used in the actions
+        $this->httpParameters = $httpParameters;
+
+        //Sets an instance of HttpResponse for the Controllers to send response errors
+        $this->response = new HttpResponse();
     }
 
     /**
