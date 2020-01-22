@@ -4,15 +4,25 @@
 namespace Core;
 
 
-class Entity
+use ReflectionClass;
+use ReflectionException;
+
+abstract class Entity
 {
-    protected int $id;
+    protected ?int $id;
 
     public function __construct(array $data = null)
     {
         if(!is_null($data))
         {
-            $this->hydrate($data);
+            try
+            {
+                $this->hydrate($data);
+            }
+            catch (ReflectionException $e)
+            {
+                print_r($e->getMessage());
+            }
         }
     }
 
@@ -21,7 +31,7 @@ class Entity
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -31,7 +41,7 @@ class Entity
     /**
      * @param int $id
      */
-    public function setId(int $id): void
+    public function setId(int $id = null): void
     {
         $this->id = $id;
     }
@@ -41,14 +51,21 @@ class Entity
     /**
      * Hydrates the instance
      * @param array $data
+     * @throws ReflectionException
      */
     public function hydrate(array $data)
     {
+        $reflection = new ReflectionClass($this);
+
+        $attributes = $reflection->getProperties();
+
         //Gets the attribute and corresponding value
-        foreach ($data as $attribute=>$value)
+        foreach ($attributes as $attribute)
         {
             //Defines the setter name based on the attribute name
-            $setter = $this->tableNameToSetter($attribute);
+            $setter = $this->tableNameToSetter($attribute->name);
+
+            isset($data[$attribute->name]) ? $value = $data[$attribute->name] : $value = null;
 
             //Calls the setter
             if(is_callable([$this,$setter]))
