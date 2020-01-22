@@ -4,6 +4,7 @@
 namespace Core;
 
 
+use Entities\User;
 use Exceptions\RoutingException;
 
 class Router
@@ -43,6 +44,9 @@ class Router
      */
     protected function setRoute(string $uri):void
     {
+        //Prevents unauthorized user to access admin
+        $this->adminKeeper($uri);
+
         //Checks all the routes
         foreach ($GLOBALS['routes'] as $route)
         {
@@ -58,6 +62,25 @@ class Router
         if(empty($this->route))
         {
             throw new RoutingException('The requested page doesn\'t exist');
+        }
+    }
+
+    /**
+     * Prevents an unauthorized user to access admin
+     * @param $uri
+     */
+    private function adminKeeper($uri)
+    {
+        //Checks if the admin word is contained in the uri
+        if(!strpos($uri,'admin') === false)
+        {
+            if(!isset($_SESSION['user']->role) || $_SESSION['user']->getRole() != User::ROLE_ADMIN )
+            {
+                //Redirects
+                $response = new HttpResponse();
+
+                $response->redirect('/auth',HttpResponse::AUTH);
+            }
         }
     }
 }
