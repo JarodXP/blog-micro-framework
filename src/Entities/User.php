@@ -13,7 +13,7 @@ class User extends Entity
     protected ?int $avatarId;
     protected ?int $resumeId;
 
-    protected string $email, $password, $dateAdded;
+    protected string $email, $password;
 
     protected ?string $username;
     protected ?string $lastName;
@@ -21,7 +21,10 @@ class User extends Entity
     protected ?string $title;
     protected ?string $phone;
     protected ?string $baseline;
-    protected ?string$introduction;
+    protected ?string $introduction;
+    protected ?string $dateAdded;
+    protected ?string $notification;
+
 
     public const ROLE_ADMIN = 1,
         ROLE_MEMBER = 2;
@@ -128,10 +131,20 @@ class User extends Entity
     /**
      * @return string
      */
-    public function getDateAdded(): string
+    public function getDateAdded(): ?string
     {
         return $this->dateAdded;
     }
+
+    /**
+     * @return string
+     */
+    public function getNotification(): ?string
+    {
+        return $this->notification;
+    }
+
+
 
     //SETTERS
 
@@ -217,6 +230,7 @@ class User extends Entity
                 throw new EntityAttributeException('First name is not valid');
             }
         }
+        $this->firstName = $firstName;
     }
 
     /**
@@ -291,10 +305,16 @@ class User extends Entity
     /**
      * @param string $dateAdded
      */
-    protected function setDateAdded(string $dateAdded): void
+    protected function setDateAdded(string $dateAdded = null): void
     {
         $this->dateAdded = $dateAdded;
     }
 
-
+    /**
+     * @param string $notification
+     */
+    public function setNotification(string $notification = null): void
+    {
+        $this->notification = $notification;
+    }
 }
