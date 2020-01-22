@@ -5,6 +5,7 @@ namespace Entities;
 
 
 use Core\Entity;
+use Exceptions\EntityAttributeException;
 
 class SocialNetwork extends Entity
 {
@@ -45,6 +46,10 @@ class SocialNetwork extends Entity
      */
     public function setName(string $name): void
     {
+        if(mb_strlen($name) > 30)
+        {
+            throw new EntityAttributeException('$name should be less than 30 characters.');
+        }
         $this->name = $name;
     }
 }

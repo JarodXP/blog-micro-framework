@@ -5,6 +5,7 @@ namespace Entities;
 
 
 use Core\Entity;
+use Exceptions\EntityAttributeException;
 
 class User extends Entity
 {
@@ -21,6 +22,9 @@ class User extends Entity
     protected ?string $phone;
     protected ?string $baseline;
     protected ?string$introduction;
+
+    public const ROLE_ADMIN = 1,
+        ROLE_MEMBER = 2;
 
 
     //GETTERS
@@ -136,6 +140,11 @@ class User extends Entity
      */
     public function setRole(int $role): void
     {
+        //Checks if the role is valid
+        if($role != self::ROLE_ADMIN && $role != self::ROLE_MEMBER)
+        {
+            throw new EntityAttributeException('Role is not valid');
+        }
         $this->role = $role;
     }
 
@@ -160,6 +169,11 @@ class User extends Entity
      */
     public function setUsername(string $username = null): void
     {
+        if(!preg_match('~^[a-zA-Z0-9]{3,20}$~',$username))
+        {
+            throw new EntityAttributeException('Username is not valid');
+        }
+
         $this->username = $username;
     }
 
@@ -168,6 +182,10 @@ class User extends Entity
      */
     public function setEmail(string $email): void
     {
+        if(!preg_match('~^[a-zA-Z0-9.\-_]+@[a-zA-Z0-9\-_]+(\.[([a-z]{2,}){1,3}$~',$email))
+        {
+            throw new EntityAttributeException('Email is not valid');
+        }
         $this->email = $email;
     }
 
@@ -176,7 +194,15 @@ class User extends Entity
      */
     public function setPassword(string $password): void
     {
-        $this->password = $password;
+        //Checks if the password has already been hashed
+        if(password_get_info($password)['algo'] == 0)
+        {
+            $this->password = password_hash($password,PASSWORD_DEFAULT);
+        }
+        else
+        {
+            $this->password = $password;
+        }
     }
 
     /**
@@ -184,7 +210,13 @@ class User extends Entity
      */
     public function setFirstName(string $firstName = null): void
     {
-        $this->firstName = $firstName;
+        if(!is_null($firstName))
+        {
+            if(!preg_match('~^[a-zA-Z\s-\'çàéèêiïù]{2,50}$~',$firstName))
+            {
+                throw new EntityAttributeException('First name is not valid');
+            }
+        }
     }
 
     /**
@@ -192,6 +224,13 @@ class User extends Entity
      */
     public function setLastName(string $lastName = null): void
     {
+        if(!is_null($lastName))
+        {
+            if(!preg_match('~^[a-zA-Z\s-\'çàéèêiïù]{2,50}$~',$lastName))
+            {
+                throw new EntityAttributeException('Last name is not valid');
+            }
+        }
         $this->lastName = $lastName;
     }
 
@@ -200,6 +239,11 @@ class User extends Entity
      */
     public function setTitle(string $title = null): void
     {
+        if(mb_strlen($title) > 100)
+        {
+            throw new EntityAttributeException('Title is not valid');
+        }
+
         $this->title = $title;
     }
 
@@ -208,6 +252,14 @@ class User extends Entity
      */
     public function setPhone(string $phone = null): void
     {
+        if(!is_null($phone))
+        {
+            if(!preg_match('~^[a-zA-Z0-9.\-\s]{4,20}$~',$phone))
+            {
+                throw new EntityAttributeException('Phone number is not valid');
+            }
+        }
+
         $this->phone = $phone;
     }
 
@@ -216,6 +268,10 @@ class User extends Entity
      */
     public function setBaseline(string $baseline = null): void
     {
+        if(mb_strlen($baseline) > 100)
+        {
+            throw new EntityAttributeException('Baseline should be less than 100 characters');
+        }
         $this->baseline = $baseline;
     }
 
@@ -224,14 +280,21 @@ class User extends Entity
      */
     public function setIntroduction(string $introduction = null): void
     {
+        if(mb_strlen($introduction) > 5000)
+        {
+            throw new EntityAttributeException('Baseline should be less than 5000 characters');
+        }
+
         $this->introduction = $introduction;
     }
 
     /**
      * @param string $dateAdded
      */
-    public function setDateAdded(string $dateAdded): void
+    protected function setDateAdded(string $dateAdded): void
     {
         $this->dateAdded = $dateAdded;
     }
+
+
 }

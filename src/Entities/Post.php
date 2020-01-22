@@ -5,10 +5,13 @@ namespace Entities;
 
 
 use Core\Entity;
+use Exceptions\EntityAttributeException;
 
 class Post extends Entity
 {
-    protected int $userId, $status;
+    protected int $userId;
+
+    protected bool $status;
 
     protected ?int $headerId;
 
@@ -102,9 +105,9 @@ class Post extends Entity
     }
 
     /**
-     * @param int $status
+     * @param bool $status
      */
-    public function setStatus(int $status): void
+    public function setStatus(bool $status): void
     {
         $this->status = $status;
     }
@@ -114,6 +117,11 @@ class Post extends Entity
      */
     public function setTitle(string $title = null): void
     {
+        if(mb_strlen($title) > 70)
+        {
+            throw new EntityAttributeException('Title should be less than 70 characters');
+        }
+
         $this->title = $title;
     }
 
@@ -122,6 +130,11 @@ class Post extends Entity
      */
     public function setExtract(string $extract = null): void
     {
+        if(mb_strlen($extract) > 160)
+        {
+            throw new EntityAttributeException('Extract should be less than 160 characters');
+        }
+
         $this->extract = $extract;
     }
 
@@ -130,13 +143,18 @@ class Post extends Entity
      */
     public function setContent(string $content = null): void
     {
+        if(mb_strlen($content) > 5000)
+        {
+            throw new EntityAttributeException('Content should be less than 5000 characters');
+        }
+
         $this->content = $content;
     }
 
     /**
      * @param string $dateAdded
      */
-    public function setDateAdded(string $dateAdded): void
+    protected function setDateAdded(string $dateAdded): void
     {
         $this->dateAdded = $dateAdded;
     }
@@ -144,7 +162,7 @@ class Post extends Entity
     /**
      * @param string $dateModified
      */
-    public function setDateModified(string $dateModified): void
+    protected function setDateModified(string $dateModified): void
     {
         $this->dateModified = $dateModified;
     }

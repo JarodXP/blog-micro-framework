@@ -5,6 +5,7 @@ namespace Entities;
 
 
 use Core\Entity;
+use Exceptions\EntityAttributeException;
 
 class Upload extends Entity
 {
@@ -42,11 +43,16 @@ class Upload extends Entity
     //SETTERS
 
     /**
-     * @param string $file_name
+     * @param string $fileName
      */
-    public function setFileName(string $file_name): void
+    public function setFileName(string $fileName): void
     {
-        $this->file_name = $file_name;
+        if(!preg_match('~^[a-zA-Z0-9-.\\\/_]{2,100}.(pdf|jpg|jpeg|png)$~',$fileName))
+        {
+            throw new EntityAttributeException('File name is not valid');
+        }
+
+        $this->file_name = $fileName;
     }
 
     /**
@@ -54,6 +60,11 @@ class Upload extends Entity
      */
     public function setOriginalName(string $originalName): void
     {
+        if(!preg_match('~^[a-zA-Z0-9-._]{2,100}.(pdf|jpg|jpeg|png)$~',$originalName))
+        {
+            throw new EntityAttributeException('File name is not valid');
+        }
+
         $this->originalName = $originalName;
     }
 
@@ -62,6 +73,16 @@ class Upload extends Entity
      */
     public function setAlt(string $alt = null): void
     {
+        if(!is_null($alt))
+        {
+            if(!preg_match('~^[a-zA-Z0-9-._]{2,30}$~',$alt))
+            {
+                throw new EntityAttributeException('alt name is not valid');
+            }
+
+            $this->originalName = $alt;
+        }
+
         $this->alt = $alt;
     }
 }
