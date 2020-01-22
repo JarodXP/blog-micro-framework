@@ -23,6 +23,11 @@ class NetworkManager extends Manager
      */
     public function insertSocialNetwork(SocialNetwork $network):bool
     {
+        //Checks if the name is unique
+        $this->checkUniqueFields([
+            self::NAME => $network->getName(),
+        ],false);
+
         $q = $this->dao->prepare(
             'INSERT INTO '.self::TABLE.'('.self::NAME.', '.self::UPLOAD_ID.') 
                         VALUES(:name, :uploadId)');
@@ -39,6 +44,11 @@ class NetworkManager extends Manager
      */
     public function updateSocialNetwork(SocialNetwork $network)
     {
+        //Checks if the name is unique
+        $this->checkUniqueFields([
+            self::NAME => $network->getName(),
+        ],true,$network->getId());
+
         $q = $this->dao->prepare('UPDATE '.self::TABLE.' SET '
             .self::UPLOAD_ID.'= :uploadId, '.self::NAME.' = :name WHERE id = :id');
 

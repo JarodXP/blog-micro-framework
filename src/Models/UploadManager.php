@@ -24,6 +24,12 @@ class UploadManager extends Manager
      */
     public function insertUpload(Upload $upload):bool
     {
+        //Checks if the file name and the original name are unique
+        $this->checkUniqueFields([
+            self::FILE_NAME => $upload->getFileName(),
+            self::ORIGINAL_NAME => $upload->getOriginalName()
+        ],false);
+
         $q = $this->dao->prepare(
             'INSERT INTO '.self::TABLE.'('.self::FILE_NAME.', '.self::ORIGINAL_NAME.', '.self::ALT.') 
                         VALUES(:fileName, :originalName, :alt)');
@@ -40,6 +46,12 @@ class UploadManager extends Manager
      */
     public function updateUpload(Upload $upload)
     {
+        //Checks if the file name and the original name are unique
+        $this->checkUniqueFields([
+            self::FILE_NAME => $upload->getFileName(),
+            self::ORIGINAL_NAME => $upload->getOriginalName()
+        ],true,$upload->getId());
+
         $q = $this->dao->prepare('UPDATE '.self::TABLE.' SET '
             .self::FILE_NAME.'= :fileName, '.self::ORIGINAL_NAME.' = :originalName, '
             .self::ALT.' = :alt WHERE id = :id');

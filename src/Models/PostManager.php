@@ -27,6 +27,11 @@ class PostManager extends Manager
      */
     public function insertPost(Post $post):bool
     {
+        //Checks if the title is unique
+        $this->checkUniqueFields([
+            self::TITLE => $post->getTitle(),
+        ],false);
+
         $q = $this->dao->prepare(
             'INSERT INTO '.self::TABLE.'('.self::USER_ID.', '.self::TITLE.', '
                         .self::HEADER_ID.', '.self::EXTRACT.', '.self::CONTENT.', '.self::STATUS.') 
@@ -44,6 +49,11 @@ class PostManager extends Manager
      */
     public function updatePost(Post $post)
     {
+        //Checks if the title is unique
+        $this->checkUniqueFields([
+            self::TITLE => $post->getTitle(),
+        ],true,$post->getId());
+
         $q = $this->dao->prepare('UPDATE '.self::TABLE.' SET '
             .self::USER_ID.'= :userId, '.self::TITLE.' = :title,'.self::HEADER_ID.' = :headerId, '
             .self::EXTRACT.' = :extract, '.self::CONTENT.' = :content, '.self::STATUS.' = :status WHERE id = :id');
