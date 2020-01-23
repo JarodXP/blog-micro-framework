@@ -28,6 +28,13 @@
     {% block header %}{% endblock %}
 
     <div class="d-flex under-header row" id="wrapper">
+
+        {% if notification != '' %}
+            <p id="userNotification" class="col-12 mt-4">{{ notification }}
+                <a href="?notif=close"><i class="fas fa-window-close"></i></a>
+            </p>
+        {% endif %}
+
         {% block content %}{% endblock %}
     </div>
     <!-- /.row -->

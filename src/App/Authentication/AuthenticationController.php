@@ -107,13 +107,10 @@ class AuthenticationController extends Controller
         }
         else
         {
-            //Transfers the current notification to the User instance
-            $user->setNotification($_SESSION['user']->getNotification());
-
             //Sets the user instance as a the new $_SESSION['user']
             $_SESSION['user'] = $user;
 
-            $this->response->redirect('/admin');
+            $this->response->redirect('/admin',HttpResponse::ADMIN_REGISTERED);
         }
     }
 

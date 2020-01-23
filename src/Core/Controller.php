@@ -35,6 +35,7 @@ abstract class Controller
         $this->twigEnvironment->addGlobal('locale', $GLOBALS['locale']);
         $this->twigEnvironment->addGlobal('charset', $GLOBALS['charset']);
         $this->twigEnvironment->addGlobal('env', $GLOBALS['env']);
+        $this->twigEnvironment->addGlobal('notification',$_SESSION['user']->getNotification());
 
         //Sets the parameters to be used in the actions
         $this->httpParameters = $httpParameters;
