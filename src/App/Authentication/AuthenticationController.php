@@ -46,6 +46,14 @@ class AuthenticationController extends Controller
 
                 //Inserts admin in database
                 $manager->insertUser($admin);
+
+                //Sets to the user the last id registered
+                $admin->setId($manager->lastId());
+
+                //Sets the $_SESSION user
+                $_SESSION['user'] = $admin;
+
+                $this->response->redirect('admin','Admin user has been registered');
             }
             catch(EntityAttributeException $e)
             {

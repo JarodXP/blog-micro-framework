@@ -9,8 +9,6 @@ use App\Application;
 use Entities\User;
 use Keradus\Psr4Autoloader;
 
-session_start();
-
 /*Autoloaders for classes, one per namespace*/
 
 $coreLoader = new Psr4Autoloader();
@@ -65,7 +63,14 @@ $charset = $config['APP_CHARSET'];
 $env = $config['APP_ENV'];
 
 //Sets the $_SESSION['user']
-$_SESSION['user'] = new User();
+$sessionUser = new User();
+
+session_start();
+
+if(!isset($_SESSION['user']))
+{
+    $_SESSION['user'] = $sessionUser;
+}
 
 //Sends the application environment for the Twig Environment instance
 $app = new Application($env);

@@ -8,6 +8,7 @@ use Entities\User;
 use Exceptions\RoutingException;
 use HTMLPurifier;
 use HTMLPurifier_Config;
+use Models\UserManager;
 
 class Router
 {
@@ -57,6 +58,9 @@ class Router
      */
     protected function setRoute(string $uri):void
     {
+        //If it's first connection, redirects to register admin form
+        $uri = $this->firstConnectionFilter($uri);
+
         //Prevents unauthorized user to access admin
         $this->adminKeeper($uri);
 
@@ -122,5 +126,23 @@ class Router
         {
             $this->httpParameters[$item] = $purifier->purify($value);
         }
+    }
+
+    /**
+     * Checks if an admin exists and redirects to admin form
+     * @param $uri
+     * @return string
+     */
+    private function firstConnectionFilter(string $uri):string
+    {
+        $manager = new UserManager();
+
+        //Looks for user with admin rights
+        if(empty($manager->findListBy(['role' => User::ROLE_ADMIN])) && !preg_match('~^/auth/register$~',$uri))
+        {
+            $uri = '/auth/first-time';
+        }
+
+        return $uri;
     }
 }
