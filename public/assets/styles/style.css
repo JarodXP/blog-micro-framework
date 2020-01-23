@@ -74,6 +74,28 @@ footer .row{
     margin: 0;
 }
 
+#userNotification {
+    width: 100vw;
+    background-color:darkorange;
+    text-align: center;
+    box-shadow: 10px 10px 10px gray;
+    height: 100%;
+    padding: 3%;
+    font-style: italic;
+    color: white;
+}
+
+#userNotification a{
+    font-size: 1.2rem;
+    color: white;
+    float: right;
+    margin-right: 5px;
+}
+
+#userNotification.hidden{
+    display: none;
+}
+
 /*********FRONT***************************/
 .front-content{
     padding-top: 30px;
@@ -327,6 +349,10 @@ footer .row{
 
     footer{
         font-size: 1rem;
+    }
+
+    #userNotification{
+        padding: 1%;
     }
 
     /*Front*/

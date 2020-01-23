@@ -87,7 +87,10 @@ class Application
      */
     public function run()
     {
-        $router = new Router($_SERVER['REQUEST_URI']);
+        //Closes the notification if requested
+        $uri = $this->closeNotification();
+
+        $router = new Router($uri);
 
         //Instantiates the right controller with the name got from the route
         $controllerName = $router->getRoute()->getControllerName();
@@ -98,5 +101,26 @@ class Application
         $actionName = $router->getRoute()->getActionName();
 
         $controller->$actionName();
+    }
+
+    /**
+     * Changes the $_SESSION['user'] notification
+     * @return string
+     */
+    private function closeNotification():string
+    {
+        $uri = $_SERVER['REQUEST_URI'];
+
+        //Checks if the GET notif parameter is set to 'close'
+        if(isset($_GET['notif']) && $_GET['notif'] = 'close')
+        {
+            //Modifies $_SESSION['user'] notification
+            $_SESSION['user']->setNotification('');
+
+            //Removes the parameter from the uri
+            $uri = str_replace('?notif=close','',$uri);
+        }
+
+        return $uri;
     }
 }
