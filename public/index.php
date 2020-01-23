@@ -1,12 +1,12 @@
 <?php
 
-//Sets the autoload for composer packages
-
 declare(strict_types=1);
 
+//Sets the autoload for composer packages
 require __DIR__ .'/../vendor/autoload.php';
 
 use App\Application;
+use Entities\User;
 use Keradus\Psr4Autoloader;
 
 /*Autoloaders for classes, one per namespace*/
@@ -61,6 +61,16 @@ $config = yaml_parse_file($configDirectory.'/config.yml');
 $locale = $config['APP_LOCALE'];
 $charset = $config['APP_CHARSET'];
 $env = $config['APP_ENV'];
+
+//Sets the $_SESSION['user']
+$sessionUser = new User();
+
+session_start();
+
+if(!isset($_SESSION['user']))
+{
+    $_SESSION['user'] = $sessionUser;
+}
 
 //Sends the application environment for the Twig Environment instance
 $app = new Application($env);

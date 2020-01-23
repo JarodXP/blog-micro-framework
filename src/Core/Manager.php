@@ -4,6 +4,7 @@
 namespace Core;
 
 
+use Exceptions\EntityAttributeException;
 use PDO;
 use Services\ListHandler;
 
@@ -74,6 +75,33 @@ abstract class Manager
         $q->execute([':table' => $table]);
 
         return $q->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Checks if the requested fields are unique
+     * @param array $fieldValue
+     * @param bool $update
+     * @param int|null $id
+     * @throws EntityAttributeException
+     */
+    protected function checkUniqueFields(array $fieldValue, bool $update, int $id = null)
+    {
+        foreach ($fieldValue as $field => $value)
+        {
+            //Looks for elements with the same criteria
+            $existing = $this->findListBy([$field => $value]);
+
+            //If other element exists
+            if(!empty($existing))
+            {
+                //Checks if it's not the same in case of update
+                if(!($update == true && $existing['id'] != $id))
+                {
+                    //If not throws exception
+                    throw new EntityAttributeException('The value '.$field.' already exists.');
+                }
+            }
+        }
     }
 
 }

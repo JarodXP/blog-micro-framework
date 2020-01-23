@@ -1,0 +1,33 @@
+{% extends 'mainAuth.html.twig' %}
+
+{% block title %}Bienvenue{% endblock %}
+
+{% block content %}
+
+    <h1 class="mt-4 col-12 text-center">Bienvenue</h1>
+
+    <p class="mt-4 col-12 text-center">Veuillez vous enregistrer en tant qu'administrateur</p>
+
+    <form method="post" action="/auth/register" class="col-4 offset-4">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="text" name="email" placeholder="Email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for = "username">Identifiant</label>
+            <input id="username" type="text" name="username" placeholder="Identifiant" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for = "password">Mot de passe</label>
+            <input id="password" type="password" name="password" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for = "passwordCheck">Ressaisir le Mot de passe</label>
+            <input id="passwordCheck" type="password" name="passwordCheck" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+
+    </form>
+
+
+{% endblock %}

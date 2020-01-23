@@ -105,6 +105,10 @@ class ListHandler
         //Adds a pair of column / value for each WHERE parameter
         foreach ($conditions as $column => $value)
         {
+            if(is_string($value))
+            {
+                $value = '"'.$value.'"';
+            }
             $requestConditions .= $column.' = '.$value;
 
             //Adds AND clause between each parameter

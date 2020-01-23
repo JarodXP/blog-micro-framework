@@ -92,7 +92,7 @@ class Application
         //Instantiates the right controller with the name got from the route
         $controllerName = $router->getRoute()->getControllerName();
 
-        $controller = new $controllerName($this);
+        $controller = new $controllerName($this,$router->getHttpParameters());
 
         //Starts the right action with the name got from the route
         $actionName = $router->getRoute()->getActionName();

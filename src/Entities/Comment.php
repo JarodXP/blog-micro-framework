@@ -5,10 +5,12 @@ namespace Entities;
 
 
 use Core\Entity;
+use Exceptions\EntityAttributeException;
 
 class Comment extends Entity
 {
-    protected int $postId, $status;
+    protected int $postId;
+    protected bool $status;
     protected string $pseudo, $content, $dateAdded;
 
     //GETTERS
@@ -24,7 +26,7 @@ class Comment extends Entity
     /**
      * @return int
      */
-    public function getStatus(): int
+    public function getStatus(): bool
     {
         return $this->status;
     }
@@ -66,7 +68,7 @@ class Comment extends Entity
     /**
      * @param int $status
      */
-    public function setStatus(int $status): void
+    public function setStatus(bool $status): void
     {
         $this->status = $status;
     }
@@ -76,6 +78,11 @@ class Comment extends Entity
      */
     public function setPseudo(string $pseudo): void
     {
+        if(!preg_match('~^[a-zA-Z0-9]{2,20}$~',$pseudo))
+        {
+            throw new EntityAttributeException('Pseudo is not valid');
+        }
+
         $this->pseudo = $pseudo;
     }
 
@@ -84,13 +91,18 @@ class Comment extends Entity
      */
     public function setContent(string $content): void
     {
+        if(mb_strlen($content) > 300)
+        {
+            throw new EntityAttributeException('Content should be less than 300 characters');
+        }
+
         $this->content = $content;
     }
 
     /**
      * @param string $dateAdded
      */
-    public function setDateAdded(string $dateAdded): void
+    protected function setDateAdded(string $dateAdded): void
     {
         $this->dateAdded = $dateAdded;
     }

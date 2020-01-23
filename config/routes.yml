@@ -114,7 +114,22 @@
 
 #AUTHENTICATION#######################
 -
-  uri: ^/admin/signin[/]?$
+  uri: ^/auth/first-time$
+  package: authentication
+  controller: authentication
+  action: displayAdminForm
+-
+  uri: ^/auth/register$
+  package: authentication
+  controller: authentication
+  action: registerAdmin
+-
+  uri: ^/auth[/]?$
+  package: authentication
+  controller: authentication
+  action: displaySigninForm
+-
+  uri: ^/auth/signin[/]?$
   package: authentication
   controller: authentication
   action: signin

@@ -33,6 +33,12 @@ class UserManager extends Manager
      */
     public function insertUser(User $user):bool
     {
+        //Checks if the username and email are unique
+        $this->checkUniqueFields([
+            self::USERNAME => $user->getUsername(),
+            self::EMAIL => $user->getEmail()
+        ],false);
+
         $q = $this->dao->prepare(
             'INSERT INTO '.self::TABLE.'('.self::USERNAME.', '.self::EMAIL.', '.self::PASSWORD.', '
                             .self::ROLE.', '.self::AVATAR_ID.', '.self::FIRST_NAME.', '.self::LAST_NAME.', '
@@ -52,6 +58,12 @@ class UserManager extends Manager
      */
     public function updateUser(User $user)
     {
+        //Checks if the username and email are unique
+        $this->checkUniqueFields([
+            self::USERNAME => $user->getUsername(),
+            self::EMAIL => $user->getEmail()
+        ],true,$user->getId());
+
         $q = $this->dao->prepare('UPDATE '.self::TABLE.' 
         SET '.self::USERNAME.' = :username, '.self::EMAIL.' = :email, '.self::PASSWORD.' = :password, '
             .self::ROLE.' = :role, '.self::AVATAR_ID.' = :avatarId, '.self::FIRST_NAME.' = :firstName, '
