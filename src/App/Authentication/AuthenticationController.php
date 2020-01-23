@@ -53,7 +53,7 @@ class AuthenticationController extends Controller
                 //Sets the $_SESSION user
                 $_SESSION['user'] = $admin;
 
-                $this->response->redirect('admin','Admin user has been registered');
+                $this->response->redirect('/admin',HttpResponse::ADMIN_REGISTERED);
             }
             catch(EntityAttributeException $e)
             {
@@ -65,7 +65,7 @@ class AuthenticationController extends Controller
         }
         else
         {
-            $this->response->redirect('/auth/first-time','The two password fields must be exactly the same.');
+            $this->response->redirect('/auth/first-time',HttpResponse::PASSWORD_MISMATCH);
         }
     }
 
