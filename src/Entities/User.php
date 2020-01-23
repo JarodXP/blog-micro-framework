@@ -13,8 +13,8 @@ class User extends Entity
     protected ?int $avatarId;
     protected ?int $resumeId;
 
-    protected string $email, $password;
-
+    protected ?string $email;
+    protected ?string $password;
     protected ?string $username;
     protected ?string $lastName;
     protected ?string $firstName;
@@ -27,7 +27,8 @@ class User extends Entity
 
 
     public const ROLE_ADMIN = 1,
-        ROLE_MEMBER = 2;
+        ROLE_MEMBER = 2,
+        ROLE_VISITOR = 3;
 
 
     //GETTERS
@@ -151,13 +152,22 @@ class User extends Entity
     /**
      * @param int $role
      */
-    public function setRole(int $role): void
+    public function setRole(int $role = null): void
     {
+        //Sets a default role to visitors
+        if(is_null($role))
+        {
+            $role = self::ROLE_VISITOR;
+        }
+
+        $acceptedRoles = [self::ROLE_ADMIN,self::ROLE_MEMBER,self::ROLE_VISITOR];
+
         //Checks if the role is valid
-        if($role != self::ROLE_ADMIN && $role != self::ROLE_MEMBER)
+        if(array_search($role,$acceptedRoles) === false)
         {
             throw new EntityAttributeException('Role is not valid');
         }
+
         $this->role = $role;
     }
 
@@ -182,9 +192,12 @@ class User extends Entity
      */
     public function setUsername(string $username = null): void
     {
-        if(!preg_match('~^[a-zA-Z0-9]{3,20}$~',$username))
+        if(!is_null($username))
         {
-            throw new EntityAttributeException('Username is not valid');
+            if(!preg_match('~^[a-zA-Z0-9]{3,20}$~',$username))
+            {
+                throw new EntityAttributeException('Username is not valid');
+            }
         }
 
         $this->username = $username;
@@ -193,11 +206,14 @@ class User extends Entity
     /**
      * @param string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(string $email = null): void
     {
-        if(!preg_match('~^[a-zA-Z0-9.\-_]+@[a-zA-Z0-9\-_]+(\.[([a-z]{2,}){1,3}$~',$email))
+        if(!is_null($email))
         {
-            throw new EntityAttributeException('Email is not valid');
+            if(!preg_match('~^[a-zA-Z0-9.\-_]+@[a-zA-Z0-9\-_]+(\.[([a-z]{2,}){1,3}$~',$email))
+            {
+                throw new EntityAttributeException('Email is not valid');
+            }
         }
         $this->email = $email;
     }
@@ -205,7 +221,7 @@ class User extends Entity
     /**
      * @param string $password
      */
-    public function setPassword(string $password): void
+    public function setPassword(string $password = null): void
     {
         //Checks if the password has already been hashed
         if(password_get_info($password)['algo'] == 0)

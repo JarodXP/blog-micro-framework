@@ -86,7 +86,7 @@ class AuthenticationController extends Controller
         $manager = new UserManager();
 
         //Searches the user by the login
-        $userData = $manager->findListBy(['username' => $this->httpParameters['login']]);
+        $userData = $manager->findListBy(['username' => $this->httpParameters['login']])[0];
 
         //If no user were found, redirects
         if(empty($userData))
@@ -94,18 +94,26 @@ class AuthenticationController extends Controller
             $this->response->redirect('/auth',HttpResponse::WRONG_LOGIN);
         }
 
-        var_dump($userData);
-
         //Instantiates the user to get the password
         $user = new User($userData);
 
         $userPassword = $user->getPassword();
 
         //Checks if typed password matches user's password
-        if(!password_verify($this->httpParameters['password'],$userPassword))
+        if(!password_verify($this->httpParameters['loginPassword'],$userPassword))
         {
             //Redirects
             $this->response->redirect('/auth',HttpResponse::WRONG_PASSWORD);
+        }
+        else
+        {
+            //Transfers the current notification to the User instance
+            $user->setNotification($_SESSION['user']->getNotification());
+
+            //Sets the user instance as a the new $_SESSION['user']
+            $_SESSION['user'] = $user;
+
+            $this->response->redirect('/admin');
         }
     }
 

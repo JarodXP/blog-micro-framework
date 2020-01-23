@@ -13,16 +13,13 @@ abstract class Entity
 
     public function __construct(array $data = null)
     {
-        if(!is_null($data))
+        try
         {
-            try
-            {
-                $this->hydrate($data);
-            }
-            catch (ReflectionException $e)
-            {
-                print_r($e->getMessage());
-            }
+            $this->hydrate($data);
+        }
+        catch (ReflectionException $e)
+        {
+            print_r($e->getMessage());
         }
     }
 
@@ -53,7 +50,7 @@ abstract class Entity
      * @param array $data
      * @throws ReflectionException
      */
-    public function hydrate(array $data)
+    public function hydrate(array $data = null)
     {
         $reflection = new ReflectionClass($this);
 

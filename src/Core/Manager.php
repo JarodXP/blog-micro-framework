@@ -36,8 +36,6 @@ abstract class Manager
 
         $q->execute();
 
-        var_dump($q->fetchAll(PDO::FETCH_ASSOC));
-
         return $q->fetchAll(PDO::FETCH_ASSOC);
     }
 

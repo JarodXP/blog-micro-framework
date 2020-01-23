@@ -83,8 +83,6 @@ class Router
 
         //Sets the httpParameters
         $this->sanitizeHttpParams();
-
-        var_dump($this->route);
     }
 
     /**
@@ -96,7 +94,7 @@ class Router
         //Checks if the admin word is contained in the uri
         if(!strpos($uri,'admin') === false)
         {
-            if(!isset($_SESSION['user']->role) || $_SESSION['user']->getRole() != User::ROLE_ADMIN )
+            if(!isset($_SESSION['user']) || $_SESSION['user']->getRole() != User::ROLE_ADMIN )
             {
                 //Redirects
                 $response = new HttpResponse();
@@ -138,8 +136,6 @@ class Router
     private function firstConnectionFilter(string $uri):string
     {
         $manager = new UserManager();
-
-        var_dump($manager->findListBy(['role' => User::ROLE_ADMIN]),User::ROLE_ADMIN);
 
         //Looks for user with admin rights
         if(empty($manager->findListBy(['role' => User::ROLE_ADMIN])) && !preg_match('~^/auth/register$~',$uri))
