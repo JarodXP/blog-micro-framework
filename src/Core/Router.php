@@ -94,7 +94,7 @@ class Router
         //Checks if the admin word is contained in the uri
         if(!strpos($uri,'admin') === false)
         {
-            if(!isset($_SESSION['user']->role) || $_SESSION['user']->getRole() != User::ROLE_ADMIN )
+            if(!isset($_SESSION['user']) || $_SESSION['user']->getRole() != User::ROLE_ADMIN )
             {
                 //Redirects
                 $response = new HttpResponse();
