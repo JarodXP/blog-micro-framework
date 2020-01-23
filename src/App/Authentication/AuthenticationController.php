@@ -83,13 +83,29 @@ class AuthenticationController extends Controller
 
     public function signInAction()
     {
-        try
+        $manager = new UserManager();
+
+        //Searches the user by the login
+        $userData = $manager->findListBy(['username' => $this->httpParameters['login']]);
+
+        //If no user were found, redirects
+        if(empty($userData))
         {
-            echo $this->twigEnvironment->render('/authChangePassword.html.twig');
+            $this->response->redirect('/auth',HttpResponse::WRONG_LOGIN);
         }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
+
+        var_dump($userData);
+
+        //Instantiates the user to get the password
+        $user = new User($userData);
+
+        $userPassword = $user->getPassword();
+
+        //Checks if typed password matches user's password
+        if(!password_verify($this->httpParameters['password'],$userPassword))
         {
-            print_r($e->getMessage());
+            //Redirects
+            $this->response->redirect('/auth',HttpResponse::WRONG_PASSWORD);
         }
     }
 

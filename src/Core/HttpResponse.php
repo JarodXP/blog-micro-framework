@@ -21,6 +21,7 @@ class HttpResponse
      */
     public function redirect(string $location, string $notification = null):void
     {
+        var_dump($_SESSION['user']);
         $_SESSION['user']->setNotification($notification);
 
         $location = 'location:'.$location;

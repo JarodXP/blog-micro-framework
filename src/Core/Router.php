@@ -83,6 +83,8 @@ class Router
 
         //Sets the httpParameters
         $this->sanitizeHttpParams();
+
+        var_dump($this->route);
     }
 
     /**
@@ -136,6 +138,8 @@ class Router
     private function firstConnectionFilter(string $uri):string
     {
         $manager = new UserManager();
+
+        var_dump($manager->findListBy(['role' => User::ROLE_ADMIN]),User::ROLE_ADMIN);
 
         //Looks for user with admin rights
         if(empty($manager->findListBy(['role' => User::ROLE_ADMIN])) && !preg_match('~^/auth/register$~',$uri))

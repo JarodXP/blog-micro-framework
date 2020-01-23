@@ -5,13 +5,13 @@ namespace Front;
 
 
 use Core\Controller;
+use Models\UserManager;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 class BlogController extends Controller
 {
-
     public function postListAction()
     {
         try
