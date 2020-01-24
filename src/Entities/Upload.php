@@ -13,6 +13,10 @@ class Upload extends Entity
 
     protected ?string $alt;
 
+    protected ?int $type;
+
+    public const IMAGE_TYPE = 1, PDF_TYPE = 2;
+
 
     //GETTERS
 
@@ -39,6 +43,16 @@ class Upload extends Entity
     {
         return $this->alt;
     }
+
+    /**
+     * @return int
+     */
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+
 
     //SETTERS
 
@@ -85,4 +99,13 @@ class Upload extends Entity
 
         $this->alt = $alt;
     }
+
+    /**
+     * @param int|null $type
+     */
+    public function setType(?int $type): void
+    {
+        $this->type = $type;
+    }
+
 }
