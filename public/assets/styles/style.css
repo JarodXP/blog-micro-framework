@@ -213,6 +213,7 @@ footer .row{
 .table-image .imageDiv{
     height: 3.5rem;
     width: 4.5rem;
+    margin: auto;
 }
 
 /*Header*/

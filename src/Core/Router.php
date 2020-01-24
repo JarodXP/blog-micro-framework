@@ -9,15 +9,24 @@ use Exceptions\RoutingException;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use Models\UserManager;
+use Services\AuthenticationHandler;
 
 class Router
 {
+    use AuthenticationHandler;
+
     protected Route $route;
+
+    protected HttpResponse $response;
 
     protected array $httpParameters = [];
 
     public function __construct(string $uri)
     {
+        //Sets the HttpResponse property
+        $this->response = new HttpResponse();
+
+        //Sets the route array property
         try
         {
             $this->setRoute($uri);
@@ -62,7 +71,11 @@ class Router
         $uri = $this->firstConnectionFilter($uri);
 
         //Prevents unauthorized user to access admin
-        $this->adminKeeper($uri);
+        if(!strpos($uri,'admin') === false && !$this->authenticatedAsAdmin())
+        {
+            //Redirects
+            $this->response->redirect('/auth',HttpResponse::AUTH);
+        }
 
         //Checks all the routes
         foreach ($GLOBALS['routes'] as $route)
@@ -83,25 +96,6 @@ class Router
 
         //Sets the httpParameters
         $this->sanitizeHttpParams();
-    }
-
-    /**
-     * Prevents an unauthorized user to access admin
-     * @param $uri
-     */
-    private function adminKeeper($uri)
-    {
-        //Checks if the admin word is contained in the uri
-        if(!strpos($uri,'admin') === false)
-        {
-            if(!isset($_SESSION['user']) || $_SESSION['user']->getRole() != User::ROLE_ADMIN )
-            {
-                //Redirects
-                $response = new HttpResponse();
-
-                $response->redirect('/auth',HttpResponse::AUTH);
-            }
-        }
     }
 
     /**

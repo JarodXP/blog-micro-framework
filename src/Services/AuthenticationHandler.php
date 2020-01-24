@@ -24,6 +24,23 @@ trait AuthenticationHandler
     }
 
     /**
+     * Checks if current user has admin role
+     * @return bool
+     */
+    public function authenticatedAsAdmin()
+    {
+        //Checks if $_SESSION['user'] is set with role admin
+        if(!isset($_SESSION['user']) || $_SESSION['user']->getRole() != User::ROLE_ADMIN )
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /**
      * Checks if typed password matches registered password hash
      * @param string $typedPassword
      * @param User $user
