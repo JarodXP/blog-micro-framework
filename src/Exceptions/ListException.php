@@ -6,7 +6,7 @@ namespace Exceptions;
 
 use InvalidArgumentException;
 
-class PaginatedListException extends InvalidArgumentException
+class ListException extends InvalidArgumentException
 {
 
 }

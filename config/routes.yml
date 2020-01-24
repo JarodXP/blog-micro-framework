@@ -138,6 +138,11 @@
   package: authentication
   controller: authentication
   action: changePassword
+-
+  uri: ^/admin/change-password-form$
+  package: authentication
+  controller: authentication
+  action: displayChangePasswordForm
 
 
 
