@@ -95,7 +95,7 @@ abstract class Manager
             if(!empty($existing))
             {
                 //Checks if it's not the same in case of update
-                if(!($update == true && $existing['id'] != $id))
+                if(($update == true && (int)$existing[0]['id'] != $id))
                 {
                     //If not throws exception
                     throw new EntityAttributeException('The value '.$field.' already exists.');

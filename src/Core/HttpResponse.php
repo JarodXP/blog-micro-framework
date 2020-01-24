@@ -7,10 +7,11 @@ namespace Core;
 class HttpResponse
 {
     public const WRONG_LOGIN = 'L\'identifiant saisi n\'existe pas.',
-        WRONG_PASSWORD = 'Le mot de passe ne correspond pas.',
+        WRONG_PASSWORD = 'Le mot de passe actuel ne correspond pas.',
         PASSWORD_MISMATCH = 'Les deux champs mot de passe ne sont pas identiques',
         AUTH = 'Veuillez vous identifier pour entrer dans l\'espace admin',
-        ADMIN_REGISTERED = 'Admin user has been registered';
+        ADMIN_REGISTERED = 'L\'utilisateur Admin a bien été enregistré',
+        PASSWORD_UPDATED = 'Le mot de passe a été mis à jour';
 
 
     /**
@@ -21,9 +22,10 @@ class HttpResponse
      */
     public function redirect(string $location, string $notification = null):void
     {
-        var_dump($_SESSION['user']);
+        //Sets the user notification
         $_SESSION['user']->setNotification($notification);
 
+        //Redirects
         $location = 'location:'.$location;
 
         header($location);

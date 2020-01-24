@@ -6,7 +6,7 @@ namespace Services;
 
 
 use Core\Manager;
-use Exceptions\PaginatedListException;
+use Exceptions\ListException;
 
 class ListHandler
 {
@@ -157,7 +157,7 @@ class ListHandler
         //Checks if the $order parameter is a valid database table column
         if (empty($this->manager->databaseTableColumns($order)))
         {
-            throw new PaginatedListException('The requested order: '.$order.' is not a valid column');
+            throw new ListException('The requested order: '.$order.' is not a valid column');
         }
 
         else
@@ -176,7 +176,7 @@ class ListHandler
         if ((!is_null($direction) && strtolower($direction) != self::DIRECTION_DESC &&
             strtolower($direction) != self::DIRECTION_ASC))
         {
-            throw new PaginatedListException('Direction parameter is not valid');
+            throw new ListException('Direction parameter is not valid');
         }
         else
         {
