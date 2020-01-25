@@ -107,7 +107,7 @@ class AuthenticationController extends Controller
             //Sets the user instance as a the new $_SESSION['user']
             $_SESSION['user'] = $user;
 
-            $this->response->redirect('/admin',HttpResponse::ADMIN_REGISTERED);
+            $this->response->redirect('/admin',null);
         }
     }
 

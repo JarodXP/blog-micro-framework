@@ -9,7 +9,7 @@ use Exceptions\EntityAttributeException;
 
 class Upload extends Entity
 {
-    protected string $file_name, $originalName;
+    protected string $fileName, $originalName;
 
     protected ?string $alt;
 
@@ -25,7 +25,7 @@ class Upload extends Entity
      */
     public function getFileName(): string
     {
-        return $this->file_name;
+        return $this->fileName;
     }
 
     /**
@@ -52,8 +52,6 @@ class Upload extends Entity
         return $this->type;
     }
 
-
-
     //SETTERS
 
     /**
@@ -66,7 +64,7 @@ class Upload extends Entity
             throw new EntityAttributeException('File name is not valid');
         }
 
-        $this->file_name = $fileName;
+        $this->fileName = $fileName;
     }
 
     /**
@@ -94,7 +92,7 @@ class Upload extends Entity
                 throw new EntityAttributeException('alt name is not valid');
             }
 
-            $this->originalName = $alt;
+            $this->alt = $alt;
         }
 
         $this->alt = $alt;

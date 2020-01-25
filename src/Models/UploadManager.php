@@ -12,7 +12,7 @@ use PDOStatement;
 class UploadManager extends Manager
 {
     public const TABLE = 'uploads',
-        FILE_NAME = 'file_name',
+        FILE_NAME = 'fileName',
         ORIGINAL_NAME = 'original_name',
         ALT = 'alt';
 

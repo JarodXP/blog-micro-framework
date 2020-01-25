@@ -9,7 +9,7 @@ use Exceptions\EntityAttributeException;
 
 class User extends Entity
 {
-    protected int $role;
+    protected ?int $role;
     protected ?int $avatarId;
     protected ?int $resumeId;
 
@@ -36,7 +36,7 @@ class User extends Entity
     /**
      * @return int
      */
-    public function getRole(): int
+    public function getRole(): ?int
     {
         return $this->role;
     }

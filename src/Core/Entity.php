@@ -4,11 +4,12 @@
 namespace Core;
 
 
+use ArrayAccess;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
 
-abstract class Entity
+abstract class Entity implements ArrayAccess
 {
     protected ?int $id;
 
@@ -82,10 +83,7 @@ abstract class Entity
             //Defines the setter name based on the attribute name
             $setter = $this->tableNameConverter(self::SETTER,$attribute->name);
 
-            //Defines the database column name based on the attribute name
-            $column = $this->tableNameConverter(self::PROPERTY,$attribute->name);
-
-            isset($data[$column]) ? $value = $data[$column] : $value = null;
+            isset($data[$attribute->name]) ? $value = $data[$attribute->name] : $value = null;
 
             //Calls the setter
             if(is_callable([$this,$setter]))
@@ -131,5 +129,39 @@ abstract class Entity
         {
             throw new InvalidArgumentException('String type is not valid');
         }
+    }
+
+    //ARRAY ACCESS FUNCTIONS
+
+    public function offsetGet($var)
+    {
+        $getter = 'get'.ucfirst($var);
+
+        if(isset($this->$var) && is_callable([$this,$getter]))
+        {
+            return $this->$getter();
+        }
+
+        return null;
+    }
+
+    public function offsetSet($var, $value)
+    {
+        $setter = 'set'.ucfirst($var);
+
+        if(isset($var) && is_callable([$this,$setter]))
+        {
+            $this->$setter($value);
+        }
+    }
+
+    public function offsetUnset($var):void
+    {
+        throw new InvalidArgumentException('Removing indexes is not possible for this class');
+    }
+
+    public function offsetExists($var):bool
+    {
+        return isset($this->$var) && is_callable([$this,$var]);
     }
 }
