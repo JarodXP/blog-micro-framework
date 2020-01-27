@@ -328,4 +328,13 @@ class User extends Entity
     {
         $this->notification = $notification;
     }
+
+    /**
+     *Sets an array with the mandatory properties
+     */
+    protected function setMandatoryProperties()
+    {
+        $this->mandatoryProperties = ['username','email','password','role'];
+    }
+
 }

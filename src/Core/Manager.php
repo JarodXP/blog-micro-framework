@@ -108,7 +108,7 @@ abstract class Manager
                 if(($update == true && (int)$existing['id'] != $id))
                 {
                     //If not throws exception
-                    throw new EntityAttributeException('The value '.$field.' already exists.');
+                    throw new EntityAttributeException('La valeur '.$value. ' pour le champs '.$field.' existe déjà.');
                 }
             }
         }

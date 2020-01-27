@@ -106,4 +106,11 @@ class Upload extends Entity
         $this->type = $type;
     }
 
+    /**
+     * Sets an array with the mandatory fields
+     */
+    protected function setMandatoryProperties()
+    {
+        $this->mandatoryProperties = ['fileName','originalName','type'];
+    }
 }

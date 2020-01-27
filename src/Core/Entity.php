@@ -5,6 +5,7 @@ namespace Core;
 
 
 use ArrayAccess;
+use Exceptions\EntityAttributeException;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
@@ -13,7 +14,9 @@ abstract class Entity
 {
     protected ?int $id;
 
-    public const SETTER = 1, PROPERTY = 2;//Used in the method tableNameConverter
+    protected ?array $mandatoryProperties;
+
+    public const SETTER = 1, PROPERTY = 2;
 
 
     public function __construct(array $data = null)
@@ -26,6 +29,8 @@ abstract class Entity
         {
             print_r($e->getMessage());
         }
+
+        $this->setMandatoryProperties();
     }
 
     //GETTER
@@ -48,7 +53,13 @@ abstract class Entity
         $this->id = $id;
     }
 
-    //PUBLIC FUNCTION
+    /**
+     * Sets an array with the mandatory fields
+     */
+    protected abstract function setMandatoryProperties();
+
+
+    //PUBLIC FUNCTIONS
 
     /**
      * Hydrates the instance
@@ -92,6 +103,29 @@ abstract class Entity
             }
         }
     }
+
+    /**
+     * Checks if the mandatory properties are not null before insert or update
+     * $this->mandatoryProperties array is to be set before the method is called.
+     * If not, returns true
+     * @return mixed
+     */
+    public function isValid()
+    {
+        //Checks each of the mandatory property if it's unset or null
+        foreach ($this->mandatoryProperties as $property)
+        {
+            //In case of unset or null, returns false
+            if (!isset($this->$property) || is_null($this->$property))
+            {
+                throw new EntityAttributeException('Le champs '.$property.' ne peut être vide');
+            }
+        }
+
+        return true;
+    }
+
+    //PRIVATE FUNCTIONS
 
     /**
      * Converts a multiwords database table name with format xxx_yyy into a setter function with format setXxxYyy
