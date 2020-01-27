@@ -9,26 +9,21 @@
 
     <!-- Profile Content Column -->
     <div class="row front-content">
-        <div id="avatar" class="col-4 offset-4" style="background-image: url('/assets/uploads/photoProfile.png');"></div>
+        <div id="avatar" class="col-4 offset-4" style="background-image: url({{ avatar.fileName }});"></div>
 
-        <h1 id="ownerName" class="col-12 text-center">Grégory Barile</h1>
+        <h1 id="ownerName" class="col-12 text-center">{{ profile.firstName }} {{ profile.lastName }}</h1>
 
-        <h2 id="ownerTitle" class="col-12 text-center">Développeur PHP</h2>
+        <h2 id="ownerTitle" class="col-12 text-center">{{ profile.title }}</h2>
 
-        <p id="baseline" class="col-12 text-center">Rock N' Work</p>
+        <p id="baseline" class="col-12 text-center">{{ profile.baseline }}</p>
 
         <h3 class="col-12 text-left">Présentation :</h3>
 
-        <p id="introduction" class="col-12">
-
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam fermentum orci sed neque viverra, eu elementum elit faucibus. Vestibulum sit amet nunc sem. Duis bibendum ex ac accumsan tempus. Phasellus neque tortor, volutpat quis justo non, tristique sodales dolor. Etiam suscipit, nibh id faucibus aliquet, leo nunc mattis lorem, non eleifend justo sem et nibh. Aenean sit amet leo feugiat, viverra dui vitae, ullamcorper dolor. Vestibulum est est, sodales sit amet ex id, elementum tincidunt quam. Aenean vehicula, orci dictum commodo fermentum, tortor tortor semper augue, eget efficitur est turpis mollis ante. Quisque eget nibh ut massa aliquet mattis at vitae nibh.
-
-            Duis efficitur magna et scelerisque condimentum. In hac habitasse platea dictumst. Praesent ultrices sem vitae dolor cursus, vitae pulvinar dolor sodales. Nam accumsan nisl et orci mollis, in pellentesque velit scelerisque. Maecenas nec nisl vel nisl egestas imperdiet id eget orci. Vivamus euismod dui a posuere dignissim. Pellentesque at justo non metus dictum efficitur. Ut vitae dignissim nulla. Donec lobortis hendrerit risus, nec dignissim lectus maximus sit amet. Maecenas nec ullamcorper dui.
-        </p>
+        <p id="introduction" class="col-12">{{ profile.introduction }}</p>
 
         <p class="col-6 text-center link-btn"><a class="btn btn-primary" href="/contact" target="_blank">Contact</a></p>
 
-        <p class="col-6 text-center link-btn"><a class="btn btn-primary" href="/assets/uploads/resume.pdf" target="_blank">CV</a></p>
+        <p class="col-6 text-center link-btn"><a class="btn btn-primary" href={{ resume.fileName }} target="_blank">CV</a></p>
 
     </div>
 
