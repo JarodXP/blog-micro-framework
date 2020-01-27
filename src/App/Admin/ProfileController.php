@@ -9,15 +9,17 @@ use Core\HttpResponse;
 use Entities\Upload;
 use Entities\User;
 use Exceptions\EntityAttributeException;
+use Exceptions\UploadException;
 use Models\UploadManager;
 use Models\UserManager;
 use Services\AuthenticationHandler;
-use Services\EntityUpdater;
+use Services\FileUploader;
+use Services\PropertiesUpdater;
 
 
 class ProfileController extends Controller
 {
-    use AuthenticationHandler, EntityUpdater;
+    use AuthenticationHandler, PropertiesUpdater, FileUploader;
 
     public function editProfileAction()
     {
@@ -50,13 +52,23 @@ class ProfileController extends Controller
 
         $admin = new User($adminData);
 
-        //Uses EntityUpdater service to update the $admin object with the parameters
+        //Uses PropertiesUpdater service to update the $admin object with the parameters
         $this->updateProperties($this->httpParameters,$admin);
-
-        $manager = new UserManager();
 
         try
         {
+            //Checks if $_FILES['avatarImageFile'] contains a file
+            if(($_FILES['avatarImageFile']['error'] != 4))
+            {
+                //Uses FileUploader service to upload the avatar image and get an Upload object
+                $avatar = $this->registerImage('avatarImageFile','avatar',$admin->getAvatarId());
+
+                //Sets the admin object avatar id
+                $admin->setAvatarId($avatar->getId());
+            }
+
+            $manager = new UserManager();
+
             //Checks if all mandatory properties are set and not null
             $admin->isValid();
 
@@ -64,7 +76,7 @@ class ProfileController extends Controller
             $manager->updateUser($admin);
 
         }
-        catch (EntityAttributeException $e)
+        catch (EntityAttributeException | UploadException $e)
         {
             //In case not all the mandatory properties are valid, redirects to profile
             $this->response->redirect('/admin/my-profile',$e->getMessage());

@@ -6,7 +6,7 @@ namespace Services;
 
 use Core\Entity;
 
-trait EntityUpdater
+trait PropertiesUpdater
 {
     /**
      * Updates an existing entity with the new values

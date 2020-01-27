@@ -14,6 +14,8 @@
     "ext-yaml": "*",
     "keradus/psr4autoloader": "^2.0",
     "ext-pdo": "*",
-    "ezyang/htmlpurifier": "^4.12"
+    "ezyang/htmlpurifier": "^4.12",
+    "ext-exif": "*",
+    "ext-gd": "*"
   }
 }

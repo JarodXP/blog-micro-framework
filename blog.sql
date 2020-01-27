@@ -1,7 +1,7 @@
 create table uploads
 (
     id            int auto_increment
-        primary key,
+        primary fileKey,
     file_name     varchar(300) default '' not null,
     original_name varchar(300) default '' not null,
     alt           varchar(300)            null,
@@ -15,7 +15,7 @@ create table uploads
 create table social_networks
 (
     id        int auto_increment
-        primary key,
+        primary fileKey,
     name      varchar(300) not null,
     upload_id int          not null,
     constraint name
@@ -23,14 +23,14 @@ create table social_networks
     constraint upload_id
         unique (upload_id),
     constraint social_networks_ibfk_1
-        foreign key (upload_id) references uploads (id)
+        foreign fileKey (upload_id) references uploads (id)
 )
     engine = InnoDB;
 
 create table users
 (
     id           int auto_increment
-        primary key,
+        primary fileKey,
     username     varchar(300)                       null,
     email        varchar(300)                       not null,
     password     varchar(300)                       not null,
@@ -49,23 +49,23 @@ create table users
     constraint username
         unique (username),
     constraint users_ibfk_1
-        foreign key (avatar_id) references uploads (id),
+        foreign fileKey (avatar_id) references uploads (id),
     constraint users_ibfk_2
-        foreign key (resume_id) references uploads (id)
+        foreign fileKey (resume_id) references uploads (id)
 )
     engine = InnoDB;
 
 create table network_links
 (
     id         int auto_increment
-        primary key,
+        primary fileKey,
     network_id int          not null,
     user_id    int          not null,
     link       varchar(300) not null,
     constraint network_links_ibfk_1
-        foreign key (network_id) references social_networks (id),
+        foreign fileKey (network_id) references social_networks (id),
     constraint network_links_ibfk_2
-        foreign key (user_id) references users (id)
+        foreign fileKey (user_id) references users (id)
 )
     engine = InnoDB;
 
@@ -78,7 +78,7 @@ create index user_id
 create table posts
 (
     id            int auto_increment
-        primary key,
+        primary fileKey,
     user_id       int                                not null,
     title         varchar(300)                       null,
     header_id     int                                null,
@@ -88,23 +88,23 @@ create table posts
     date_modified datetime default CURRENT_TIMESTAMP not null,
     status        tinyint  default 0                 not null,
     constraint posts_ibfk_1
-        foreign key (header_id) references uploads (id),
+        foreign fileKey (header_id) references uploads (id),
     constraint posts_ibfk_2
-        foreign key (user_id) references users (id)
+        foreign fileKey (user_id) references users (id)
 )
     engine = InnoDB;
 
 create table comments
 (
     id         int auto_increment
-        primary key,
+        primary fileKey,
     post_id    int                                not null,
     pseudo     varchar(300)                       not null,
     content    mediumtext                         not null,
     date_added datetime default CURRENT_TIMESTAMP not null,
     status     tinyint  default 0                 not null,
     constraint comments_ibfk_1
-        foreign key (post_id) references posts (id)
+        foreign fileKey (post_id) references posts (id)
 )
     engine = InnoDB;
 
