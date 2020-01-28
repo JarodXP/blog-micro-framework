@@ -19,9 +19,9 @@ abstract class Controller
     protected Application $app;
     protected FilesystemLoader $twigLoader;
     protected Environment $twigEnvironment;
-    protected ?array $httpParameters;
+    protected ?array $httpParameters;//The POST and GETS parameters sanitized in Router and gathered in this array
     protected HttpResponse $response;
-    protected ?array $templateVars;
+    protected ?array $templateVars;//The variables array to be sent to twig render
 
     public function __construct(Application $app, array $httpParameters)
     {

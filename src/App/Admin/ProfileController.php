@@ -26,9 +26,10 @@ class ProfileController extends Controller
             $uploadManager = new UploadManager();
 
             //Sets the template var 'avatar'
-            $this->templateVars['avatar'] = new Upload($uploadManager->findListBy(['id' => $_SESSION['user']->getAvatarId()])[0]);
+            $this->templateVars['avatar'] = new Upload($uploadManager->findOneBy(['id' => $_SESSION['user']->getAvatarId()]));
 
             $this->twigRender('/adminMyProfile.html.twig',$this->templateVars);
+
         }
 
         $this->response->redirect('/auth',HttpResponse::AUTH);

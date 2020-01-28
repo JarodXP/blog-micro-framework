@@ -132,7 +132,7 @@ class Router
         $manager = new UserManager();
 
         //Looks for user with admin rights
-        if(empty($manager->findListBy(['role' => User::ROLE_ADMIN])) && !preg_match('~^/auth/register$~',$uri))
+        if(empty($manager->findOneBy(['role' => User::ROLE_ADMIN])) && !preg_match('~^/auth/register$~',$uri))
         {
             $uri = '/auth/first-time';
         }

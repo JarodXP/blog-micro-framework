@@ -90,7 +90,7 @@ class AuthenticationController extends Controller
     public function signInAction()
     {
         //Searches the user by the login
-        $userData = $this->manager->findListBy(['username' => $this->httpParameters['login']])[0];
+        $userData = $this->manager->findOneBy(['username' => $this->httpParameters['login']]);
 
         //If no user were found, redirects
         if(empty($userData))
@@ -107,7 +107,7 @@ class AuthenticationController extends Controller
             //Sets the user instance as a the new $_SESSION['user']
             $_SESSION['user'] = $user;
 
-            $this->response->redirect('/admin',null);
+            $this->response->redirect('/admin');
         }
     }
 

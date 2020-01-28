@@ -13,7 +13,7 @@ abstract class Entity implements ArrayAccess
 {
     protected ?int $id;
 
-    public const SETTER = 1, PROPERTY = 2;
+    public const SETTER = 1, PROPERTY = 2;//Used in the method tableNameConverter
 
 
     public function __construct(array $data = null)

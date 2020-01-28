@@ -20,7 +20,7 @@ class ProfileController extends Controller
         //Creates an instance of User for the admin to display profile information
         $userManager = new UserManager();
 
-        $adminData = $userManager->findListBy(['role' => User::ROLE_ADMIN])[0];
+        $adminData = $userManager->findOneBy(['role' => User::ROLE_ADMIN]);
 
         $this->templateVars['profile'] = new User($adminData);
 
@@ -29,7 +29,7 @@ class ProfileController extends Controller
 
         if(!is_null($adminData['avatar_id']))
         {
-            $avatarData = $uploadManager->findListBy(['id' => $adminData['avatar_id']])[0];
+            $avatarData = $uploadManager->findOneBy(['id' => $adminData['avatar_id']]);
 
             $this->templateVars['avatar'] = new Upload($avatarData);
         }
@@ -37,7 +37,7 @@ class ProfileController extends Controller
         //Creates an instance of Uploads to display profile's resume
         if(!is_null($adminData['resume_id']))
         {
-            $resumeData = $uploadManager->findListBy(['id' => $adminData['resume_id']])[0];
+            $resumeData = $uploadManager->findOneBy(['id' => $adminData['resume_id']]);
 
             $this->templateVars['resume'] = new Upload($resumeData);
         }
