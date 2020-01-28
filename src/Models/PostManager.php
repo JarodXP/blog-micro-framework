@@ -8,6 +8,7 @@ use Core\Manager;
 use Entities\Post;
 use PDO;
 use PDOStatement;
+use Services\ListHandler;
 
 class PostManager extends Manager
 {
@@ -17,6 +18,7 @@ class PostManager extends Manager
         HEADER_ID = 'header_id',
         EXTRACT = 'extract',
         CONTENT = 'content',
+        DATE_ADDED = 'date_added',
         STATUS = 'status';
 
 
@@ -63,6 +65,29 @@ class PostManager extends Manager
         $this->bindAllFields($q,$post);
 
         return $q->execute();
+    }
+
+    /**
+     * Gathers the post data and the corresponding upload data
+     * @param $conditions
+     * @param $options
+     * @return array
+     */
+    public function findPostsAndUploads($conditions,$options)
+    {
+        $listManager = new ListHandler($this);
+
+        $requestParameters = $listManager->getRequestParameters($conditions,$options);
+
+        $q = $this->dao->prepare(
+            'SELECT posts.*, uploads.*, users.username
+                            FROM posts 
+                            INNER JOIN uploads ON posts.header_id = uploads.id
+                            INNER JOIN users ON posts.user_id = users.id'.' '.$requestParameters);
+
+        $q->execute();
+
+        return $q->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

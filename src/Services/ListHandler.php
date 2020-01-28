@@ -154,16 +154,7 @@ class ListHandler
      */
     protected function setOrder(string $order = null): void
     {
-        //Checks if the $order parameter is a valid database table column
-        if (empty($this->manager->databaseTableColumns($order)))
-        {
-            throw new ListException('The requested order: '.$order.' is not a valid column');
-        }
-
-        else
-        {
-            $order == null ? $this->orderBy = ''.$order : $this->orderBy = 'ORDER BY '.$order;
-        }
+        $order == null ? $this->orderBy = ''.$order : $this->orderBy = 'ORDER BY '.$order;
     }
 
     /**
