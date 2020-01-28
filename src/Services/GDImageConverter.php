@@ -4,13 +4,12 @@
 namespace Services;
 
 
-use Errors\UnauthorizedFileUpload;
-use Errors\UploadError;
+
 use Exceptions\UploadException;
 
 class GDImageConverter
 {
-    protected $createResourceFunction,
+    protected string $createResourceFunction,
         $createImageFunction;
 
     public function __construct(int $imageType)
@@ -39,6 +38,11 @@ class GDImageConverter
 
         //Creates a blank image resource for destImage
         $destImage = imagecreatetruecolor($destImageWidth,$destImageHeight);
+
+        //Preserves transparency
+        imagecolortransparent($destImage, imagecolorallocatealpha($destImage, 0, 0, 0, 127));
+        imagealphablending($destImage, false);
+        imagesavealpha($destImage, true);
 
         //Copies and resizes image resources
         if(!imagecopyresampled($destImage,$tempImage,0,0,0,0,
