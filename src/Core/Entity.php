@@ -4,7 +4,6 @@
 namespace Core;
 
 
-use ArrayAccess;
 use Exceptions\EntityAttributeException;
 use InvalidArgumentException;
 use ReflectionClass;
@@ -123,6 +122,27 @@ abstract class Entity
         }
 
         return true;
+    }
+
+    /**
+     * Updates an existing entity with the new values
+     * @param $fields
+     * @param $entity
+     */
+    public function updateProperties(array $fields):void
+    {
+        //Loops around every parameter sent
+        foreach ($fields as $field => $value)
+        {
+            //Builds a setter name
+            $setter = 'set'.ucfirst($field);
+
+            //Checks if the setter exists for the class and calls it
+            if(is_callable([$this,$setter]))
+            {
+                $this->$setter($value);
+            }
+        }
     }
 
     //PRIVATE FUNCTIONS

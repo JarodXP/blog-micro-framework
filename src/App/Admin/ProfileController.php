@@ -14,12 +14,11 @@ use Models\UploadManager;
 use Models\UserManager;
 use Services\AuthenticationHandler;
 use Services\FileUploader;
-use Services\PropertiesUpdater;
 
 
 class ProfileController extends Controller
 {
-    use AuthenticationHandler, PropertiesUpdater, FileUploader;
+    use AuthenticationHandler, FileUploader;
 
     public function editProfileAction()
     {
@@ -45,15 +44,16 @@ class ProfileController extends Controller
 
     public function registerProfileAction()
     {
-        //Creates a new User instance from the $_SESSION['user'] cookie
+        //Creates a new $admin User instance from the $_SESSION['user'] cookie
         $userManager = new UserManager();
 
-        $adminData = $userManager->findListBy(['id' => $_SESSION['user']->getId()])[0];
+        $admin = new User($userManager->findOneBy(['id' => $_SESSION['user']->getId()]));
 
-        $admin = new User($adminData);
+        //Updates $admin User with the new parameters
+        $admin->updateProperties($this->httpParameters);
 
-        //Uses PropertiesUpdater service to update the $admin object with the parameters
-        $this->updateProperties($this->httpParameters,$admin);
+        //Sets a variable to store the current $admin avatarId
+        $currentAvatarId = null;
 
         try
         {
@@ -61,20 +61,29 @@ class ProfileController extends Controller
             if(($_FILES['avatarImageFile']['error'] != 4))
             {
                 //Uses FileUploader service to upload the avatar image and get an Upload object
-                $avatar = $this->registerImage('avatarImageFile','avatar',$admin->getAvatarId());
+                $avatar = $this->uploadImage('avatarImageFile','avatar');
 
-                //Sets the admin object avatar id
+                //Stores the current $admin avatarId
+                $currentAvatarId = $admin->getAvatarId();
+
+                //Sets the new avatarId property to the $admin object
                 $admin->setAvatarId($avatar->getId());
             }
 
             $manager = new UserManager();
 
             //Checks if all mandatory properties are set and not null
-            $admin->isValid();
+            if($admin->isValid())
+            {
+                //Updates the user
+                $manager->updateUser($admin);
 
-            //Updates the user
-            $manager->updateUser($admin);
-
+                //Removes former avatar (both in server and database)
+                if(!is_null($currentAvatarId))
+                {
+                    $this->removeFile($currentAvatarId);
+                }
+            }
         }
         catch (EntityAttributeException | UploadException $e)
         {
