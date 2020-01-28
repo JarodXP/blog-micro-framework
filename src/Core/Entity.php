@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
 
-abstract class Entity implements ArrayAccess
+abstract class Entity
 {
     protected ?int $id;
 
@@ -129,39 +129,5 @@ abstract class Entity implements ArrayAccess
         {
             throw new InvalidArgumentException('String type is not valid');
         }
-    }
-
-    //ARRAY ACCESS FUNCTIONS
-
-    public function offsetGet($var)
-    {
-        $getter = 'get'.ucfirst($var);
-
-        if(isset($this->$var) && is_callable([$this,$getter]))
-        {
-            return $this->$getter();
-        }
-
-        return null;
-    }
-
-    public function offsetSet($var, $value)
-    {
-        $setter = 'set'.ucfirst($var);
-
-        if(isset($var) && is_callable([$this,$setter]))
-        {
-            $this->$setter($value);
-        }
-    }
-
-    public function offsetUnset($var):void
-    {
-        throw new InvalidArgumentException('Removing indexes is not possible for this class');
-    }
-
-    public function offsetExists($var):bool
-    {
-        return isset($this->$var) && is_callable([$this,$var]);
     }
 }
