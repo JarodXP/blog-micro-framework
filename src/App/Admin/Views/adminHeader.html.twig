@@ -5,8 +5,8 @@
             <button class="btn btn-primary" id="adminToggleBtn"><i class="fas fa-bars"></i></button>
         </p>
         <div class="col-10 col-md-3 offset-md-7 d-flex justify-content-end">
-            <p class="">Greg</p>
-            <div class="ml-4" id=avatarHeader style="background-image:url('/assets/uploads/photoProfile.png')"></div>
+            <p class="">{{ connectedUser.username }}</p>
+            <div class="ml-4" id=avatarHeader style="background-image:url({{ '/assets/uploads/'~connectedUser.avatarFileName }})"></div>
         </div>
     </div>
 </header>

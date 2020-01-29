@@ -79,6 +79,26 @@ class UserManager extends Manager
     }
 
     /**
+     * Gets the username and avatar fileName for the connected user
+     * @param int $id
+     * @return array
+     */
+    public function findConnectedUserHeader(int $id)
+    {
+        $q = $this->dao->prepare(
+            'SELECT users.username AS username, uploads.file_name AS avatarFileName
+                            FROM users 
+                            INNER JOIN uploads ON users.avatar_id = uploads.id
+                            WHERE users.id = :id');
+
+        $q->bindValue(':id',$id,PDO::PARAM_INT);
+
+        $q->execute();
+
+        return $q->fetchAll(PDO::FETCH_ASSOC)[0];
+    }
+
+    /**
      * Binds all fields value with parameters
      * @param PDOStatement $q
      * @param User $user

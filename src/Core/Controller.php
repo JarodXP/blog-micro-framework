@@ -5,6 +5,7 @@ namespace Core;
 
 
 use App\Application;
+use Models\UserManager;
 use ReflectionClass;
 use ReflectionException;
 use Twig\Environment;
@@ -53,6 +54,20 @@ abstract class Controller
 
         //Sets an instance of HttpResponse for the Controllers to send response errors
         $this->response = new HttpResponse();
+
+        //Sets the connected user info as default $templateVars to be sent to the render
+        if(isset($_SESSION['user']) && !is_null($_SESSION['user']->getId()))
+        {
+            $userManager = new UserManager();
+
+            $connectedUser = $userManager->findConnectedUserHeader($_SESSION['user']->getId());
+
+            $this->templateVars['connectedUser'] = [
+                'avatarFileName' => $connectedUser['avatarFileName'],
+                'username' => $connectedUser['username']
+            ];
+        }
+
     }
 
     /**
