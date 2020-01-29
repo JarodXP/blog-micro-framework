@@ -62,20 +62,25 @@ $locale = $config['APP_LOCALE'];
 $charset = $config['APP_CHARSET'];
 $env = $config['APP_ENV'];
 
-//Sets the $_SESSION['user']
+//Instantiates a User object to be sent to the Session
 $sessionUser = new User();
 
+//Starts the session
 session_start();
 
+//Sets the object to the $_SESSION['user']
 if(!isset($_SESSION['user']))
 {
+    //Avoid session resetting (in case of admin session already set)
     $_SESSION['user'] = $sessionUser;
 }
+
 
 if(isset($_GET['notif']) && $_GET['notif'] = 'close')
 {
     $_SESSION['user']->setNotification('');
 }
+
 
 //Sends the application environment for the Twig Environment instance
 $app = new Application($env);

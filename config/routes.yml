@@ -72,6 +72,11 @@
   package: admin
   controller: profile
   action: editProfile
+-
+  uri: ^/admin/my-profile/register$
+  package: admin
+  controller: profile
+  action: registerProfile
 
   #PROFESSIONAL
 -

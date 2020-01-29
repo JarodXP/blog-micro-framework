@@ -40,6 +40,16 @@ abstract class Manager
     }
 
     /**
+     * Gets a single element using a WHERE clause condition
+     * @param array $conditions
+     * @return mixed
+     */
+    public function findOneBy(array $conditions)
+    {
+        return $this->findListBy($conditions)[0];
+    }
+
+    /**
      * Removes a specific element
      * @param int $elementId
      * @return bool
@@ -89,13 +99,13 @@ abstract class Manager
         foreach ($fieldValue as $field => $value)
         {
             //Looks for elements with the same criteria
-            $existing = $this->findListBy([$field => $value]);
+            $existing = $this->findOneBy([$field => $value]);
 
             //If other element exists
             if(!empty($existing))
             {
                 //Checks if it's not the same in case of update
-                if(($update == true && (int)$existing[0]['id'] != $id))
+                if(($update == true && (int)$existing['id'] != $id))
                 {
                     //If not throws exception
                     throw new EntityAttributeException('The value '.$field.' already exists.');

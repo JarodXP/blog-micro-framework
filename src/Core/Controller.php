@@ -8,6 +8,10 @@ use App\Application;
 use ReflectionClass;
 use ReflectionException;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
@@ -15,8 +19,9 @@ abstract class Controller
     protected Application $app;
     protected FilesystemLoader $twigLoader;
     protected Environment $twigEnvironment;
-    protected ?array $httpParameters;
+    protected ?array $httpParameters;//The POST and GETS parameters sanitized in Router and gathered in this array
     protected HttpResponse $response;
+    protected ?array $templateVars;//The variables array to be sent to twig render
 
     public function __construct(Application $app, array $httpParameters)
     {
@@ -36,6 +41,12 @@ abstract class Controller
         $this->twigEnvironment->addGlobal('charset', $GLOBALS['charset']);
         $this->twigEnvironment->addGlobal('env', $GLOBALS['env']);
         $this->twigEnvironment->addGlobal('notification',$_SESSION['user']->getNotification());
+
+        //Sets the Debug extension in development environment
+        if($this->twigEnvironment->isDebug())
+        {
+            $this->twigEnvironment->addExtension(new DebugExtension());
+        }
 
         //Sets the parameters to be used in the actions
         $this->httpParameters = $httpParameters;
@@ -63,7 +74,6 @@ abstract class Controller
             exit();
         }
 
-
         $controllerFileName = $reflector->getFileName();
 
         //Removes the name of the Controller in the file name to defines the calling Controller directory path
@@ -71,5 +81,24 @@ abstract class Controller
 
         //Returns the Views directory path
         return $controllerDirPath.'Views';
+    }
+
+    /**
+     * Centralized twig render
+     * @param string $template
+     * @param array $twigVars
+     */
+    protected function twigRender(string $template, array $twigVars = null):void
+    {
+        try
+        {
+            echo $this->twigEnvironment->render($template,$twigVars);
+
+            exit();
+        }
+        catch (LoaderError | RuntimeError | SyntaxError $e)
+        {
+            print_r($e->getMessage());
+        }
     }
 }

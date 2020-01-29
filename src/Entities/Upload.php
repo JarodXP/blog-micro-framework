@@ -9,9 +9,13 @@ use Exceptions\EntityAttributeException;
 
 class Upload extends Entity
 {
-    protected string $file_name, $originalName;
+    protected string $fileName, $originalName;
 
     protected ?string $alt;
+
+    protected ?int $type;
+
+    public const IMAGE_TYPE = 1, PDF_TYPE = 2;
 
 
     //GETTERS
@@ -21,7 +25,7 @@ class Upload extends Entity
      */
     public function getFileName(): string
     {
-        return $this->file_name;
+        return $this->fileName;
     }
 
     /**
@@ -40,6 +44,14 @@ class Upload extends Entity
         return $this->alt;
     }
 
+    /**
+     * @return int
+     */
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
     //SETTERS
 
     /**
@@ -52,7 +64,7 @@ class Upload extends Entity
             throw new EntityAttributeException('File name is not valid');
         }
 
-        $this->file_name = $fileName;
+        $this->fileName = $fileName;
     }
 
     /**
@@ -80,9 +92,18 @@ class Upload extends Entity
                 throw new EntityAttributeException('alt name is not valid');
             }
 
-            $this->originalName = $alt;
+            $this->alt = $alt;
         }
 
         $this->alt = $alt;
     }
+
+    /**
+     * @param int|null $type
+     */
+    public function setType(?int $type): void
+    {
+        $this->type = $type;
+    }
+
 }

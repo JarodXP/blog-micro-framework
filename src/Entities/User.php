@@ -9,7 +9,7 @@ use Exceptions\EntityAttributeException;
 
 class User extends Entity
 {
-    protected int $role;
+    protected ?int $role;
     protected ?int $avatarId;
     protected ?int $resumeId;
 
@@ -36,7 +36,7 @@ class User extends Entity
     /**
      * @return int
      */
-    public function getRole(): int
+    public function getRole(): ?int
     {
         return $this->role;
     }
@@ -239,12 +239,9 @@ class User extends Entity
      */
     public function setFirstName(string $firstName = null): void
     {
-        if(!is_null($firstName))
+        if(mb_strlen($firstName) > 30)
         {
-            if(!preg_match('~^[a-zA-Z\s-\'çàéèêiïù]{2,50}$~',$firstName))
-            {
-                throw new EntityAttributeException('First name is not valid');
-            }
+            throw new EntityAttributeException('First name is not valid');
         }
         $this->firstName = $firstName;
     }
@@ -254,13 +251,11 @@ class User extends Entity
      */
     public function setLastName(string $lastName = null): void
     {
-        if(!is_null($lastName))
+        if(mb_strlen($lastName) > 30)
         {
-            if(!preg_match('~^[a-zA-Z\s-\'çàéèêiïù]{2,50}$~',$lastName))
-            {
-                throw new EntityAttributeException('Last name is not valid');
-            }
+            throw new EntityAttributeException('Last name is not valid');
         }
+
         $this->lastName = $lastName;
     }
 
