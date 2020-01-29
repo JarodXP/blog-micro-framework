@@ -113,7 +113,6 @@ footer .row{
 }
 
 #avatar {
-    background-image: url('/assets/uploads/photoProfile.png');
     height: 100px;
     background-size: contain;
     background-repeat: no-repeat;
@@ -281,6 +280,17 @@ footer .row{
     text-align: center;
     font-size: 0.8rem;
     vertical-align: middle!important;
+}
+
+.btn-disabled{
+    display: none;
+}
+
+.sort-icon {
+    border: none;
+    background-color: transparent;
+    color: darkorange;
+    font-weight: bold;
 }
 
 /*Admin forms*/

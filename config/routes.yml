@@ -51,6 +51,16 @@
   controller: posts
   action: postList
 -
+  uri: ^/admin/posts/\?order=[a-zA-Z0-9_]{3,20}$
+  package: admin
+  controller: posts
+  action: postList
+-
+  uri: ^/admin/posts/\?page=[0-9]{1,100}$
+  package: admin
+  controller: posts
+  action: postList
+-
   uri: ^/admin/posts/post-([0-9]+)$
   package: admin
   controller: posts
