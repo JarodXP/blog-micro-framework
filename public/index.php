@@ -50,6 +50,7 @@ $serviceLoader->addNamespace('Services', __DIR__ . '/../src/Services');
 ///GLOBALS VARIABLES//////////
 $cacheDirectory = __DIR__ . '/../var/cache/';
 $configDirectory = __DIR__ . '/../config';
+$uploadDirectory = __DIR__ . '/assets/uploads';
 
 //Sets a global variable for the routes parsed file
 $routes = yaml_parse_file($configDirectory.'/routes.yml');

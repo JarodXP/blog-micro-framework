@@ -12,17 +12,18 @@ use PDOStatement;
 class UploadManager extends Manager
 {
     public const TABLE = 'uploads',
-        FILE_NAME = 'fileName',
+        FILE_NAME = 'file_name',
         ORIGINAL_NAME = 'original_name',
-        ALT = 'alt';
+        ALT = 'alt',
+        TYPE = 'type';
 
 
     /**
      * Inserts a upload in database
      * @param Upload $upload
-     * @return bool
+     * @return int
      */
-    public function insertUpload(Upload $upload):bool
+    public function insertUpload(Upload $upload):int
     {
         //Checks if the file name and the original name are unique
         $this->checkUniqueFields([
@@ -31,12 +32,14 @@ class UploadManager extends Manager
         ],false);
 
         $q = $this->dao->prepare(
-            'INSERT INTO '.self::TABLE.'('.self::FILE_NAME.', '.self::ORIGINAL_NAME.', '.self::ALT.') 
-                        VALUES(:fileName, :originalName, :alt)');
+            'INSERT INTO '.self::TABLE.'('.self::FILE_NAME.', '.self::ORIGINAL_NAME.', '.self::ALT.', '.self::TYPE.') 
+                        VALUES(:fileName, :originalName, :alt, :type)');
 
         $this->bindAllFields($q,$upload);
 
-        return $q->execute();
+        $q->execute();
+
+        return $this->dao->lastInsertId();
     }
 
     /**
@@ -54,7 +57,7 @@ class UploadManager extends Manager
 
         $q = $this->dao->prepare('UPDATE '.self::TABLE.' SET '
             .self::FILE_NAME.'= :fileName, '.self::ORIGINAL_NAME.' = :originalName, '
-            .self::ALT.' = :alt WHERE id = :id');
+            .self::ALT.' = :alt, '.self::TYPE.' = :type WHERE id = :id');
 
         $q->bindValue(':id', $upload->getId(),PDO::PARAM_INT);
 
@@ -72,6 +75,7 @@ class UploadManager extends Manager
     {
         $q->bindValue(':fileName', $upload->getFileName());
         $q->bindValue(':originalName', $upload->getOriginalName());
+        $q->bindValue(':type', $upload->getType());
         $q->bindValue(':alt', $upload->getAlt());
     }
 }

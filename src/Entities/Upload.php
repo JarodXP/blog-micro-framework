@@ -11,9 +11,7 @@ class Upload extends Entity
 {
     protected string $fileName, $originalName;
 
-    protected ?string $alt;
-
-    protected ?int $type;
+    protected ?string $alt, $type;
 
     public const IMAGE_TYPE = 1, PDF_TYPE = 2;
 
@@ -45,9 +43,9 @@ class Upload extends Entity
     }
 
     /**
-     * @return int
+     * @return string|null
      */
-    public function getType(): ?int
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -59,11 +57,6 @@ class Upload extends Entity
      */
     public function setFileName(string $fileName): void
     {
-        if(!preg_match('~^[a-zA-Z0-9-.\\\/_]{2,100}.(pdf|jpg|jpeg|png)$~',$fileName))
-        {
-            throw new EntityAttributeException('File name is not valid');
-        }
-
         $this->fileName = $fileName;
     }
 
@@ -72,9 +65,9 @@ class Upload extends Entity
      */
     public function setOriginalName(string $originalName): void
     {
-        if(!preg_match('~^[a-zA-Z0-9-._]{2,100}.(pdf|jpg|jpeg|png)$~',$originalName))
+        if(preg_match('~^[a-zA-Z0-9-._]{2,100}.(pdf|jpg|jpeg|png)$~',$originalName) == 0)
         {
-            throw new EntityAttributeException('File name is not valid');
+            throw new EntityAttributeException('File name : '.$originalName.' is not valid');
         }
 
         $this->originalName = $originalName;
@@ -99,11 +92,18 @@ class Upload extends Entity
     }
 
     /**
-     * @param int|null $type
+     * @param string|null $type
      */
-    public function setType(?int $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
 
+    /**
+     * Sets an array with the mandatory fields
+     */
+    protected function setMandatoryProperties()
+    {
+        $this->mandatoryProperties = ['fileName','originalName','type'];
+    }
 }

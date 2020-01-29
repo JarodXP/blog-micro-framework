@@ -46,7 +46,16 @@ abstract class Manager
      */
     public function findOneBy(array $conditions)
     {
-        return $this->findListBy($conditions)[0];
+        if(!empty($this->findListBy($conditions)))
+        {
+            //If not empty, returns first index
+            return $this->findListBy($conditions)[0];
+        }
+        else
+        {
+            //If empty, returns empty array
+            return $this->findListBy($conditions);
+        }
     }
 
     /**
@@ -94,7 +103,7 @@ abstract class Manager
      * @param int|null $id
      * @throws EntityAttributeException
      */
-    protected function checkUniqueFields(array $fieldValue, bool $update, int $id = null)
+    public function checkUniqueFields(array $fieldValue, bool $update, int $id = null)
     {
         foreach ($fieldValue as $field => $value)
         {
@@ -105,10 +114,10 @@ abstract class Manager
             if(!empty($existing))
             {
                 //Checks if it's not the same in case of update
-                if(($update == true && (int)$existing['id'] != $id))
+                if(($update == true && (int)$existing['id'] != $id) || $update == false)
                 {
                     //If not throws exception
-                    throw new EntityAttributeException('The value '.$field.' already exists.');
+                    throw new EntityAttributeException('La valeur '.$value.' existe déjà.');
                 }
             }
         }
