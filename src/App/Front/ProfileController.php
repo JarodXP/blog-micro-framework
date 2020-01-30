@@ -42,7 +42,7 @@ class ProfileController extends Controller
             $this->templateVars['resume'] = new Upload($resumeData);
         }
 
-        $this->twigRender('/frontMyProfile.html.twig',$this->templateVars);
+        $this->twigRender('/frontMyProfile.html.twig');
     }
 
     public function displayContactFormAction()

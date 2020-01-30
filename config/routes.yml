@@ -69,7 +69,12 @@
   uri: ^/admin/posts/new-post$
   package: admin
   controller: posts
-  action: newPost
+  action: displayNewPost
+-
+  uri: ^/admin/posts/register-new-post$
+  package: admin
+  controller: posts
+  action: registerNewPost
 -
   uri: ^/admin/posts/remove=([0-9]+)$
   package: admin

@@ -84,10 +84,14 @@ class PostManager extends Manager
         $requestParameters = $listManager->getRequestParameters($conditions,$options);
 
         $q = $this->dao->prepare(
-            'SELECT posts.*, uploads.*, users.username
-                            FROM posts 
-                            INNER JOIN uploads ON posts.header_id = uploads.id
-                            INNER JOIN users ON posts.user_id = users.id'.' '.$requestParameters);
+            'SELECT posts.*, 
+                            uploads.file_name AS fileName,
+                            uploads.original_name AS originalName,
+                            uploads.alt AS alt,
+                            users.username AS author
+                        FROM posts 
+                        INNER JOIN uploads ON posts.header_id = uploads.id
+                        INNER JOIN users ON posts.user_id = users.id'.' '.$requestParameters);
 
         $q->execute();
 

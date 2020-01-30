@@ -5,6 +5,8 @@ namespace Admin;
 
 
 use Core\Controller;
+use Entities\Post;
+use Exceptions\EntityAttributeException;
 use Models\PostManager;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -86,7 +88,7 @@ class PostsController extends Controller
         $this->templateVars[self::ORDER] = $options[self::ORDER];
 
         //Renders the template
-        $this->twigRender('adminPosts.html.twig',$this->templateVars);
+        $this->twigRender('adminPosts.html.twig');
 
     }
 
@@ -102,16 +104,29 @@ class PostsController extends Controller
         }
     }
 
-    public function newPostAction()
+    public function registerNewPostAction()
     {
+        $post = new Post([$this->httpParameters]);
+
+        $postManager = new PostManager();
+
         try
         {
-            echo $this->twigEnvironment->render('/adminNewPost.html.twig');
+            if($post->isValid())
+            {
+                $postManager->insertPost($post);
+            }
+            $this->editPostAction();
         }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
+        catch (EntityAttributeException $e)
         {
-            print_r($e->getMessage());
+            $this->response->redirect('/admin/new-post',$e->getMessage());
         }
+    }
+
+    public function displayNewPostAction()
+    {
+        $this->twigRender('/adminNewPost.html.twig');
     }
 
     public function removePostAction()
