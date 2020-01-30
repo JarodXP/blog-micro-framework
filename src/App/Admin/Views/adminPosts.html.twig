@@ -67,10 +67,10 @@
                                 <label class="col-12 col-md-10" for="rangeLimit">Nombre d'articles par page</label>
 
                                 <select class="form-control col-2 offset-5 offset-md-0" id="rangeLimit" name="limit" >
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>25</option>
-                                    <option>100</option>
+                                    <option {% if limit == 5 %}selected{% endif %}>5</option>
+                                    <option {% if limit == 10 %}selected{% endif %}>10</option>
+                                    <option {% if limit == 25 %}selected{% endif %}>25</option>
+                                    <option {% if limit == 100 %}selected{% endif %}>100</option>
                                 </select>
                             </div>
                         </div>

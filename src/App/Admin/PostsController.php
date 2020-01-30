@@ -69,6 +69,9 @@ class PostsController extends Controller
         //Sets the list in the template variables
         $this->templateVars['posts'] = $postManager->findPostsAndUploads(null,$options);
 
+        //Sets the limit in the template variables
+        $this->templateVars['limit'] = $options['limit'];
+
         //Sets the page in the template variables
         isset($this->httpParameters[self::PAGE])
             ? $this->templateVars[self::PAGE] = $this->httpParameters[self::PAGE]
