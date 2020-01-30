@@ -14,67 +14,76 @@ class PostsController extends Controller
 {
     protected array $table = [];
 
+    public const LIMIT = 'limit',
+        PAGE = 'page',
+        OFFSET = 'offset',
+        ORDER = 'order',
+        CURRENT_ORDER = 'currentOrder',
+        DIRECTION = 'direction',
+        DIRECTION_ASC = 'asc',
+        DIRECTION_DESC = 'desc';
+
     public function postListAction()
     {
         $postManager = new PostManager();
 
         //Sets lists options to sort the table
-        isset($this->httpParameters['limit']) ? $options['limit'] = $this->httpParameters['limit'] : $options['limit'] = 10;
+        isset($this->httpParameters[self::LIMIT]) ? $options[self::LIMIT] = $this->httpParameters[self::LIMIT] : $options[self::LIMIT] = 10;
 
-        isset($this->httpParameters['page'])
-            ? $options['offset'] = ($this->httpParameters['page']) * $options['limit'] - $options['limit']
-            : $options['offset'] = null;
+        isset($this->httpParameters[self::PAGE])
+            ? $options[self::OFFSET] = ($this->httpParameters[self::PAGE]) * $options[self::LIMIT] - $options[self::LIMIT]
+            : $options[self::OFFSET] = null;
 
-        if(isset($this->httpParameters['order']))
+        if(isset($this->httpParameters[self::ORDER]))
         {
-            $options['order'] = $this->httpParameters['order'];
+            $options[self::ORDER] = $this->httpParameters[self::ORDER];
         }
-        elseif (isset($this->httpParameters['currentOrder']))
+        elseif (isset($this->httpParameters[self::CURRENT_ORDER]))
         {
-            $options['order'] = $this->httpParameters['currentOrder'];
+            $options[self::ORDER] = $this->httpParameters[self::CURRENT_ORDER];
         }
         else
         {
-            $options['order'] = PostManager::DATE_ADDED;
+            $options[self::ORDER] = PostManager::DATE_ADDED;
         }
 
-        if(isset($this->httpParameters['order'])
-            && isset($this->httpParameters['currentOrder'])
-            && isset($this->httpParameters['direction'])
-            && $this->httpParameters['order'] == $this->httpParameters['currentOrder'])
+        if(isset($this->httpParameters[self::ORDER])
+            && isset($this->httpParameters[self::CURRENT_ORDER])
+            && isset($this->httpParameters[self::DIRECTION])
+            && $this->httpParameters[self::ORDER] == $this->httpParameters[self::CURRENT_ORDER])
         {
-            $this->httpParameters['direction'] == 'asc'
-                ? $options['direction'] = 'desc'
-                : $options['direction'] = 'asc';
+            $this->httpParameters[self::DIRECTION] == self::DIRECTION_ASC
+                ? $options[self::DIRECTION] = self::DIRECTION_DESC
+                : $options[self::DIRECTION] = self::DIRECTION_ASC;
         }
         else
         {
-            $options['direction'] = 'asc';
+            $options[self::DIRECTION] = self::DIRECTION_ASC;
         }
 
         //Sets the list in the template variables
         $this->templateVars['posts'] = $postManager->findPostsAndUploads(null,$options);
 
         //Sets the page in the template variables
-        isset($this->httpParameters['page'])
-            ? $this->templateVars['page'] = $this->httpParameters['page']
-            : $this->templateVars['page'] = '1';
+        isset($this->httpParameters[self::PAGE])
+            ? $this->templateVars[self::PAGE] = $this->httpParameters[self::PAGE]
+            : $this->templateVars[self::PAGE] = '1';
 
         //Sets the nextPage in the template variables
-        count($this->templateVars['posts']) >= $options['limit']
-            ?  $this->templateVars['nextPage'] = $this->templateVars['page'] + 1
+        count($this->templateVars['posts']) >= $options[self::LIMIT]
+            ?  $this->templateVars['nextPage'] = $this->templateVars[self::PAGE] + 1
             :  $this->templateVars['nextPage'] = null;
 
         //Sets the prevPage in the template variables
-        (is_null($options['offset']) || $options['offset'] == 0)
+        (is_null($options[self::OFFSET]) || $options[self::OFFSET] == 0)
             ?  $this->templateVars['prevPage'] = null
-            :  $this->templateVars['prevPage'] = $this->templateVars['page'] - 1;
+            :  $this->templateVars['prevPage'] = $this->templateVars[self::PAGE] - 1;
 
         //Sets the direction in the template variables
-        $this->templateVars['direction'] = $options['direction'];
+        $this->templateVars[self::DIRECTION] = $options[self::DIRECTION];
 
         //Sets the order in the template variables
-        $this->templateVars['order'] = $options['order'];
+        $this->templateVars[self::ORDER] = $options[self::ORDER];
 
         //Renders the template
         $this->twigRender('adminPosts.html.twig',$this->templateVars);
