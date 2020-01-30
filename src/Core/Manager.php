@@ -82,21 +82,6 @@ abstract class Manager
     }
 
     /**
-     * Gets the columns for a requested table.
-     * Used to check if column exists.
-     * @param string $table
-     * @return array
-     */
-    public function databaseTableColumns(string $table = null)
-    {
-        $q = $this->dao->prepare('SELECT COLUMN_NAME FROM information_schema. COLUMNS WHERE TABLE_NAME = :table');
-
-        $q->execute([':table' => $table]);
-
-        return $q->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
      * Checks if the requested fields are unique
      * @param array $fieldValue
      * @param bool $update

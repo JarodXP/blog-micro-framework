@@ -70,13 +70,11 @@ class ProfileController extends Controller
                 $admin->setAvatarId($avatar->getId());
             }
 
-            $manager = new UserManager();
-
             //Checks if all mandatory properties are set and not null
             if($admin->isValid())
             {
                 //Updates the user
-                $manager->updateUser($admin);
+                $userManager->updateUser($admin);
 
                 //Removes former avatar (both in server and database)
                 if(!is_null($currentAvatarId))

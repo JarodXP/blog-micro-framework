@@ -5,6 +5,7 @@ namespace Core;
 
 
 use App\Application;
+use App\Shared\AdminTwigExtension;
 use Models\UserManager;
 use ReflectionClass;
 use ReflectionException;
@@ -48,6 +49,9 @@ abstract class Controller
         {
             $this->twigEnvironment->addExtension(new DebugExtension());
         }
+
+        //Sets the custom Twig Extensions
+        $this->twigEnvironment->addExtension(new AdminTwigExtension());
 
         //Sets the parameters to be used in the actions
         $this->httpParameters = $httpParameters;
