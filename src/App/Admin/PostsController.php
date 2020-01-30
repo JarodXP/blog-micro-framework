@@ -8,12 +8,15 @@ use Core\Controller;
 use Entities\Post;
 use Exceptions\EntityAttributeException;
 use Models\PostManager;
+use Services\FileUploader;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 class PostsController extends Controller
 {
+    use FileUploader;
+
     protected array $table = [];
 
     public const LIMIT = 'limit',
@@ -94,38 +97,61 @@ class PostsController extends Controller
 
     public function editPostAction()
     {
-        try
-        {
-            echo $this->twigEnvironment->render('/adminEditPost.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+        $post = new Post();
+
+        $this->templateVars['formAction'] = 'post-'.$post->getSlug();
+
+        $this->twigRender('/adminEditPost.html.twig');
     }
 
     public function registerNewPostAction()
     {
-        $post = new Post([$this->httpParameters]);
+        $post = new Post($this->httpParameters);
 
         $postManager = new PostManager();
 
+        //Sets a variable to store the current postHeader id
+        $currentPostHeaderId = null;
+
         try
         {
+            //Checks if $_FILES['postHeaderFile'] contains a file
+            if(($_FILES['postHeaderFile']['error'] != 4))
+            {
+                //Uses FileUploader service to upload the post header image and get an Upload object
+                $postHeader = $this->uploadImage('postHeaderFile',$this->httpParameters['alt']);
+
+                //Stores the current $admin avatarId
+                $currentPostHeaderId = $post->getHeaderId();
+
+                //Sets the new avatarId property to the $admin object
+                $post->setHeaderId($postHeader->getId());
+            }
+
+            //Checks if all mandatory properties are set and not null
             if($post->isValid())
             {
+                //Inserts the $post
                 $postManager->insertPost($post);
+
+                //Removes former postHeader (both in server and database)
+                if(!is_null($currentPostHeaderId))
+                {
+                    $this->removeFile($currentPostHeaderId);
+                }
             }
-            $this->editPostAction();
+
         }
         catch (EntityAttributeException $e)
         {
-            $this->response->redirect('/admin/new-post',$e->getMessage());
+            $this->response->redirect('/admin/posts/new-post',$e->getMessage());
         }
     }
 
     public function displayNewPostAction()
     {
+        $this->templateVars['formAction'] = 'register-new-post';
+
         $this->twigRender('/adminNewPost.html.twig');
     }
 

@@ -15,7 +15,7 @@ class PostManager extends Manager
     public const TABLE = 'posts',
         TITLE = 'title',
         SLUG = 'slug',
-        USER_ID = 'user_id',
+        AUTHOR = 'author',
         HEADER_ID = 'header_id',
         EXTRACT = 'extract',
         CONTENT = 'content',
@@ -37,10 +37,10 @@ class PostManager extends Manager
         ],false);
 
         $q = $this->dao->prepare(
-            'INSERT INTO '.self::TABLE.'('.self::USER_ID.', '.self::TITLE.', '
+            'INSERT INTO '.self::TABLE.'('.self::AUTHOR.', '.self::TITLE.', '
                             .self::SLUG.', '.self::HEADER_ID.', '.self::EXTRACT.', '
                             .self::CONTENT.', '.self::STATUS.') 
-                        VALUES(:userId, :title, :slug, :headerId, :extract, :content, :status)');
+                        VALUES(:author, :title, :slug, :headerId, :extract, :content, :status)');
 
         $this->bindAllFields($q,$post);
 
@@ -61,7 +61,7 @@ class PostManager extends Manager
         ],true,$post->getId());
 
         $q = $this->dao->prepare('UPDATE '.self::TABLE.' SET '
-            .self::USER_ID.'= :userId, '.self::TITLE.' = :title,'.self::SLUG.' = :slug,'.self::HEADER_ID.' = :headerId, '
+            .self::AUTHOR.'= :userId, '.self::TITLE.' = :title,'.self::SLUG.' = :slug,'.self::HEADER_ID.' = :headerId, '
             .self::EXTRACT.' = :extract, '.self::CONTENT.' = :content, '.self::STATUS.' = :status WHERE id = :id');
 
         $q->bindValue(':id', $post->getId(),PDO::PARAM_INT);
@@ -87,11 +87,9 @@ class PostManager extends Manager
             'SELECT posts.*, 
                             uploads.file_name AS fileName,
                             uploads.original_name AS originalName,
-                            uploads.alt AS alt,
-                            users.username AS author
+                            uploads.alt AS alt
                         FROM posts 
-                        INNER JOIN uploads ON posts.header_id = uploads.id
-                        INNER JOIN users ON posts.user_id = users.id'.' '.$requestParameters);
+                        INNER JOIN uploads ON posts.header_id = uploads.id'.' '.$requestParameters);
 
         $q->execute();
 
@@ -105,7 +103,7 @@ class PostManager extends Manager
      */
     private function bindAllFields(PDOStatement &$q, Post $post)
     {
-        $q->bindValue(':userId',$post->getUserId(),PDO::PARAM_INT);
+        $q->bindValue(':author',$post->getAuthor());
         $q->bindValue(':title',$post->getTitle());
         $q->bindValue(':slug',$post->getSlug());
         $q->bindValue(':headerId',$post->getHeaderId(),PDO::PARAM_INT);
