@@ -14,6 +14,7 @@ class PostManager extends Manager
 {
     public const TABLE = 'posts',
         TITLE = 'title',
+        SLUG = 'slug',
         USER_ID = 'user_id',
         HEADER_ID = 'header_id',
         EXTRACT = 'extract',
@@ -32,12 +33,14 @@ class PostManager extends Manager
         //Checks if the title is unique
         $this->checkUniqueFields([
             self::TITLE => $post->getTitle(),
+            self::SLUG => $post->getSlug()
         ],false);
 
         $q = $this->dao->prepare(
             'INSERT INTO '.self::TABLE.'('.self::USER_ID.', '.self::TITLE.', '
-                        .self::HEADER_ID.', '.self::EXTRACT.', '.self::CONTENT.', '.self::STATUS.') 
-                        VALUES(:userId, :title, :headerId, :extract, :content, :status)');
+                            .self::SLUG.', '.self::HEADER_ID.', '.self::EXTRACT.', '
+                            .self::CONTENT.', '.self::STATUS.') 
+                        VALUES(:userId, :title, :slug, :headerId, :extract, :content, :status)');
 
         $this->bindAllFields($q,$post);
 
@@ -54,10 +57,11 @@ class PostManager extends Manager
         //Checks if the title is unique
         $this->checkUniqueFields([
             self::TITLE => $post->getTitle(),
+            self::SLUG => $post->getSlug(),
         ],true,$post->getId());
 
         $q = $this->dao->prepare('UPDATE '.self::TABLE.' SET '
-            .self::USER_ID.'= :userId, '.self::TITLE.' = :title,'.self::HEADER_ID.' = :headerId, '
+            .self::USER_ID.'= :userId, '.self::TITLE.' = :title,'.self::SLUG.' = :slug,'.self::HEADER_ID.' = :headerId, '
             .self::EXTRACT.' = :extract, '.self::CONTENT.' = :content, '.self::STATUS.' = :status WHERE id = :id');
 
         $q->bindValue(':id', $post->getId(),PDO::PARAM_INT);
@@ -99,6 +103,7 @@ class PostManager extends Manager
     {
         $q->bindValue(':userId',$post->getUserId(),PDO::PARAM_INT);
         $q->bindValue(':title',$post->getTitle());
+        $q->bindValue(':slug',$post->getSlug());
         $q->bindValue(':headerId',$post->getHeaderId(),PDO::PARAM_INT);
         $q->bindValue(':extract',$post->getExtract());
         $q->bindValue(':content',$post->getContent());

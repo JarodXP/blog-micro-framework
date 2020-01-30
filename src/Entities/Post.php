@@ -10,14 +10,12 @@ use Exceptions\EntityAttributeException;
 class Post extends Entity
 {
     protected int $userId;
-
     protected bool $status;
-
     protected ?int $headerId;
-
-    protected ?string $title, $extract, $content;
-
-    protected string $dateAdded, $dateModified;
+    protected ?string $title;
+    protected ?string $extract;
+    protected ?string $content;
+    protected string $slug, $dateAdded, $dateModified;
 
 
     //GETTERS
@@ -84,6 +82,14 @@ class Post extends Entity
     public function getDateModified(): string
     {
         return $this->dateModified;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 
     //SETTERS
@@ -165,5 +171,21 @@ class Post extends Entity
     protected function setDateModified(string $dateModified): void
     {
         $this->dateModified = $dateModified;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * Sets an array with the mandatory fields
+     */
+    protected function setMandatoryProperties()
+    {
+        $this->mandatoryProperties = ['title','user_id','slug','status'];
     }
 }
