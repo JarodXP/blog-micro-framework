@@ -100,18 +100,34 @@ class PostsController extends Controller
 
     public function editPostAction()
     {
-        $post = new Post();
+        $postManager = new PostManager();
 
-        $this->templateVars['formAction'] = 'post-'.$post->getSlug();
+        $post = $postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']])[0];
+
+        $this->templateVars['post'] = $post;
+
+        $this->templateVars['postSlug'] = $this->httpParameters['postSlug'];
 
         $this->twigRender('/adminEditPost.html.twig');
     }
 
-    public function registerNewPostAction()
+    public function registerPostAction()
     {
-        $post = new Post($this->httpParameters);
-
         $postManager = new PostManager();
+
+        //If it's a new post, creates a post instance from the httpParameters
+        if($this->httpParameters['postSlug'] == 'new-post')
+        {
+            $post = new Post($this->httpParameters);
+        }
+        //If it's an existing post, creates instance from database
+        else
+        {
+            $post = new Post($postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']])[0]);
+
+            //And updates the properties with the httpParameters
+            $post->updateProperties($this->httpParameters);
+        }
 
         //Sets a variable to store the current postHeader id
         $currentPostHeaderId = null;
@@ -124,36 +140,65 @@ class PostsController extends Controller
                 //Uses FileUploader service to upload the post header image and get an Upload object
                 $postHeader = $this->uploadImage('postHeaderFile',$this->httpParameters['alt']);
 
-                //Stores the current $admin avatarId
+                //Stores the current post header id
                 $currentPostHeaderId = $post->getHeaderId();
 
-                //Sets the new avatarId property to the $admin object
+                //Sets the new postHeaderId property to the $post object
                 $post->setHeaderId($postHeader->getId());
             }
 
             //Checks if all mandatory properties are set and not null
             if($post->isValid())
             {
-                //Inserts the $post
-                $postManager->insertPost($post);
-
-                //Removes former postHeader (both in server and database)
-                if(!is_null($currentPostHeaderId))
+                //Inserts or updates post depending on the "new-post" parameter
+                if($this->httpParameters['postSlug'] == 'new-post')
                 {
-                    $this->removeFile($currentPostHeaderId);
+                    //Inserts the $post
+                    $postManager->insertPost($post);
+                }
+
+                else
+                {
+                    //Inserts the $post
+                    $postManager->updatePost($post);
+
+                    //Removes former postHeader (both in server and database)
+                    if(!is_null($currentPostHeaderId))
+                    {
+                        $this->removeFile($currentPostHeaderId);
+                    }
                 }
             }
+
+            //Redirects to the post
+            $this->response->redirect('/admin/posts/'.$post->getSlug());
 
         }
         catch (EntityAttributeException $e)
         {
-            $this->response->redirect('/admin/posts/new-post',$e->getMessage());
+            //If a file has been created during process, removes it
+            if(isset($postHeader) && !is_null($postHeader->getId()))
+            {
+                $this->removeFile($currentPostHeaderId);
+            }
+
+            //Redirects either to the edit post page or the new post page
+            if(isset($this->httpParameters['postSlug']))
+            {
+                $location = '/admin/posts/'.$this->httpParameters['postSlug'];
+            }
+            else
+            {
+                $location = '/admin/posts/new-post';
+            }
+
+            $this->response->redirect($location,$e->getMessage());
         }
     }
 
     public function displayNewPostAction()
     {
-        $this->templateVars['formAction'] = 'register-new-post';
+        $this->templateVars['postSlug'] = 'new-post';
 
         $this->twigRender('/adminNewPost.html.twig');
     }

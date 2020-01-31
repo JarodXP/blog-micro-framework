@@ -27,12 +27,12 @@
   controller: blog
   action: postList
 -
-  uri: ^/blog/post-([0-9]+)$
+  uri: ^/blog/([a-zA-Z0-9\-]{5,30})$
   package: front
   controller: blog
   action: displayPost
 -
-  uri: ^/blog/post-([0-9]+)/send-comment$
+  uri: ^/blog/([a-zA-Z0-9\-]{5,30})/send-comment$
   package: front
   controller: blog
   action: sendComment
@@ -61,7 +61,7 @@
   controller: posts
   action: postList
 -
-  uri: ^/admin/posts/post-([0-9]+)$
+  uri: ^/admin/posts/([a-zA-Z0-9\-]{5,30})$
   package: admin
   controller: posts
   action: editPost
@@ -71,12 +71,12 @@
   controller: posts
   action: displayNewPost
 -
-  uri: ^/admin/posts/register-new-post$
+  uri: ^/admin/posts/\?register=([a-zA-Z0-9\-]{5,30})$
   package: admin
   controller: posts
-  action: registerNewPost
+  action: registerPost
 -
-  uri: ^/admin/posts/remove=([0-9]+)$
+  uri: ^/admin/posts/remove=([a-zA-Z0-9\-]{5,30})$
   package: admin
   controller: posts
   action: removePost

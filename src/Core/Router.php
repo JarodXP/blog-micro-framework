@@ -81,10 +81,17 @@ class Router
         foreach ($GLOBALS['routes'] as $route)
         {
             //If matches pattern, sets the $route attribute
-            if(preg_match('~^'.$route['uri'].'$~', $uri))
+            if(preg_match('~^'.$route['uri'].'$~', $uri,$matches))
             {
                 //Sets the route
                 $this->route = new Route($route);
+
+                //Sets the post slug if set.
+                //The index[1] gets the regex group corresponding to the slug
+                if(isset($matches[1]))
+                {
+                    $this->httpParameters['postSlug'] = $matches[1];
+                }
             }
         }
 

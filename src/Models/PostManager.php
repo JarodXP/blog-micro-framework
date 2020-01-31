@@ -61,7 +61,7 @@ class PostManager extends Manager
         ],true,$post->getId());
 
         $q = $this->dao->prepare('UPDATE '.self::TABLE.' SET '
-            .self::AUTHOR.'= :userId, '.self::TITLE.' = :title,'.self::SLUG.' = :slug,'.self::HEADER_ID.' = :headerId, '
+            .self::AUTHOR.'= :author, '.self::TITLE.' = :title,'.self::SLUG.' = :slug,'.self::HEADER_ID.' = :headerId, '
             .self::EXTRACT.' = :extract, '.self::CONTENT.' = :content, '.self::STATUS.' = :status WHERE id = :id');
 
         $q->bindValue(':id', $post->getId(),PDO::PARAM_INT);
@@ -77,8 +77,9 @@ class PostManager extends Manager
      * @param $options
      * @return array
      */
-    public function findPostsAndUploads($conditions,$options)
+    public function findPostsAndUploads($conditions = null, $options = null)
     {
+        //Sets the parameters with the ListHandler Service
         $listManager = new ListHandler($this);
 
         $requestParameters = $listManager->getRequestParameters($conditions,$options);
@@ -89,7 +90,7 @@ class PostManager extends Manager
                             uploads.original_name AS originalName,
                             uploads.alt AS alt
                         FROM posts 
-                        INNER JOIN uploads ON posts.header_id = uploads.id'.' '.$requestParameters);
+                        LEFT JOIN uploads ON posts.header_id = uploads.id'.' '.$requestParameters);
 
         $q->execute();
 
