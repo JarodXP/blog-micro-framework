@@ -102,8 +102,10 @@ class PostsController extends Controller
     {
         $postManager = new PostManager();
 
+        //Creates instance from database
         $post = $postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']])[0];
 
+        //Sets the twig template vars to be sent to the twig environment for render
         $this->templateVars['post'] = $post;
 
         $this->templateVars['postSlug'] = $this->httpParameters['postSlug'];
@@ -115,25 +117,25 @@ class PostsController extends Controller
     {
         $postManager = new PostManager();
 
-        //If it's a new post, creates a post instance from the httpParameters
-        if($this->httpParameters['postSlug'] == 'new-post')
-        {
-            $post = new Post($this->httpParameters);
-        }
-        //If it's an existing post, creates instance from database
-        else
-        {
-            $post = new Post($postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']])[0]);
-
-            //And updates the properties with the httpParameters
-            $post->updateProperties($this->httpParameters);
-        }
-
-        //Sets a variable to store the current postHeader id
-        $currentPostHeaderId = null;
-
         try
         {
+            //If it's a new post, creates a post instance from the httpParameters
+            if($this->httpParameters['postSlug'] == 'new-post')
+            {
+                $post = new Post($this->httpParameters);
+            }
+            //If it's an existing post, creates instance from database
+            else
+            {
+                $post = new Post($postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']])[0]);
+
+                //And updates the properties with the httpParameters
+                $post->updateProperties($this->httpParameters);
+            }
+
+            //Sets a variable to store the current postHeader id
+            $currentPostHeaderId = null;
+
             //Checks if $_FILES['postHeaderFile'] contains a file
             if(($_FILES['postHeaderFile']['error'] != 4))
             {
@@ -148,25 +150,24 @@ class PostsController extends Controller
             }
 
             //Checks if all mandatory properties are set and not null
-            if($post->isValid())
+            $post->isValid();
+
+            //Inserts or updates post depending on the "new-post" parameter
+            if($this->httpParameters['postSlug'] == 'new-post')
             {
-                //Inserts or updates post depending on the "new-post" parameter
-                if($this->httpParameters['postSlug'] == 'new-post')
-                {
-                    //Inserts the $post
-                    $postManager->insertPost($post);
-                }
+                //Inserts the $post
+                $postManager->insertPost($post);
+            }
 
-                else
-                {
-                    //Inserts the $post
-                    $postManager->updatePost($post);
+            else
+            {
+                //Updates the $post
+                $postManager->updatePost($post);
 
-                    //Removes former postHeader (both in server and database)
-                    if(!is_null($currentPostHeaderId))
-                    {
-                        $this->removeFile($currentPostHeaderId);
-                    }
+                //Removes former postHeader (both in server and database)
+                if(!is_null($currentPostHeaderId))
+                {
+                    $this->removeFile($currentPostHeaderId);
                 }
             }
 
@@ -183,21 +184,13 @@ class PostsController extends Controller
             }
 
             //Redirects either to the edit post page or the new post page
-            if(isset($this->httpParameters['postSlug']))
-            {
-                $location = '/admin/posts/'.$this->httpParameters['postSlug'];
-            }
-            else
-            {
-                $location = '/admin/posts/new-post';
-            }
-
-            $this->response->redirect($location,$e->getMessage());
+            $this->response->redirect('/admin/posts/'.$this->httpParameters['postSlug'],$e->getMessage());
         }
     }
 
     public function displayNewPostAction()
     {
+        //Sets the postSlug var to be sent to the twig environment for render
         $this->templateVars['postSlug'] = 'new-post';
 
         $this->twigRender('/adminNewPost.html.twig');
