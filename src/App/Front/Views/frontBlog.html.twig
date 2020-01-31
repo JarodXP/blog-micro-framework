@@ -12,58 +12,43 @@
 
         <h2 class="col-12 text-center">Articles</h2>
 
-        <!-- Blog Post -->
-        <div class="card mb-4">
-            <img class="card-img-top post-list-header" src="/assets/uploads/postHeader.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-title">1er article</h2>
-                <p class="card-text">Nulla volutpat finibus vehicula. Aliquam maximus sapien ut arcu rhoncus vulputate. Ut accumsan amet...</p>
-                <a href="/blog/post-0" class="btn btn-primary">Lire plus &rarr;</a>
+        {% for post in posts %}
+            <!-- Blog Post -->
+            <div class="card mb-4">
+                <img class="card-img-top post-list-header" src="{{ '/assets/uploads/'~post.fileName }}" alt="{{ post.alt }}">
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p class="card-text">{{ post.extract }}</p>
+                    <a href="{{ '/blog/'~post.slug }}" class="btn btn-primary">Lire plus &rarr;</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Publié le {{ post.date_added | date("d/m/Y") }} par
+                    <a href="/profile">{{ post.author }}</a>
+                </div>
             </div>
-            <div class="card-footer text-muted">
-                Publié le 13/01/20 par
-                <a href="/profile">Greg</a>
-            </div>
-        </div>
-
-        <div class="card mb-4">
-            <img class="card-img-top post-list-header" src="/assets/uploads/postHeader.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-title">1er article</h2>
-                <p class="card-text">Nulla volutpat finibus vehicula. Aliquam maximus sapien ut arcu rhoncus vulputate. Ut accumsan amet...</p>
-                <a href="/blog/post-0" class="btn btn-primary">Lire plus &rarr;</a>
-            </div>
-            <div class="card-footer text-muted">
-                Publié 13/01/20 par
-                <a href="/profile">Greg</a>
-            </div>
-        </div>
-
-        <div class="card mb-4">
-            <img class="card-img-top post-list-header" src="/assets/uploads/postHeader.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-title">1er article</h2>
-                <p class="card-text">Nulla volutpat finibus vehicula. Aliquam maximus sapien ut arcu rhoncus vulputate. Ut accumsan amet...</p>
-                <a href="/blog/post-0" class="btn btn-primary">Lire plus &rarr;</a>
-            </div>
-            <div class="card-footer text-muted">
-                Publié 13/01/20 par
-                <a href="/profile">Greg</a>
-            </div>
-        </div>
+        {% endfor %}
 
         <!-- Pagination -->
+        <p class="col-12 text-center">Page : {{ page }}</p>
         <div class="col-12 text-center">
             <ul class="pagination justify-content-center mb-4">
                 <li class="page-item">
-                    <a class="page-link" href="#">&larr; Older</a>
+                    <button type="submit" form="blogList" formaction="{{ '/blog/?page='~prevPage }}"
+                            class="page-link {{ enableClass(prevPage) }}">&larr; Older</button>
                 </li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Newer &rarr;</a>
+                <li class="page-item">
+                    <button type="submit" form="blogList" formaction="{{ '/blog/?page='~nextPage }}"
+                            class="page-link {{ enableClass(nextPage) }}">Newer &rarr;</button>
                 </li>
             </ul>
         </div>
     </div>
 
+{% endblock %}
+
+{% block sideBar %}
+    {% include 'widgetPostsListsSort.html.twig' %}
+    {% include 'widgetSocialNetworks.html.twig' %}
+    {% include 'widgetLastPosts.html.twig' %}
 {% endblock %}
 

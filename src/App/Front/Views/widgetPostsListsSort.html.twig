@@ -1,0 +1,12 @@
+<form id="blogList" action="/blog/" method="post" class="card my-4">
+    <div class="card-header d-flex justify-content-center align-items-center">
+        <label for="rangeLimit" class="mb-0 mr-2">Afficher:</label>
+        <select class="form-control col-4" id="rangeLimit" name="limit" >
+            <option {% if limit == 5 %}selected{% endif %}>5</option>
+            <option {% if limit == 10 %}selected{% endif %}>10</option>
+            <option {% if limit == 25 %}selected{% endif %}>25</option>
+            <option {% if limit == 100 %}selected{% endif %}>100</option>
+        </select>
+        <button id="btn-list-valid" class="ml-2 ml-md-3" form="blogList"><i class="fas fa-arrow-circle-right"></i></button>
+    </div>
+</form>
