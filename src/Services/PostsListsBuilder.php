@@ -5,6 +5,7 @@ namespace Services;
 
 
 use Admin\PostsController;
+use Entities\Post;
 use Models\PostManager;
 
 trait PostsListsBuilder
@@ -18,7 +19,7 @@ trait PostsListsBuilder
      * Used in admin posts and blogs
      * @return array
      */
-    public function listOptions():array
+    public function postsListOptions():array
     {
         //Sets lists options limit
         isset($this->httpParameters[PostsController::LIMIT])
@@ -91,5 +92,22 @@ trait PostsListsBuilder
 
         //Sets the order in the template variables
         $this->templateVars[PostsController::ORDER] = $options[PostsController::ORDER];
+    }
+
+    /**
+     * Sets the sidebar widget "last posts" list
+     * @param int $nbOfPosts
+     */
+    public function sidebarPostsWidgetList(int $nbOfPosts)
+    {
+        $postManager = new PostManager();
+
+        //Gets the list of the 3 last posts order by date_added
+        $this->templateVars['lastPosts'] = $postManager->findListBy(['status' => Post::STATUS_PUBLISHED],
+            [
+                PostsController::LIMIT => $nbOfPosts,
+                PostsController::ORDER => PostManager::DATE_ADDED,
+                PostsController::DIRECTION => PostsController::DIRECTION_DESC
+            ]);
     }
 }

@@ -4,6 +4,7 @@
 namespace Front;
 
 
+use App\Application;
 use Core\Controller;
 use Entities\Post;
 use Models\PostManager;
@@ -16,18 +17,25 @@ class BlogController extends Controller
 {
     use PostsListsBuilder;
 
+    public function __construct(Application $app, array $httpParameters)
+    {
+        parent::__construct($app, $httpParameters);
+
+        //Sets the sidebar widget "last posts" list
+        $this->sidebarPostsWidgetList(3);
+    }
+
     public function postListAction()
     {
-
         //Sets the options to be sent to the manager as parameter for the list
-        $options = $this->listOptions();
+        $options = $this->postsListOptions();
 
         $postManager = new PostManager();
 
         //Gets the list of posts
         $this->templateVars['posts'] = $postManager->findPostsAndUploads(['status' => Post::STATUS_PUBLISHED],$options);
 
-        //Sets the variable to be sent to the twig template
+        //Sets the list variables to be sent to the twig template (page number, next page...)
         $this->buildTemplateListVars($options);
 
         //Renders the template
