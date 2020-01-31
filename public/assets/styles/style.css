@@ -283,7 +283,7 @@ footer .row{
 }
 
 .btn-disabled{
-    display: none;
+    display: none!important;
 }
 
 .sort-icon {
@@ -338,7 +338,19 @@ footer .row{
     background-repeat: no-repeat;
 }
 
-/******DESKTOP***********/
+/******************FRONT********************/
+#btn-list-valid {
+    background-color: transparent;
+    border: none;
+}
+
+#btn-list-valid>i {
+    font-size: 1.5rem;
+    color: darkorange;
+    text-shadow: 1px 1px 2px gray;
+}
+
+/******************DESKTOP***********/
 @media (min-width:768px) {
 
     .under-header{
@@ -398,6 +410,10 @@ footer .row{
 
     #baseline{
         font-size: 1.3rem;
+    }
+
+    #btn-list-valid>i {
+        font-size: 2rem;
     }
 
     /*Admin*/

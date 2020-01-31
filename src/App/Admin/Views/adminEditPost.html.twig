@@ -9,7 +9,7 @@
     {% block h1Title %}<h1 class="col-12 text-center">Modifier l'article : {{ post.title }}</h1>{% endblock %}
 
     {% block h2Title %}<h2 class="col-12 text-center mt-4 mt-md-5">Par {{ post.author }} ,
-        dernière modification le {{ post.date_modified }}</h2>{% endblock %}
+        dernière modification le {{ post.date_modified | date("d/m/Y") }}</h2>{% endblock %}
 
     <form action="/admin/posts/?register={{ postSlug }}" method="post" id="postForm" class="col-12 col-md-10 offset-md-1
     admin-form" enctype="multipart/form-data">
