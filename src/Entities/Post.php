@@ -20,6 +20,8 @@ class Post extends Entity
     protected ?string $dateModified;
     protected string $slug;
 
+    public const STATUS_PUBLISHED = 1, STATUS_DRAFT = 0;
+
 
     //GETTERS
 
