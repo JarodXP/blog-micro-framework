@@ -26,6 +26,8 @@ class PostsController extends Controller
         CURRENT_ORDER = 'currentOrder',
         DIRECTION = 'direction',
         DIRECTION_ASC = 'asc',
+        POST_SLUG = 'postSlug',
+        NEW_POST = 'new-post',
         DIRECTION_DESC = 'desc';
 
     public function postListAction()
@@ -70,7 +72,7 @@ class PostsController extends Controller
         $this->templateVars['posts'] = $postManager->findPostsAndUploads(null,$options);
 
         //Sets the limit in the template variables
-        $this->templateVars['limit'] = $options['limit'];
+        $this->templateVars[self::LIMIT] = $options[self::LIMIT];
 
         //Sets the page in the template variables
         isset($this->httpParameters[self::PAGE])
@@ -103,12 +105,12 @@ class PostsController extends Controller
         $postManager = new PostManager();
 
         //Creates instance from database
-        $post = $postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']])[0];
+        $post = $postManager->findPostsAndUploads(['slug' => $this->httpParameters[self::POST_SLUG]])[0];
 
         //Sets the twig template vars to be sent to the twig environment for render
         $this->templateVars['post'] = $post;
 
-        $this->templateVars['postSlug'] = $this->httpParameters['postSlug'];
+        $this->templateVars[self::POST_SLUG] = $this->httpParameters[self::POST_SLUG];
 
         $this->twigRender('/adminEditPost.html.twig');
     }
@@ -120,14 +122,14 @@ class PostsController extends Controller
         try
         {
             //If it's a new post, creates a post instance from the httpParameters
-            if($this->httpParameters['postSlug'] == 'new-post')
+            if($this->httpParameters[self::POST_SLUG] == self::NEW_POST)
             {
                 $post = new Post($this->httpParameters);
             }
             //If it's an existing post, creates instance from database
             else
             {
-                $post = new Post($postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']])[0]);
+                $post = new Post($postManager->findPostsAndUploads(['slug' => $this->httpParameters[self::POST_SLUG]])[0]);
 
                 //And updates the properties with the httpParameters
                 $post->updateProperties($this->httpParameters);
@@ -137,7 +139,7 @@ class PostsController extends Controller
             $currentPostHeaderId = null;
 
             //Checks if $_FILES['postHeaderFile'] contains a file
-            if(($_FILES['postHeaderFile']['error'] != 4))
+            if($_FILES['postHeaderFile']['error'] != 4)
             {
                 //Uses FileUploader service to upload the post header image and get an Upload object
                 $postHeader = $this->uploadImage('postHeaderFile',$this->httpParameters['alt']);
@@ -153,7 +155,7 @@ class PostsController extends Controller
             $post->isValid();
 
             //Inserts or updates post depending on the "new-post" parameter
-            if($this->httpParameters['postSlug'] == 'new-post')
+            if($this->httpParameters[self::POST_SLUG] == self::NEW_POST)
             {
                 //Inserts the $post
                 $postManager->insertPost($post);
@@ -184,14 +186,14 @@ class PostsController extends Controller
             }
 
             //Redirects either to the edit post page or the new post page
-            $this->response->redirect('/admin/posts/'.$this->httpParameters['postSlug'],$e->getMessage());
+            $this->response->redirect('/admin/posts/'.$this->httpParameters[self::POST_SLUG],$e->getMessage());
         }
     }
 
     public function displayNewPostAction()
     {
         //Sets the postSlug var to be sent to the twig environment for render
-        $this->templateVars['postSlug'] = 'new-post';
+        $this->templateVars[self::POST_SLUG] = self::NEW_POST;
 
         $this->twigRender('/adminNewPost.html.twig');
     }
