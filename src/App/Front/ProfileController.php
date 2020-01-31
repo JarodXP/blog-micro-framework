@@ -4,17 +4,29 @@
 namespace Front;
 
 
+use App\Application;
 use Core\Controller;
 use Entities\Upload;
 use Entities\User;
 use Models\UploadManager;
 use Models\UserManager;
+use Services\PostsListsBuilder;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 class ProfileController extends Controller
 {
+    use PostsListsBuilder;
+
+    public function __construct(Application $app, array $httpParameters)
+    {
+        parent::__construct($app, $httpParameters);
+
+        //Sets the sidebar widget "last posts" list
+        $this->sidebarPostsWidgetList(3);
+    }
+
     public function displayProfileAction()
     {
         //Creates an instance of User for the admin to display profile information

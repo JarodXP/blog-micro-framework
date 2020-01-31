@@ -1,5 +1,12 @@
 #Routes
 ---
+
+-
+  uri: ^/not-found$
+  package: front
+  controller: blog
+  action: notFound
+
 #FRONT OFFICE#######################
 -
   uri: ^/$

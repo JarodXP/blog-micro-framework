@@ -11,7 +11,8 @@ class HttpResponse
         PASSWORD_MISMATCH = 'Les deux champs mot de passe ne sont pas identiques',
         AUTH = 'Veuillez vous identifier pour entrer dans l\'espace admin',
         ADMIN_REGISTERED = 'L\'utilisateur Admin a bien été enregistré',
-        PASSWORD_UPDATED = 'Le mot de passe a été mis à jour';
+        PASSWORD_UPDATED = 'Le mot de passe a été mis à jour',
+        NOT_FOUND = 'La page demandée n\'a pu être trouvée.';
 
 
     /**

@@ -6,6 +6,7 @@ namespace Front;
 
 use App\Application;
 use Core\Controller;
+use Core\HttpResponse;
 use Entities\Post;
 use Models\PostManager;
 use Services\PostsListsBuilder;
@@ -46,8 +47,20 @@ class BlogController extends Controller
     {
         $postManager = new PostManager();
 
-        $this->templateVars['post'] = $postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']])[0];
+        //Gets the list of posts corresponding to the slug
+        $postData = $postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']]);
 
+        //If not empty, sends the post to the template vars
+        if(!empty($postData))
+        {
+            $this->templateVars['post'] = $postData[0];
+        }
+        else
+        {
+            $this->response->redirect('/not-found',HttpResponse::NOT_FOUND);
+        }
+
+        //Displays the page
         $this->twigRender('/frontPost.html.twig');
     }
 
@@ -61,5 +74,10 @@ class BlogController extends Controller
         {
             print_r($e->getMessage());
         }
+    }
+
+    public function notFoundAction()
+    {
+        $this->twigRender('404.html.twig');
     }
 }
