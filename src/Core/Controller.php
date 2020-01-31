@@ -107,11 +107,11 @@ abstract class Controller
      * @param string $template
      * @param array $twigVars
      */
-    protected function twigRender(string $template, array $twigVars = null):void
+    protected function twigRender(string $template):void
     {
         try
         {
-            echo $this->twigEnvironment->render($template,$twigVars);
+            echo $this->twigEnvironment->render($template,$this->templateVars);
 
             exit();
         }

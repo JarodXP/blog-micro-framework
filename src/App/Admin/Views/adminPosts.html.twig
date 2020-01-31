@@ -40,12 +40,12 @@
 
                         <tr>
                             <td class="col-2 align-middle">{{ post.title }}</td>
-                            <td class="col-2 align-middle">{{ post.username }}</td>
+                            <td class="col-2 align-middle">{{ post.author }}</td>
                             <td class="col-2 align-middle">{{ post.date_added | date("d/m/Y") }}</td>
                             <td class="col-2 align-middle">{{ post.date_modified | date("d/m/Y")}}</td>
                             <td class="col-2 align-middle">{{ post.status }}</td>
                             <td class="col-2 align-middle table-image">
-                                <div class="imageDiv" style="background-image: url({{ '/assets/uploads/'~post.file_name }})"></div>
+                                <div class="imageDiv" style="background-image: url({{ '/assets/uploads/'~post.fileName }})"></div>
                             </td>
                             <td class="col-2 icon-edit">
                                 <div class="d-flex flex-row justify-content-between">
@@ -67,10 +67,10 @@
                                 <label class="col-12 col-md-10" for="rangeLimit">Nombre d'articles par page</label>
 
                                 <select class="form-control col-2 offset-5 offset-md-0" id="rangeLimit" name="limit" >
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>25</option>
-                                    <option>100</option>
+                                    <option {% if limit == 5 %}selected{% endif %}>5</option>
+                                    <option {% if limit == 10 %}selected{% endif %}>10</option>
+                                    <option {% if limit == 25 %}selected{% endif %}>25</option>
+                                    <option {% if limit == 100 %}selected{% endif %}>100</option>
                                 </select>
                             </div>
                         </div>

@@ -57,7 +57,6 @@ abstract class Entity
      */
     protected abstract function setMandatoryProperties();
 
-
     //PUBLIC FUNCTIONS
 
     /**

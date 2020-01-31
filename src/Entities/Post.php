@@ -6,18 +6,19 @@ namespace Entities;
 
 use Core\Entity;
 use Exceptions\EntityAttributeException;
+use Models\UserManager;
 
 class Post extends Entity
 {
-    protected int $userId;
-
+    protected string $author;
     protected bool $status;
-
     protected ?int $headerId;
-
-    protected ?string $title, $extract, $content;
-
-    protected string $dateAdded, $dateModified;
+    protected ?string $title;
+    protected ?string $extract;
+    protected ?string $content;
+    protected ?string $dateAdded;
+    protected ?string $dateModified;
+    protected string $slug;
 
 
     //GETTERS
@@ -25,9 +26,9 @@ class Post extends Entity
     /**
      * @return int
      */
-    public function getUserId(): int
+    public function getAuthor(): string
     {
-        return $this->userId;
+        return $this->author;
     }
 
     /**
@@ -86,14 +87,32 @@ class Post extends Entity
         return $this->dateModified;
     }
 
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
     //SETTERS
 
     /**
-     * @param int $userId
+     * @param int $author
      */
-    public function setUserId(int $userId): void
+    public function setAuthor(string $author): void
     {
-        $this->userId = $userId;
+        $userManager = new UserManager();
+
+        //Checks if author is an existing username
+        if(empty($userManager->findOneBy(['username' => $author])))
+        {
+            throw new EntityAttributeException('Author should be a valid user');
+        }
+        else
+        {
+            $this->author = $author;
+        }
     }
 
     /**
@@ -107,8 +126,14 @@ class Post extends Entity
     /**
      * @param bool $status
      */
-    public function setStatus(bool $status): void
+    public function setStatus(bool $status = null): void
     {
+        //Checks if status is null and sets a default value to false
+        if(is_null($status))
+        {
+            $status = false;
+        }
+
         $this->status = $status;
     }
 
@@ -154,7 +179,7 @@ class Post extends Entity
     /**
      * @param string $dateAdded
      */
-    protected function setDateAdded(string $dateAdded): void
+    protected function setDateAdded(string $dateAdded = null): void
     {
         $this->dateAdded = $dateAdded;
     }
@@ -162,8 +187,30 @@ class Post extends Entity
     /**
      * @param string $dateModified
      */
-    protected function setDateModified(string $dateModified): void
+    protected function setDateModified(string $dateModified = null): void
     {
         $this->dateModified = $dateModified;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        if(!preg_match('~^[a-z0-9\-]{5,30}$~',$slug))
+        {
+            throw new EntityAttributeException('Le slug doit avoir entre 5 et 30 caractères et ne 
+            comprendre que des lettres minuscules des chiffres et le tiret -');
+        }
+
+        $this->slug = $slug;
+    }
+
+    /**
+     * Sets an array with the mandatory fields
+     */
+    protected function setMandatoryProperties()
+    {
+        $this->mandatoryProperties = ['title','author','slug','status'];
     }
 }
