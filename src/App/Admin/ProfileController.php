@@ -85,6 +85,12 @@ class ProfileController extends Controller
         }
         catch (EntityAttributeException | UploadException $e)
         {
+            //If a file has been created during process, removes it
+            if(isset($avatar) && !is_null($avatar->getId()))
+            {
+                $this->removeFile($currentAvatarId);
+            }
+
             //In case not all the mandatory properties are valid, redirects to profile
             $this->response->redirect('/admin/my-profile',$e->getMessage());
         }
