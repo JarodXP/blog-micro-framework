@@ -34,7 +34,7 @@ class PostsController extends Controller
     public function postListAction()
     {
         //Sets the options to be sent to the manager as parameter for the list
-        $options = $this->listOptions();
+        $options = $this->postsListOptions();
 
         $postManager = new PostManager();
 

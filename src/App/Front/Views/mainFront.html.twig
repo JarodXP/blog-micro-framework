@@ -19,12 +19,14 @@
 
     <div id="front-sidebar" class="col-10 col-md-3 offset-1 hidden">
 
-    {% block sideBar %}{% endblock %}
+        {% block sideBar %}
+            {% include 'widgetSocialNetworks.html.twig' %}
+            {% include 'widgetResumeDownload.html.twig' %}
+            {% include 'widgetLastPosts.html.twig' %}
+        {% endblock %}
 
     </div>
     <!-- /#sidebar-wrapper -->
-
-
 
 {% endblock %}
 

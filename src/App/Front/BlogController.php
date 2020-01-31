@@ -4,7 +4,9 @@
 namespace Front;
 
 
+use App\Application;
 use Core\Controller;
+use Core\HttpResponse;
 use Entities\Post;
 use Models\PostManager;
 use Services\PostsListsBuilder;
@@ -16,18 +18,25 @@ class BlogController extends Controller
 {
     use PostsListsBuilder;
 
+    public function __construct(Application $app, array $httpParameters)
+    {
+        parent::__construct($app, $httpParameters);
+
+        //Sets the sidebar widget "last posts" list
+        $this->sidebarPostsWidgetList(3);
+    }
+
     public function postListAction()
     {
-
         //Sets the options to be sent to the manager as parameter for the list
-        $options = $this->listOptions();
+        $options = $this->postsListOptions();
 
         $postManager = new PostManager();
 
         //Gets the list of posts
         $this->templateVars['posts'] = $postManager->findPostsAndUploads(['status' => Post::STATUS_PUBLISHED],$options);
 
-        //Sets the variable to be sent to the twig template
+        //Sets the list variables to be sent to the twig template (page number, next page...)
         $this->buildTemplateListVars($options);
 
         //Renders the template
@@ -36,14 +45,23 @@ class BlogController extends Controller
 
     public function displayPostAction()
     {
-        try
+        $postManager = new PostManager();
+
+        //Gets the list of posts corresponding to the slug
+        $postData = $postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']]);
+
+        //If not empty, sends the post to the template vars
+        if(!empty($postData))
         {
-            echo $this->twigEnvironment->render('/frontPost.html.twig');
+            $this->templateVars['post'] = $postData[0];
         }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
+        else
         {
-            print_r($e->getMessage());
+            $this->response->redirect('/not-found',HttpResponse::NOT_FOUND);
         }
+
+        //Displays the page
+        $this->twigRender('/frontPost.html.twig');
     }
 
     public function sendCommentAction()
@@ -56,5 +74,10 @@ class BlogController extends Controller
         {
             print_r($e->getMessage());
         }
+    }
+
+    public function notFoundAction()
+    {
+        $this->twigRender('404.html.twig');
     }
 }
