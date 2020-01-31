@@ -36,14 +36,11 @@ class BlogController extends Controller
 
     public function displayPostAction()
     {
-        try
-        {
-            echo $this->twigEnvironment->render('/frontPost.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+        $postManager = new PostManager();
+
+        $this->templateVars['post'] = $postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']])[0];
+
+        $this->twigRender('/frontPost.html.twig');
     }
 
     public function sendCommentAction()
