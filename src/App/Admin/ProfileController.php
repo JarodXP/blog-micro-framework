@@ -47,16 +47,16 @@ class ProfileController extends Controller
         //Creates a new $admin User instance from the $_SESSION['user'] cookie
         $userManager = new UserManager();
 
-        $admin = new User($userManager->findOneBy(['id' => $_SESSION['user']->getId()]));
-
-        //Updates $admin User with the new parameters
-        $admin->updateProperties($this->httpParameters);
-
-        //Sets a variable to store the current $admin avatarId
-        $currentAvatarId = null;
-
         try
         {
+            $admin = new User($userManager->findOneBy(['id' => $_SESSION['user']->getId()]));
+
+            //Updates $admin User with the new parameters
+            $admin->updateProperties($this->httpParameters);
+
+            //Sets a variable to store the current $admin avatarId
+            $currentAvatarId = null;
+
             //Checks if $_FILES['avatarImageFile'] contains a file
             if(($_FILES['avatarImageFile']['error'] != 4))
             {
@@ -71,16 +71,15 @@ class ProfileController extends Controller
             }
 
             //Checks if all mandatory properties are set and not null
-            if($admin->isValid())
-            {
-                //Updates the user
-                $userManager->updateUser($admin);
+            $admin->isValid();
 
-                //Removes former avatar (both in server and database)
-                if(!is_null($currentAvatarId))
-                {
-                    $this->removeFile($currentAvatarId);
-                }
+            //Updates the user
+            $userManager->updateUser($admin);
+
+            //Removes former avatar (both in server and database)
+            if(!is_null($currentAvatarId))
+            {
+                $this->removeFile($currentAvatarId);
             }
         }
         catch (EntityAttributeException | UploadException $e)
