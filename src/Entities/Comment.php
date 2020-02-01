@@ -11,7 +11,11 @@ class Comment extends Entity
 {
     protected int $postId;
     protected bool $status;
-    protected string $pseudo, $content, $dateAdded;
+    protected string $pseudo, $content;
+    protected ?string $dateAdded;
+
+    public const STATUS_PUBLISHED = 1,
+        STATUS_MODERATE = 0;
 
     //GETTERS
 
@@ -68,9 +72,16 @@ class Comment extends Entity
     /**
      * @param int $status
      */
-    public function setStatus(bool $status): void
+    public function setStatus(bool $status = null): void
     {
-        $this->status = $status;
+        if(is_null($status))
+        {
+            $this->status = false;
+        }
+        else
+        {
+            $this->status = $status;
+        }
     }
 
     /**
@@ -102,11 +113,17 @@ class Comment extends Entity
     /**
      * @param string $dateAdded
      */
-    protected function setDateAdded(string $dateAdded): void
+    protected function setDateAdded(string $dateAdded = null): void
     {
         $this->dateAdded = $dateAdded;
     }
 
 
-
+    /**
+     * Sets an array with the mandatory fields
+     */
+    protected function setMandatoryProperties()
+    {
+        $this->mandatoryProperties = ['postId','pseudo','content'];
+    }
 }

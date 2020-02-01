@@ -49,8 +49,6 @@ class CommentManager extends Manager
 
         $this->bindAllFields($q,$comment);
 
-        $q->debugDumpParams();
-
         return $q->execute();
     }
 
@@ -64,6 +62,6 @@ class CommentManager extends Manager
         $q->bindValue(':postId',$comment->getPostId(),PDO::PARAM_INT);
         $q->bindValue(':pseudo', $comment->getPseudo());
         $q->bindValue(':content', $comment->getContent());
-        $q->bindValue(':status', $comment->getStatus());
+        $q->bindValue(':status', $comment->getStatus(),PDO::PARAM_BOOL);
     }
 }
