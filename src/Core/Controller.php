@@ -71,7 +71,6 @@ abstract class Controller
                 'username' => $connectedUser['username']
             ];
         }
-
     }
 
     /**

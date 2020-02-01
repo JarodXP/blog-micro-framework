@@ -27,7 +27,8 @@
             <h5 class="card-header col-12">Laisser un commentaire:</h5>
             <div class="card-body col-12">
                 <div class="row">
-                    <form class="col-12" action="/blog/post-0/send-comment" method="post">
+                    <form class="col-12" action="{{ '/blog/'~post.slug~'/send-comment' }}" method="post">
+                        <input type="hidden" name="postId" value="{{ post.id }}">
                         <div class="form-group">
                             <label for="pseudo">Pseudo</label>
                             <input id="pseudo" type="text" name="pseudo" class="form-control" placeholder="Pseudo">

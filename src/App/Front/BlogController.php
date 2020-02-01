@@ -7,12 +7,12 @@ namespace Front;
 use App\Application;
 use Core\Controller;
 use Core\HttpResponse;
+use Entities\Comment;
 use Entities\Post;
+use Exceptions\EntityAttributeException;
+use Models\CommentManager;
 use Models\PostManager;
 use Services\PostsListsBuilder;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class BlogController extends Controller
 {
@@ -66,14 +66,29 @@ class BlogController extends Controller
 
     public function sendCommentAction()
     {
+        $comment = new Comment($this->httpParameters);
+
+        //Sets a variable for previous page uri
+        $previousLocation = 'blog/'.$this->httpParameters['postSlug'];
+
         try
         {
-            echo $this->twigEnvironment->render('/frontThankYouComment.html.twig');
+            //checks if all properties are set
+            $comment->isValid();
+
+            //inserts in the database
+            $commentManager = new CommentManager();
+
+            $commentManager->insertComment($comment);
         }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
+        catch(EntityAttributeException $e)
         {
-            print_r($e->getMessage());
+            $this->response->redirect($previousLocation,$e->getMessage());
         }
+
+        $this->templateVars['previousPage'] = $previousLocation;
+
+        $this->twigRender('/frontThankYouComment.html.twig');
     }
 
     public function notFoundAction()
