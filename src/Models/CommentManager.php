@@ -31,8 +31,6 @@ class CommentManager extends Manager
 
         $this->bindAllFields($q,$comment);
 
-        $q->debugDumpParams();
-
         return $q->execute();
     }
 

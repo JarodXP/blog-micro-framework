@@ -45,12 +45,15 @@
     </div>
 
     <!-- Comments -->
-    <div class="media col-12 mb-4">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-        <div class="media-body">
-            <h5 class="mt-0">Gigi</h5>
-            Très bel article
+    {% for comment in comments %}
+        <div class="media col-12 mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">{{ comment.pseudo }}</h5>
+                {{ comment.content }}
+            </div>
         </div>
-    </div>
+    {% endfor %}
+
 
 {% endblock %}

@@ -50,10 +50,18 @@ class BlogController extends Controller
         //Gets the list of posts corresponding to the slug
         $postData = $postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']]);
 
-        //If not empty, sends the post to the template vars
         if(!empty($postData))
         {
+            //If not empty, sends the post to the template
             $this->templateVars['post'] = $postData[0];
+
+            //Gets the list of comments corresponding to the post id and sends it to the template
+            $commentManager = new CommentManager();
+
+            $this->templateVars['comments'] = $commentManager->findListBy([
+                CommentManager::POST_ID => $postData[0]['id'],
+                CommentManager::STATUS => Comment::STATUS_PUBLISHED
+            ]);
         }
         else
         {
@@ -66,13 +74,13 @@ class BlogController extends Controller
 
     public function sendCommentAction()
     {
-        $comment = new Comment($this->httpParameters);
-
         //Sets a variable for previous page uri
-        $previousLocation = 'blog/'.$this->httpParameters['postSlug'];
+        $previousLocation = '/blog/'.$this->httpParameters['postSlug'];
 
         try
         {
+            $comment = new Comment($this->httpParameters);
+
             //checks if all properties are set
             $comment->isValid();
 
@@ -83,9 +91,11 @@ class BlogController extends Controller
         }
         catch(EntityAttributeException $e)
         {
+            //Redirects to post
             $this->response->redirect($previousLocation,$e->getMessage());
         }
 
+        //Sets the link for "back" button
         $this->templateVars['previousPage'] = $previousLocation;
 
         $this->twigRender('/frontThankYouComment.html.twig');

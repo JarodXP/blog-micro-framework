@@ -14,6 +14,9 @@ class Comment extends Entity
     protected string $pseudo, $content;
     protected ?string $dateAdded;
 
+    public const STATUS_PUBLISHED = 1,
+        STATUS_MODERATE = 0;
+
     //GETTERS
 
     /**
