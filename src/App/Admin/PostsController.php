@@ -81,6 +81,12 @@ class PostsController extends Controller
             {
                 $post = new Post($postManager->findPostsAndUploads(['slug' => $this->httpParameters[self::POST_SLUG]])[0]);
 
+                //Sets the status to 'false' if checkbox unchecked (as it doesn't sent any POST data)
+                if(!isset($this->httpParameters['status']))
+                {
+                    $this->httpParameters['status'] = false;
+                }
+
                 //And updates the properties with the httpParameters
                 $post->updateProperties($this->httpParameters);
             }

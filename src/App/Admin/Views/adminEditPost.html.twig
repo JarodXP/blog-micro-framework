@@ -77,11 +77,11 @@
         <div id="postSectionStatus" class="row form-section ">
             <div class="form-group col-12 text-center">
                 <p>
-                    <label for="check-visible">Actuellement : {{ post.status }}</label>
+                    <label for="check-visible">Actuellement : {{ post.status | statusPost }}</label>
                 </p>
                 <p><span class="font-italic">Changer le statut : </span>
                     <input id="check-visible" type="checkbox" name="status" value=1 data-toggle="toggle"
-                           data-offstyle="dark">
+                           data-offstyle="dark" {% if post.status == 1 %}checked{% endif %}>
                 </p>
             </div>
         </div>

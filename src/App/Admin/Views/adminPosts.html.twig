@@ -43,7 +43,7 @@
                             <td class="col-2 align-middle">{{ post.author }}</td>
                             <td class="col-2 align-middle">{{ post.date_added | date("d/m/Y") }}</td>
                             <td class="col-2 align-middle">{{ post.date_modified | date("d/m/Y")}}</td>
-                            <td class="col-2 align-middle">{{ post.status }}</td>
+                            <td class="col-2 align-middle">{{ post.status | statusPost }}</td>
                             <td class="col-2 align-middle table-image">
                                 <div class="imageDiv" style="background-image: url({{ '/assets/uploads/'~post.fileName }})"></div>
                             </td>
