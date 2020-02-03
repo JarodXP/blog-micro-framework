@@ -21,8 +21,8 @@
                     <tr>
                         <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=title" class="sort-icon">
                                 Titre {{ directionIcon('title', order, direction) | raw }} </button></th>
-                        <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=username" class="sort-icon">
-                                Auteur {{ directionIcon('username', order, direction) | raw }} </button></th>
+                        <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=author" class="sort-icon">
+                                Auteur {{ directionIcon('author', order, direction) | raw }} </button></th>
                         <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=date_added" class="sort-icon">
                                 Créé le {{ directionIcon('date_added', order, direction) | raw }} </button></th>
                         <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=date_modified" class="sort-icon">
@@ -43,14 +43,14 @@
                             <td class="col-2 align-middle">{{ post.author }}</td>
                             <td class="col-2 align-middle">{{ post.date_added | date("d/m/Y") }}</td>
                             <td class="col-2 align-middle">{{ post.date_modified | date("d/m/Y")}}</td>
-                            <td class="col-2 align-middle">{{ post.status }}</td>
+                            <td class="col-2 align-middle">{{ post.status | statusPost }}</td>
                             <td class="col-2 align-middle table-image">
                                 <div class="imageDiv" style="background-image: url({{ '/assets/uploads/'~post.fileName }})"></div>
                             </td>
                             <td class="col-2 icon-edit">
                                 <div class="d-flex flex-row justify-content-between">
                                     <p class="modif-icon mx-2"><a href = {{ '/admin/posts/'~post.slug }}><i class="far fa-edit"></i></a></p>
-                                    <p class="modif-icon mx-2"><a href = {{ '/admin/posts/remove='~post.id }}><i class="far fa-trash-alt"></i></a></p>
+                                    <p class="modif-icon mx-2"><a href = {{ '/admin/posts/remove='~post.slug }}><i class="far fa-trash-alt"></i></a></p>
                                 </div>
                             </td>
                         </tr>

@@ -13,7 +13,9 @@
 
     <form action="/admin/posts/?register={{ postSlug }}" method="post" id="postForm" class="col-12 col-md-10 offset-md-1
     admin-form" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="{{ post.id }}">
+        {% if post.id is not null %}
+            <input type="hidden" name="id" value="{{ post.id }}">
+        {% endif %}
 
         <div id="postSectionInfo" class="row form-section ">
             <div class="form-group col-12 col-md-10 offset-md-1">
@@ -75,11 +77,11 @@
         <div id="postSectionStatus" class="row form-section ">
             <div class="form-group col-12 text-center">
                 <p>
-                    <label for="check-visible">Actuellement : {{ post.status }}</label>
+                    <label for="check-visible">Actuellement : {{ post.status | statusPost }}</label>
                 </p>
                 <p><span class="font-italic">Changer le statut : </span>
                     <input id="check-visible" type="checkbox" name="status" value=1 data-toggle="toggle"
-                           data-offstyle="dark">
+                           data-offstyle="dark" {% if post.status == 1 %}checked{% endif %}>
                 </p>
             </div>
         </div>
@@ -88,7 +90,7 @@
             <div class="col-10 offset-1">
                 <div class="form-submit">
                     <p><button type="submit" class="btn btn-success">Enregistrer</button></p>
-                    <p><button type="submit" class="btn btn-danger" formaction="/admin/posts/remove={{ post.id }}"
+                    <p><button type="submit" class="btn btn-danger" formaction="/admin/posts/remove={{ post.slug }}"
                                                        formmethod="post">Supprimer</button></p>
                     <p><button type="submit" class="btn btn-secondary" formaction="/admin/">Retour</button></p>
                 </div>
