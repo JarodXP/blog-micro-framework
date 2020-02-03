@@ -48,6 +48,11 @@
   package: front
   controller: blog
   action: sendComment
+-
+  uri: ^/blog/thank-you$
+  package: front
+  controller: blog
+  action: thankYou
 
   #BACKOFFICE #######################
 

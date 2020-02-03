@@ -75,7 +75,7 @@ class BlogController extends Controller
     public function sendCommentAction()
     {
         //Sets a variable for previous page uri
-        $previousLocation = '/blog/'.$this->httpParameters['postSlug'];
+        $_SESSION['previousUri'] = '/blog/'.$this->httpParameters['postSlug'];
 
         try
         {
@@ -92,13 +92,23 @@ class BlogController extends Controller
         catch(EntityAttributeException $e)
         {
             //Redirects to post
-            $this->response->redirect($previousLocation,$e->getMessage());
+            $this->response->redirect($_SESSION['previousUri'],$e->getMessage());
         }
 
-        //Sets the link for "back" button
-        $this->templateVars['previousPage'] = $previousLocation;
+        $this->response->redirect('/blog/thank-you');
+    }
 
-        $this->twigRender('/frontThankYouComment.html.twig');
+    public function thankYouAction()
+    {
+        $this->templateVars['h1'] = 'Merci pour votre commentaire!';
+
+        $this->templateVars['content'] = 'Votre commentaire a bien été envoyé, 
+        je m\'efforce de le modérer dans les plus brefs délais.';
+
+        //Sets the link for "back" button
+        $this->templateVars['previousPage'] = $_SESSION['previousUri'];
+
+        $this->twigRender('/frontThankYou.html.twig');
     }
 
     public function notFoundAction()
