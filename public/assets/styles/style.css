@@ -60,6 +60,10 @@ footer{
     height: 40px;
     margin-top: -40px;
     font-size: 0.8rem;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    z-index: 200;
 }
 
 footer a{
