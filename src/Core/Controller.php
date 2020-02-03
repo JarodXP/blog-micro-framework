@@ -42,7 +42,6 @@ abstract class Controller
         $this->twigEnvironment->addGlobal('locale', $GLOBALS['locale']);
         $this->twigEnvironment->addGlobal('charset', $GLOBALS['charset']);
         $this->twigEnvironment->addGlobal('env', $GLOBALS['env']);
-        $this->twigEnvironment->addGlobal('notification',$_SESSION['user']->getNotification());
 
         //Sets the Debug extension in development environment
         if($this->twigEnvironment->isDebug())
@@ -71,6 +70,11 @@ abstract class Controller
                 'username' => $connectedUser['username']
             ];
         }
+
+        //Sets the notification and destroys the $_SESSION['user'] notification
+        $this->templateVars['notification'] = $_SESSION['user']->getNotification();
+
+        $_SESSION['user']->setNotification(null);
     }
 
     /**

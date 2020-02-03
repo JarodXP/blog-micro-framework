@@ -30,10 +30,12 @@
                 <input id="title" type="text" name="title" class="col-12 form-control" value="{{ post.title }}">
             </div>
 
-            <div class="form-group col-12 col-md-10 offset-md-1">
-                <label for="slug" class="col-12">Slug</label>
-                <input id="slug" type="text" name="slug" class="col-12 form-control" value={{ post.slug }}>
-            </div>
+            {% if post is not null %}
+                <div class="form-group col-12 col-md-10 offset-md-1">
+                    <label for="slug" class="col-12">Slug</label>
+                    <input id="slug" type="text" name="slug" class="col-12 form-control" value={{ post.slug }}>
+                </div>
+            {% endif %}
         </div>
 
         <div id="postSectionText" class="row form-section ">
@@ -76,9 +78,11 @@
 
         <div id="postSectionStatus" class="row form-section ">
             <div class="form-group col-12 text-center">
-                <p>
-                    <label for="check-visible">Actuellement : {{ post.status | statusPost }}</label>
-                </p>
+                {% if post is not null %}
+                    <p>
+                        <label for="check-visible">Actuellement : {{ post.status | statusPost }}</label>
+                    </p>
+                {% endif %}
                 <p><span class="font-italic">Changer le statut : </span>
                     <input id="check-visible" type="checkbox" name="status" value=1 data-toggle="toggle"
                            data-offstyle="dark" {% if post.status == 1 %}checked{% endif %}>
