@@ -64,7 +64,7 @@
                     <div class="row align-items-center">
                         <div class="form-group col-12 col-md-4 ">
                             <div class="row align-items-center justify-content-left">
-                                <label class="col-12 col-md-10" for="rangeLimit">Nombre d'articles par page</label>
+                                <label class="col-12 col-md-8" for="rangeLimit">Nombre d'articles par page</label>
 
                                 <select class="form-control col-2 offset-5 offset-md-0" id="rangeLimit" name="limit" >
                                     <option {% if limit == 5 %}selected{% endif %}>5</option>
@@ -72,6 +72,7 @@
                                     <option {% if limit == 25 %}selected{% endif %}>25</option>
                                     <option {% if limit == 100 %}selected{% endif %}>100</option>
                                 </select>
+                                <button id="btn-list-valid" class="col-md-2" type="submit"><i class="fas fa-arrow-circle-right"></i></button>
                             </div>
                         </div>
 

@@ -96,6 +96,10 @@ footer .row{
     display: none;
 }
 
+select {
+    padding-left: 0;
+}
+
 /*********FRONT***************************/
 .front-content{
     padding-top: 30px;
