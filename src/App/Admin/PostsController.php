@@ -7,12 +7,13 @@ namespace Admin;
 use Core\Controller;
 use Entities\Post;
 use Exceptions\EntityAttributeException;
+use Exceptions\UploadException;
+use Models\CommentManager;
 use Models\PostManager;
+use Models\UploadManager;
+use PDOException;
 use Services\FileUploader;
 use Services\PostsListsBuilder;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class PostsController extends Controller
 {
@@ -149,13 +150,43 @@ class PostsController extends Controller
 
     public function removePostAction()
     {
+        //Instantiates the Post, Comment and Upload managers
+        $postManager = new PostManager();
+
+        $commentManager = new CommentManager();
+
+        $uploadManager = new UploadManager();
+
+        //Gets the post corresponding to the slug
+        $post = $postManager->findOneBy(['slug' => $this->httpParameters['postSlug']]);
+
+        //Gets the list of comments related to the post
+        $postComments = $commentManager->findListBy(['post_id' => $post['id']]);
+
         try
         {
-            echo $this->twigEnvironment->render('/adminRemovePost.html.twig');
+            //Removes each of the comment in the list
+            foreach ($postComments as $comment)
+            {
+                $commentManager->removeElement($comment['id']);
+            }
+
+            //Gets the postHeader related to the post
+            $postHeader = $uploadManager->findOneBy(['id' => $post['header_id']]);
+
+            //Removes the post
+            $postManager->removeElement($post['id']);
+
+            //Removes the image, both in database and server
+            $this->removeFile($postHeader['id']);
         }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
+        catch (PDOException | UploadException $e)
         {
-            print_r($e->getMessage());
+            //Redirects to the admin edit post page in case of failure
+            $this->response->redirect('/admin/posts/'.$post['slug'], $e->getMessage());
         }
+
+        //Redirects to the admin post list in case of success
+        $this->response->redirect('/admin/posts', 'L\'article a bien été supprimé');
     }
 }
