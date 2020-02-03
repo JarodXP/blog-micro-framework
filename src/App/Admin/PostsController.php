@@ -161,8 +161,6 @@ class PostsController extends Controller
 
         $commentManager = new CommentManager();
 
-        $uploadManager = new UploadManager();
-
         //Gets the post corresponding to the slug
         $post = $postManager->findOneBy(['slug' => $this->httpParameters['postSlug']]);
 
@@ -177,14 +175,22 @@ class PostsController extends Controller
                 $commentManager->removeElement($comment['id']);
             }
 
-            //Gets the postHeader related to the post
-            $postHeader = $uploadManager->findOneBy(['id' => $post['header_id']]);
+            if(!is_null($post['header_id']))
+            {
+                //Gets the postHeader related to the post
+                $uploadManager = new UploadManager();
+
+                $postHeader = $uploadManager->findOneBy(['id' => $post['header_id']]);
+            }
 
             //Removes the post
             $postManager->removeElement($post['id']);
 
             //Removes the image, both in database and server
-            $this->removeFile($postHeader['id']);
+            if(isset($postHeader))
+            {
+                $this->removeFile($postHeader['id']);
+            }
         }
         catch (PDOException | UploadException $e)
         {
