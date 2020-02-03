@@ -21,8 +21,8 @@
                     <tr>
                         <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=title" class="sort-icon">
                                 Titre {{ directionIcon('title', order, direction) | raw }} </button></th>
-                        <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=username" class="sort-icon">
-                                Auteur {{ directionIcon('username', order, direction) | raw }} </button></th>
+                        <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=author" class="sort-icon">
+                                Auteur {{ directionIcon('author', order, direction) | raw }} </button></th>
                         <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=date_added" class="sort-icon">
                                 Créé le {{ directionIcon('date_added', order, direction) | raw }} </button></th>
                         <th class="col-2 admin-table-header"><button formaction="/admin/posts/?order=date_modified" class="sort-icon">
