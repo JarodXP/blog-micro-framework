@@ -16,6 +16,7 @@
     "ext-pdo": "*",
     "ezyang/htmlpurifier": "^4.12",
     "ext-exif": "*",
-    "ext-gd": "*"
+    "ext-gd": "*",
+    "cocur/slugify": "^4.0"
   }
 }

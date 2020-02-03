@@ -4,6 +4,7 @@
 namespace Entities;
 
 
+use Cocur\Slugify\Slugify;
 use Core\Entity;
 use Exceptions\EntityAttributeException;
 use Models\UserManager;
@@ -197,12 +198,23 @@ class Post extends Entity
     /**
      * @param string $slug
      */
-    public function setSlug(string $slug): void
+    public function setSlug(string $slug = null): void
     {
-        if(!preg_match('~^[a-z0-9\-]{5,30}$~',$slug))
+        if(!is_null($slug))
         {
-            throw new EntityAttributeException('Le slug doit avoir entre 5 et 30 caractères et ne 
+            //Checks if existing slug matches regex pattern
+            if(!preg_match('~^[a-z0-9\-]{5,30}$~',$slug))
+            {
+                throw new EntityAttributeException('Le slug doit avoir entre 5 et 30 caractères et ne 
             comprendre que des lettres minuscules des chiffres et le tiret -');
+            }
+        }
+        else
+        {
+            //Creates a slug from the title
+            $slugify = new Slugify();
+
+            $slug = $slugify->slugify($this->title);
         }
 
         $this->slug = $slug;
