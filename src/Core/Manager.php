@@ -6,7 +6,7 @@ namespace Core;
 
 use Exceptions\EntityAttributeException;
 use PDO;
-use Services\ListHandler;
+use Services\ListConfigurator;
 
 abstract class Manager
 {
@@ -28,9 +28,9 @@ abstract class Manager
      */
     public function findListBy(array $conditions = null, array $options = null):array
     {
-        $listManager = new ListHandler($this);
+        $listConfigurator = new ListConfigurator($this);
 
-        $requestParameters = $listManager->getRequestParameters($conditions,$options);
+        $requestParameters = $listConfigurator->getRequestParameters($conditions,$options);
 
         $q = $this->dao->prepare('SELECT * FROM '.static::TABLE.' '.$requestParameters);
 

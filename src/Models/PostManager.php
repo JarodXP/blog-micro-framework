@@ -8,7 +8,7 @@ use Core\Manager;
 use Entities\Post;
 use PDO;
 use PDOStatement;
-use Services\ListHandler;
+use Services\ListConfigurator;
 
 class PostManager extends Manager
 {
@@ -79,10 +79,10 @@ class PostManager extends Manager
      */
     public function findPostsAndUploads($conditions = null, $options = null)
     {
-        //Sets the parameters with the ListHandler Service
-        $listManager = new ListHandler($this);
+        //Sets the parameters with the ListConfigurator Service
+        $listConfigurator = new ListConfigurator($this);
 
-        $requestParameters = $listManager->getRequestParameters($conditions,$options);
+        $requestParameters = $listConfigurator->getRequestParameters($conditions,$options);
 
         $q = $this->dao->prepare(
             'SELECT posts.*, 

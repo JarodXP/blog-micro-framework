@@ -8,7 +8,7 @@ namespace Services;
 use Core\Manager;
 use Exceptions\ListException;
 
-class ListHandler
+class ListConfigurator
 {
     protected ?string $orderBy;
     protected ?string $limit;
@@ -21,7 +21,7 @@ class ListHandler
     //PUBLIC FUNCTIONS//////////////////
 
     /**
-     * ListHandler constructor.
+     * ListConfigurator constructor.
      * @param Manager $manager
      */
     public function __construct(Manager $manager)
