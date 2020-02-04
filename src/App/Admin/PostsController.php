@@ -40,7 +40,7 @@ class PostsController extends Controller
         $postManager = new PostManager();
 
         //Gets the list of posts
-        $this->templateVars['posts'] = $postManager->findPostsAndUploads(null,$options);
+        $this->templateVars['posts'] = $postManager->findPostsAndHeaders(null,$options);
 
         //Sets the variable to be sent to the twig template
         $this->buildTemplateListVars($options);
@@ -55,7 +55,7 @@ class PostsController extends Controller
         $postManager = new PostManager();
 
         //Creates instance from database
-        $post = $postManager->findPostsAndUploads(['slug' => $this->httpParameters[self::POST_SLUG]])[0];
+        $post = $postManager->findPostsAndHeaders(['slug' => $this->httpParameters[self::POST_SLUG]])[0];
 
         //Sets the twig template vars to be sent to the twig environment for render
         $this->templateVars['post'] = $post;
@@ -79,7 +79,7 @@ class PostsController extends Controller
             //If it's an existing post, creates instance from database
             else
             {
-                $post = new Post($postManager->findPostsAndUploads(['slug' => $this->httpParameters[self::POST_SLUG]])[0]);
+                $post = new Post($postManager->findPostsAndHeaders(['slug' => $this->httpParameters[self::POST_SLUG]])[0]);
 
                 //Sets the status to 'false' if checkbox unchecked (as it doesn't sent any POST data)
                 if(!isset($this->httpParameters['status']))

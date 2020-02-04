@@ -72,12 +72,12 @@ class PostManager extends Manager
     }
 
     /**
-     * Gathers the post data and the corresponding upload data
+     * Gathers the post data and the corresponding header data
      * @param $conditions
      * @param $options
      * @return array
      */
-    public function findPostsAndUploads($conditions = null, $options = null)
+    public function findPostsAndHeaders($conditions = null, $options = null)
     {
         //Sets the parameters with the ListConfigurator Service
         $listConfigurator = new ListConfigurator($this);
