@@ -10,7 +10,26 @@
 
         <form action="/admin/professional/social" method="post" id="socialForm" class="col-12 col-md-10 offset-md-1 admin-form" enctype="multipart/form-data">
 
-            <div id="socialSectionName" class="row form-section">
+            <div id="networksList" class="row form-section">
+                <h3 class="col-12 text-center my-4">Réseaux enregistrés</h3>
+                {% for network in networks %}
+                    <div class="col-12 col-md-4 offset-md-4 my-2">
+                        <div class="row align-items-center network-item my-3">
+                            <div class="col-12 col-md-1 admin-social-icon my-0 text-center"
+                                 style="background-image: url({{ '/assets/uploads/'~network.file_name }})"></div>
+                            <p class="col-12 col-md-9 text-center my-0">{{ network.name }}</p>
+                            <div class="col-12 col-md-1 text-center my-0 modif-icon">
+                                <a href = "{{ '/admin/professional/network/remove/?='~network.id }}">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="socialSectionName" class="row">
+                <h3 class="col-12 text-center my-4">Enregistrer un nouveau réseau</h3>
                 <div class="col-12 col-md-8 offset-md-2 my-2">
                     <div class="row">
                         <label for="networkName" class="col-12">Nom du réseau social</label>

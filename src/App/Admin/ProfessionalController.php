@@ -5,10 +5,9 @@ namespace Admin;
 
 
 use Core\Controller;
+use Models\NetworkManager;
 use Models\UserManager;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
+
 
 class ProfessionalController extends Controller
 {
@@ -29,14 +28,12 @@ class ProfessionalController extends Controller
 
     public function displayNetworksAction()
     {
-        try
-        {
-            echo $this->twigEnvironment->render('/adminSocial.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+        //Gets the network list and sends it to the twig template
+        $networkManager = new NetworkManager();
+
+        $this->templateVars['networks'] = $networkManager->findNetworksAndIcons();
+
+        $this->twigRender('/adminSocial.html.twig');
     }
 
     public function addNetworksAction()

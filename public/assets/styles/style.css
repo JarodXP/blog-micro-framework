@@ -353,6 +353,11 @@ select {
     background-repeat: no-repeat;
 }
 
+.network-item{
+    border-bottom: 1px solid darkgray;
+    padding-bottom: 5px;
+}
+
 /******************FRONT********************/
 #btn-list-valid {
     background-color: transparent;

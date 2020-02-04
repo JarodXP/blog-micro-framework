@@ -60,6 +60,23 @@ class NetworkManager extends Manager
     }
 
     /**
+     * Gets the username and avatar fileName for the connected user
+     * @param int $id
+     * @return array
+     */
+    public function findNetworksAndIcons()
+    {
+        $q = $this->dao->prepare(
+            'SELECT social_networks.*,uploads.file_name
+                            FROM social_networks 
+                            INNER JOIN uploads ON social_networks.upload_id = uploads.id');
+
+        $q->execute();
+
+        return $q->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Binds all fields value with parameters
      * @param PDOStatement $q
      * @param SocialNetwork $network
