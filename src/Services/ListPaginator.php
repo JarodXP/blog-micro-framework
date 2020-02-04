@@ -6,7 +6,8 @@ namespace Services;
 
 use Models\PostManager;
 
-trait ListPaginator
+trait
+ListPaginator
 {
     protected ?array $httpParameters;
 
@@ -64,8 +65,9 @@ trait ListPaginator
     /**
      * Sets the variables related to the list to be sent to the twig template
      * @param array $options
+     * @param string $listType
      */
-    public function paginatedListTwigVariables(array $options):void
+    public function paginatedListTwigVariables(array $options, string $listType):void
     {
         //Sets the limit in the template variables
         $this->templateVars[ListConfigurator::LIMIT] = $options[ListConfigurator::LIMIT];
@@ -76,7 +78,7 @@ trait ListPaginator
             : $this->templateVars[ListConfigurator::PAGE] = '1';
 
         //Sets the nextPage in the template variables
-        count($this->templateVars['posts']) >= $options[ListConfigurator::LIMIT]
+        count($this->templateVars[$listType]) >= $options[ListConfigurator::LIMIT]
             ?  $this->templateVars['nextPage'] = $this->templateVars[ListConfigurator::PAGE] + 1
             :  $this->templateVars['nextPage'] = null;
 

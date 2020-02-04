@@ -38,7 +38,7 @@ class BlogController extends Controller
         $this->templateVars['posts'] = $postManager->findPostsAndHeaders(['status' => Post::STATUS_PUBLISHED],$options);
 
         //Sets the list variables to be sent to the twig template (page number, next page...)
-        $this->paginatedListTwigVariables($options);
+        $this->paginatedListTwigVariables($options,'posts');
 
         //Renders the template
         $this->twigRender('/frontBlog.html.twig');

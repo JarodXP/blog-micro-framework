@@ -35,7 +35,7 @@ class PostsController extends Controller
         $this->templateVars['posts'] = $postManager->findPostsAndHeaders(null,$options);
 
         //Sets the variable to be sent to the twig template
-        $this->paginatedListTwigVariables($options);
+        $this->paginatedListTwigVariables($options,'posts');
 
         //Renders the template
         $this->twigRender('adminPosts.html.twig');
