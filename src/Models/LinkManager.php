@@ -37,7 +37,7 @@ class LinkManager extends Manager
      * @param NetworkLink $link
      * @return bool
      */
-    public function updateNetworkLink(NetworkLink $link)
+    public function updateNetworkLink(NetworkLink $link):array
     {
         $q = $this->dao->prepare('UPDATE '.self::TABLE.' SET '
             .self::USER_ID.'= :userId, '.self::NETWORK_ID.' = :networkId, '.self::LINK.' = :link
