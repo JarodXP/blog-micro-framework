@@ -61,8 +61,8 @@ footer{
     margin-top: -40px;
     font-size: 0.8rem;
     position: absolute;
+    width: 100%;
     bottom: 0;
-    width: 100vw;
     z-index: 200;
 }
 
@@ -242,6 +242,13 @@ select {
 
 #adminToggleBtn{
     padding: 0;
+    background-color: darkorange;
+    border-color: darkorange;
+}
+
+.header-link{
+    color: darkorange;
+    text-decoration: underline;
 }
 
 /*Sidebar*/
@@ -360,6 +367,10 @@ select {
 
 /******************DESKTOP***********/
 @media (min-width:768px) {
+
+    #adminToggleBtn{
+        padding: 0 4px;
+    }
 
     .under-header{
         width: 100%;

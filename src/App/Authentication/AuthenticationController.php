@@ -160,4 +160,11 @@ class AuthenticationController extends Controller
         //Redirects to the admin profile page
         $this->response->redirect('/admin/my-profile',HttpResponse::PASSWORD_UPDATED);
     }
+
+    public function disconnectAction()
+    {
+        session_destroy();
+
+        $this->response->redirect('/auth/signin');
+    }
 }

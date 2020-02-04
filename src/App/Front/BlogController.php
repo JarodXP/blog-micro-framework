@@ -34,7 +34,7 @@ class BlogController extends Controller
         $postManager = new PostManager();
 
         //Gets the list of posts
-        $this->templateVars['posts'] = $postManager->findPostsAndUploads(['status' => Post::STATUS_PUBLISHED],$options);
+        $this->templateVars['posts'] = $postManager->findPostsAndHeaders(['status' => Post::STATUS_PUBLISHED],$options);
 
         //Sets the list variables to be sent to the twig template (page number, next page...)
         $this->buildTemplateListVars($options);
@@ -48,7 +48,7 @@ class BlogController extends Controller
         $postManager = new PostManager();
 
         //Gets the list of posts corresponding to the slug
-        $postData = $postManager->findPostsAndUploads(['slug' => $this->httpParameters['postSlug']]);
+        $postData = $postManager->findPostsAndHeaders(['slug' => $this->httpParameters['postSlug']]);
 
         if(!empty($postData))
         {

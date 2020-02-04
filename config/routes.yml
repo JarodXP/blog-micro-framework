@@ -171,6 +171,11 @@
   controller: authentication
   action: signin
 -
+  uri: ^/auth/disconnect[/]?$
+  package: authentication
+  controller: authentication
+  action: disconnect
+-
   uri: ^/admin/change-password$
   package: authentication
   controller: authentication
