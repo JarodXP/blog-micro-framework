@@ -7,29 +7,31 @@
     <div class="row admin-content">
 
         <h1 class="col-12 text-center">
-            Modérer le commentaire 1 de l'article "Un article"
+            Modérer le commentaire {{ comment.id }} de l'article "{{ comment.postTitle }}"
         </h1>
 
-        <h2 class="col-12 text-center mt-4 mt-md-5">Commentaire ajouté le 14/01/2020
-            par Wawa</h2>
+        <h2 class="col-12 text-center mt-4 mt-md-5">Commentaire ajouté le {{ comment.date_added | date("d/m/Y") }}
+            par {{ comment.pseudo }}</h2>
 
-        <form action="/admin/comments/comment-0" method="post" id="postForm" class="col-12 col-md-10 offset-md-1 admin-form">
+        <form action="/admin/comments/?register={{ comment.id }}" method="post" id="postForm" class="col-12 col-md-10 offset-md-1 admin-form">
 
             <div class="row form-section">
                 <div class="form-group col-12 col-md-10 offset-md-1">
                     <label for="content" class="col-12">Commentaire</label>
-                    <textarea id="content" name="content" rows="5" cols="50" class="col-12 form-control">Très bon article</textarea>
+                    <textarea id="content" name="content" rows="5" cols="50" class="col-12 form-control">{{ comment.content }}</textarea>
                 </div>
             </div>
 
             <div class="row form-section">
-                <div class="col-12 form-group text-center">
-                    <p>
-                        <label for="check-visible">Actuellement : Publié</label>
-                    </p>
+                <div class="form-group col-12 text-center">
+                    {% if comment is not null %}
+                        <p>
+                            <label for="check-visible">Actuellement : {{ comment.status | statusComment }}</label>
+                        </p>
+                    {% endif %}
                     <p><span class="font-italic">Changer le statut : </span>
                         <input id="check-visible" type="checkbox" name="status" value=1 data-toggle="toggle"
-                               data-offstyle="dark">
+                               data-offstyle="dark" {% if comment.status == 1 %}checked{% endif %}>
                     </p>
                 </div>
             </div>

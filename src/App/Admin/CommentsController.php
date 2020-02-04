@@ -5,15 +5,16 @@ namespace Admin;
 
 
 use Core\Controller;
+use Entities\Comment;
+use Exceptions\EntityAttributeException;
 use Models\CommentManager;
 use Services\ListPaginator;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class CommentsController extends Controller
 {
     use ListPaginator;
+
+    public const EDIT_ID = 'edit', REGISTER_ID = 'register';
 
     public function commentsListAction()
     {
@@ -33,26 +34,60 @@ class CommentsController extends Controller
 
     public function editCommentAction()
     {
+        $commentManager = new CommentManager();
+
+        //Creates instance from database
+        $comment = $commentManager->findCommentsAndPost(['comments.id' => $this->httpParameters[self::EDIT_ID]])[0];
+
+        //Sets the twig template vars to be sent to the twig environment for render
+        $this->templateVars['comment'] = $comment;
+
+        $this->templateVars[self::EDIT_ID] = $this->httpParameters[self::EDIT_ID];
+
+        $this->twigRender('/adminEditComment.html.twig');
+
+    }
+
+    public function registerCommentAction()
+    {
+        $commentManager = new CommentManager();
+
         try
         {
-            echo $this->twigEnvironment->render('/adminEditComment.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+            //Creates instance from database
+            $comment = new Comment($commentManager->findCommentsAndPost(['comments.id' => $this->httpParameters[self::REGISTER_ID]])[0]);
 
+            //Sets the status to 'false' if checkbox unchecked (as it doesn't sent any POST data)
+            if(!isset($this->httpParameters['status']))
+            {
+                $this->httpParameters['status'] = false;
+            }
+
+            //And updates the properties with the httpParameters
+            $comment->updateProperties($this->httpParameters);
+
+            //Checks if all mandatory properties are set and not null
+            $comment->isValid();
+
+            //Updates the comment
+            $commentManager->updateComment($comment);
+
+            //Redirects to the comment
+            $this->response->redirect('/admin/comments/?edit='.$comment->getId());
+        }
+        catch (EntityAttributeException $e)
+        {
+            //Redirects to the edit comment page
+            $this->response->redirect('/admin/comments/?edit='.$this->httpParameters[self::REGISTER_ID],$e->getMessage());
+        }
     }
 
     public function removeCommentAction()
     {
-        try
-        {
-            echo $this->twigEnvironment->render('/adminRemoveComment.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+        $commentManager = new CommentManager();
+
+        $commentManager->removeElement($this->httpParameters['remove']);
+
+        $this->response->redirect('/admin/comments','Le commentaire a été supprimé');
     }
 }
