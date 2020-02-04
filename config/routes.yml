@@ -149,12 +149,17 @@
   controller: comments
   action: commentsList
 -
-  uri: ^/admin/comments/comment-([0-9]+)$
+  uri: ^/admin/comments/\?edit=([0-9]+)$
   package: admin
   controller: comments
   action: editComment
 -
-  uri: ^/admin/comments/remove=([0-9]+)$
+  uri: ^/admin/comments/\?register=([0-9]+)$
+  package: admin
+  controller: comments
+  action: registerComment
+-
+  uri: ^/admin/comments/\?remove=([0-9]+)$
   package: admin
   controller: comments
   action: removeComment

@@ -43,8 +43,8 @@
                             <td class="col-2 align-middle">{{ comment.status | statusComment }}</td>
                             <td class="col-2 icon-edit">
                                 <div class="d-flex flex-row justify-content-center">
-                                    <p class="modif-icon mx-2"><a href = {{ '/admin/comments/'~comment.id }}><i class="far fa-edit"></i></a></p>
-                                    <p class="modif-icon mx-2"><a href = {{ '/admin/comments/remove='~comment.id }}><i class="far fa-trash-alt"></i></a></p>
+                                    <p class="modif-icon mx-2"><a href = {{ '/admin/comments/?edit='~comment.id }}><i class="far fa-edit"></i></a></p>
+                                    <p class="modif-icon mx-2"><a href = {{ '/admin/comments/?remove='~comment.id }}><i class="far fa-trash-alt"></i></a></p>
                                 </div>
                             </td>
                         </tr>
