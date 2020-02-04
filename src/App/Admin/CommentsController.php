@@ -13,14 +13,8 @@ class CommentsController extends Controller
 {
     public function commentsListAction()
     {
-        try
-        {
-            echo $this->twigEnvironment->render('/adminComments.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+
+        $this->twigRender('/adminComments.html.twig');
     }
 
     public function editCommentAction()

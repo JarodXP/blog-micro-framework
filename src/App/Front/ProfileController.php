@@ -10,21 +10,22 @@ use Entities\Upload;
 use Entities\User;
 use Models\UploadManager;
 use Models\UserManager;
-use Services\PostsListsBuilder;
+use Services\ListPaginator;
+use Services\SidebarBuilder;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 class ProfileController extends Controller
 {
-    use PostsListsBuilder;
+    use ListPaginator, SidebarBuilder;
 
     public function __construct(Application $app, array $httpParameters)
     {
         parent::__construct($app, $httpParameters);
 
         //Sets the sidebar widget "last posts" list
-        $this->sidebarPostsWidgetList(3);
+       $this->sidebarPostsWidgetList(3);
     }
 
     public function displayProfileAction()

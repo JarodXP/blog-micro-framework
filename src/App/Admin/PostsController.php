@@ -13,29 +13,21 @@ use Models\PostManager;
 use Models\UploadManager;
 use PDOException;
 use Services\FileUploader;
-use Services\PostsListsBuilder;
+use Services\ListPaginator;
 
 class PostsController extends Controller
 {
-    use FileUploader,PostsListsBuilder;
+    use FileUploader,ListPaginator;
 
     protected array $table = [];
 
-    public const LIMIT = 'limit',
-        PAGE = 'page',
-        OFFSET = 'offset',
-        ORDER = 'order',
-        CURRENT_ORDER = 'currentOrder',
-        DIRECTION = 'direction',
-        DIRECTION_ASC = 'asc',
-        POST_SLUG = 'postSlug',
-        NEW_POST = 'new-post',
-        DIRECTION_DESC = 'desc';
+    public const POST_SLUG = 'postSlug',
+        NEW_POST = 'new-post';
 
     public function postListAction()
     {
         //Sets the options to be sent to the manager as parameter for the list
-        $options = $this->postsListOptions();
+        $options = $this->paginatedListOptions();
 
         $postManager = new PostManager();
 
@@ -43,7 +35,7 @@ class PostsController extends Controller
         $this->templateVars['posts'] = $postManager->findPostsAndHeaders(null,$options);
 
         //Sets the variable to be sent to the twig template
-        $this->buildTemplateListVars($options);
+        $this->paginatedListTwigVariables($options);
 
         //Renders the template
         $this->twigRender('adminPosts.html.twig');
