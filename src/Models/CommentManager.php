@@ -8,6 +8,7 @@ use Core\Manager;
 use Entities\Comment;
 use PDO;
 use PDOStatement;
+use Services\ListConfigurator;
 
 class CommentManager extends Manager
 {
@@ -50,6 +51,30 @@ class CommentManager extends Manager
         $this->bindAllFields($q,$comment);
 
         return $q->execute();
+    }
+
+    /**
+     * Gathers the comments data and the corresponding post data
+     * @param $conditions
+     * @param $options
+     * @return array
+     */
+    public function findCommentsAndPost($conditions = null, $options = null)
+    {
+        //Sets the parameters with the ListConfigurator Service
+        $listConfigurator = new ListConfigurator($this);
+
+        $requestParameters = $listConfigurator->getRequestParameters($conditions,$options);
+
+        $q = $this->dao->prepare(
+            'SELECT comments.*, 
+                            posts.title AS postTitle
+                        FROM comments 
+                        LEFT JOIN posts ON comments.post_id = posts.id'.' '.$requestParameters);
+
+        $q->execute();
+
+        return $q->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

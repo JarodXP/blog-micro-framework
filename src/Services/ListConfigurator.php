@@ -16,7 +16,14 @@ class ListConfigurator
 
     protected Manager $manager;
 
-    public const DIRECTION_ASC = 'asc', DIRECTION_DESC = 'desc';
+    public const DIRECTION_ASC = 'asc',
+        DIRECTION_DESC = 'desc',
+        LIMIT = 'limit',
+        PAGE = 'page',
+        OFFSET = 'offset',
+        ORDER = 'order',
+        CURRENT_ORDER = 'currentOrder',
+        DIRECTION = 'direction';
 
     //PUBLIC FUNCTIONS//////////////////
 

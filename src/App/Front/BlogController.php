@@ -12,11 +12,12 @@ use Entities\Post;
 use Exceptions\EntityAttributeException;
 use Models\CommentManager;
 use Models\PostManager;
-use Services\PostsListsBuilder;
+use Services\ListPaginator;
+use Services\SidebarBuilder;
 
 class BlogController extends Controller
 {
-    use PostsListsBuilder;
+    use ListPaginator,SidebarBuilder;
 
     public function __construct(Application $app, array $httpParameters)
     {
@@ -29,7 +30,7 @@ class BlogController extends Controller
     public function postListAction()
     {
         //Sets the options to be sent to the manager as parameter for the list
-        $options = $this->postsListOptions();
+        $options = $this->paginatedListOptions();
 
         $postManager = new PostManager();
 
@@ -37,7 +38,7 @@ class BlogController extends Controller
         $this->templateVars['posts'] = $postManager->findPostsAndHeaders(['status' => Post::STATUS_PUBLISHED],$options);
 
         //Sets the list variables to be sent to the twig template (page number, next page...)
-        $this->buildTemplateListVars($options);
+        $this->paginatedListTwigVariables($options,'posts');
 
         //Renders the template
         $this->twigRender('/frontBlog.html.twig');

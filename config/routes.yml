@@ -139,6 +139,16 @@
   controller: comments
   action: commentsList
 -
+  uri: ^/admin/comments/\?order=[a-zA-Z0-9_]{3,20}$
+  package: admin
+  controller: comments
+  action: commentsList
+-
+  uri: ^/admin/comments/\?page=[0-9]{1,100}$
+  package: admin
+  controller: comments
+  action: commentsList
+-
   uri: ^/admin/comments/comment-([0-9]+)$
   package: admin
   controller: comments
