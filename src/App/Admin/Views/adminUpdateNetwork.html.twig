@@ -17,20 +17,20 @@
 
                 {% for network in networks %}
 
-                    <div class="col-12 col-md-4 offset-md-4 my-2">
+                    <div class="col-12 col-md-6 offset-md-3 my-2">
                         <div class="row align-items-center network-item my-3">
-                            <div class="col-12 col-md-1 admin-social-icon my-0 text-center"
-                                 style="background-image: url({{ '/assets/uploads/'~network.file_name }})"></div>
-                            <p class="col-12 col-md-9 text-center my-0">{{ network.name }}</p>
-                            <div class="col-12 col-md-1 text-center my-0 modif-icon">
-                                <div class="d-flex flex-row justify-content-center">
-                                    <p class="modif-icon mx-2">
-                                        <a href = {{ '/admin/network/?update='~network.name }}>
+                            <div class="col-1 offset-1 col-md-1 admin-social-icon my-0"
+                                 style="background-image: url({{ '/assets/uploads/'~network.fileName }})"></div>
+                            <p class="col-5 text-left col-md-8 text-md-center my-0">{{ network.name }}</p>
+                            <div class="col-4 col-md-2 text-center my-0 modif-icon">
+                                <div class="row justify-content-center">
+                                    <p class="col-6 modif-icon my-0">
+                                        <a href = {{ '/admin/networks/?update='~network.name }}>
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </p>
-                                    <p class="modif-icon mx-2">
-                                        <a href = {{ '/admin/network/?remove='~network.name }}>
+                                    <p class="col-6 modif-icon my-0">
+                                        <a href = {{ '/admin/networks/?remove='~network.name }}>
                                             <i class="far fa-trash-alt"></i>
                                         </a>
                                     </p>
@@ -43,10 +43,10 @@
 
             <div id="socialSectionName" class="row">
                 {% block h3Title %}<h3 class="col-12 text-center my-4">Modifier {{ updateNetwork.name }}</h3>{% endblock %}
-                <div class="col-12 my-2">
+                <div class="col-10 offset-1 col-md-12 my-2">
                     <div class="row">
-                        <label for="networkName" class="col-12">Nom du réseau social</label>
-                        <input id="networkName" type="text" name="name" class="col-md-8 offset-md-2 form-control "
+                        <label for="networkName" class="col-12 col-md-6 offset-md-3">Nom du réseau social</label>
+                        <input id="networkName" type="text" name="name" class="col-md-6 offset-md-3 form-control "
                                value="{{ updateNetwork.name }}">
                     </div>
                 </div>
@@ -54,11 +54,11 @@
 
             <div id="iconSectionMainImage" class="row form-section d-flex align-items-center ">
 
-                <div class="col-12 col-md-2">
+                <div class="col-10 offset-1 col-md-2 offset-md-0 mb-2 mb-md-0">
                     <div class="row">
                         <p class="col-12">Icone du reseau</p>
                         <div id="networkIcon" class="col-12 imageDiv"
-                             style="background-image: url({{ '/assets/uploads/'~updateNetwork.fileName }}); background-size: cover">
+                             style="background-image: url({{ '/assets/uploads/'~updateNetwork.fileName }})">
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <label for="networkIconFile" class="col-12">Télécharger un fichier</label>
                         <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
                         <input id="networkIconFile" name="networkIconFile" type="file" class="col-12 form-control">
-                        <div id="networkIconFile" class="col-12">Fichier actuel : {{ updateNetwork.originalName }}</div>
+                        <div class="col-12 mt-3 mt-md-0">Fichier actuel : {{ updateNetwork.originalName }}</div>
                     </div>
                     <div class="form-group col-12 col-md-10 offset-md-1">
                         <label for="networkIconAlt" class="col-12">Balise Alt</label>

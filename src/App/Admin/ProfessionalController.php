@@ -40,10 +40,26 @@ class ProfessionalController extends Controller
 
         $this->templateVars['networks'] = $networkManager->findNetworksAndIcons();
 
-        //Sends the network registerIndex as new-network
-        $this->templateVars[self::REGISTER] = self::NEW_NETWORK;
 
-        $this->twigRender('/adminNewNetwork.html.twig');
+        //If existing network, sends the network data to the twig template
+        if(isset($this->httpParameters['update']))
+        {
+            $this->templateVars['updateNetwork'] = $networkManager->findNetworksAndIcons([
+                'name' => $this->httpParameters['update']
+            ])[0];
+
+            //Sends the network name as register key
+            $this->templateVars[self::REGISTER] = $this->httpParameters['update'];
+
+            $this->twigRender('/adminUpdateNetwork.html.twig');
+        }
+        else
+        {
+            //Sends new-network as register key
+            $this->templateVars[self::REGISTER] = self::NEW_NETWORK;
+
+            $this->twigRender('/adminNewNetwork.html.twig');
+        }
     }
 
     public function registerNetworkAction()
@@ -117,7 +133,7 @@ class ProfessionalController extends Controller
             }
 
             //Redirects either to the update network page or the new network page
-            $this->response->redirect('/admin/networks/'.$this->httpParameters[self::REGISTER],$e->getMessage());
+            $this->response->redirect('/admin/networks/?update='.$this->httpParameters[self::REGISTER],$e->getMessage());
         }
     }
 

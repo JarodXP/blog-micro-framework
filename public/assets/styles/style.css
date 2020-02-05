@@ -52,6 +52,7 @@ h2{
 
 .imageDiv{
     box-shadow: 5px 5px 10px gray;
+    background-size: contain;
 }
 
 footer{
