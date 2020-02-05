@@ -132,7 +132,7 @@
   controller: professional
   action: registerNetwork
 -
-  uri: ^/admin/professional/social/remove=([0-9]+)$
+  uri: ^/admin/networks/\?remove=[a-zA-Z0-9\-\s]{5,30}$
   package: admin
   controller: professional
   action: removeNetwork

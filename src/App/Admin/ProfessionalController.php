@@ -7,8 +7,11 @@ namespace Admin;
 use Core\Controller;
 use Entities\SocialNetwork;
 use Exceptions\EntityAttributeException;
+use Exceptions\UploadException;
 use Models\NetworkManager;
+use Models\UploadManager;
 use Models\UserManager;
+use PDOException;
 use Services\FileUploader;
 
 
@@ -39,7 +42,6 @@ class ProfessionalController extends Controller
         $networkManager = new NetworkManager();
 
         $this->templateVars['networks'] = $networkManager->findNetworksAndIcons();
-
 
         //If existing network, sends the network data to the twig template
         if(isset($this->httpParameters['update']))
@@ -137,8 +139,40 @@ class ProfessionalController extends Controller
         }
     }
 
-    public function removeNetworksAction()
+    public function removeNetworkAction()
     {
+        //Instantiates the Network manager
+        $networkManager = new NetworkManager();
 
+        //Gets the network corresponding to the name
+        $network = $networkManager->findOneBy(['name' => $this->httpParameters['remove']]);
+
+        try
+        {
+            if(!is_null($network['upload_id']))
+            {
+                //Gets the icon related to the post
+                $uploadManager = new UploadManager();
+
+                $icon = $uploadManager->findOneBy(['id' => $network['upload_id']]);
+            }
+
+            //Removes the network
+            $networkManager->removeElement($network['id']);
+
+            //Removes the image, both in database and server
+            if(isset($icon))
+            {
+                $this->removeFile($icon['id']);
+            }
+        }
+        catch (PDOException | UploadException $e)
+        {
+            //Redirects to the admin update network page in case of failure
+            $this->response->redirect('/admin/networks/?update='.$network['name'], $e->getMessage());
+        }
+
+        //Redirects to the admin networks list in case of success
+        $this->response->redirect('/admin/networks', 'Le réseau a bien été supprimé');
     }
 }
