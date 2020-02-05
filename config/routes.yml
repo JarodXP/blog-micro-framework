@@ -122,6 +122,11 @@
   controller: professional
   action: displayNetworks
 -
+  uri: ^/admin/professional/remove-resume$
+  package: admin
+  controller: professional
+  action: removeResume
+-
   uri: ^/admin/networks/\?update=[a-zA-Z0-9\-\s]{5,30}$
   package: admin
   controller: professional

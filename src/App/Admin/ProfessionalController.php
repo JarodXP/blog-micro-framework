@@ -23,17 +23,22 @@ class ProfessionalController extends Controller
 
     public function displayProfessionalAction()
     {
+        //Get the networks list and corresponding user links
+        $networkManager = new NetworkManager();
+
+        $this->templateVars['networks'] = $networkManager->findNetworksAndLinks($_SESSION['user']->getId(),true);
+
         //Gets the resume and sends it to the twig template
         $userManager = new UserManager();
 
-        $this->templateVars['profile'] = $userManager->findProfile(['users.id' => $_SESSION['user']->getId()]);
+        $this->templateVars['resume'] = $userManager->findUserResume($_SESSION['user']->getId());
 
         $this->twigRender('/adminProfessional.html.twig');
     }
 
     public function registerProfessionalAction()
     {
-
+        //Gets the list of networks
     }
 
     public function displayNetworksAction()

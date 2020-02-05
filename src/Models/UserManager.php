@@ -8,7 +8,6 @@ use Core\Manager;
 use Entities\User;
 use PDO;
 use PDOStatement;
-use Services\ListConfigurator;
 
 class UserManager extends Manager
 {
@@ -100,37 +99,25 @@ class UserManager extends Manager
     }
 
     /**
-     * Gathers the link and the network name
-     * @param $conditions
-     * @param $options
+     * Gets the user resume
+     * @param int $userId
      * @return array
      */
-    public function findProfile($conditions = null, $options = null)
+    public function findUserResume(int $userId)
     {
-        //Sets the parameters with the ListConfigurator Service
-        $listConfigurator = new ListConfigurator($this);
-
-        $requestParameters = $listConfigurator->getRequestParameters($conditions,$options);
-
         $q = $this->dao->prepare(
             'SELECT users.username,
-                            network_links.link, 
-                            network_links.id AS linkId,
-                            social_networks.name AS networkName,
-                            resume.file_name AS resumeFileName,
-                            resume.original_name AS resumeOriginalName,
-                            icon.file_name AS iconFileName,
-                            icon.original_name AS iconOriginalName,
-                            icon.alt 
+                            resume.file_name,
+                            resume.original_name
                         FROM users
                         LEFT JOIN uploads AS resume ON users.resume_id = resume.id
-                        LEFT JOIN network_links ON users.id = network_links.user_id 
-                        LEFT JOIN social_networks ON network_links.network_id = social_networks.id 
-                            LEFT JOIN uploads AS icon ON social_networks.upload_id = icon.id'.' '.$requestParameters);
+                        WHERE users.id = :userId');
+
+        $q->bindValue(':userId',$userId,PDO::PARAM_INT);
 
         $q->execute();
 
-        return $q->fetchAll(PDO::FETCH_ASSOC);
+        return $q->fetch(PDO::FETCH_ASSOC);
     }
 
     /**

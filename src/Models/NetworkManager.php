@@ -84,6 +84,38 @@ class NetworkManager extends Manager
     }
 
     /**
+     * Gets the list of networks and the links corresponding to users
+     * @param int $userId
+     * @param bool $findNoLinks
+     * @return array
+     */
+    public function findNetworksAndLinks(int $userId, bool $findNoLinks)
+    {
+        //Sets a condition to get networks without links
+        $findNoLinks ? $findNull = 'OR users.id IS NULL' : $findNull = '';
+
+        $q = $this->dao->prepare('SELECT
+                            network_links.link, 
+                            network_links.id AS linkId,
+                            social_networks.name AS networkName,
+                            uploads.file_name AS iconFileName,
+                            uploads.original_name AS iconOriginalName,
+                            uploads.alt 
+                        FROM social_networks
+                            LEFT JOIN uploads ON social_networks.upload_id = uploads.id 
+                            LEFT JOIN network_links ON social_networks.id = network_links.network_id 
+                            LEFT JOIN users ON users.id = network_links.user_id
+                        WHERE users.id = :userId'.' '.$findNull);
+
+        $q->bindValue(':userId',$userId,PDO::PARAM_INT);
+
+        $q->execute();
+
+
+        return $q->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Binds all fields value with parameters
      * @param PDOStatement $q
      * @param SocialNetwork $network
