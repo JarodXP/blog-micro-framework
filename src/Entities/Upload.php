@@ -80,7 +80,7 @@ class Upload extends Entity
     {
         if(!is_null($alt))
         {
-            if(!preg_match('~^[a-zA-Z0-9-._]{2,30}$~',$alt))
+            if(!preg_match('~^[a-zA-Z0-9-._/s]{2,30}$~',$alt))
             {
                 throw new EntityAttributeException('alt name is not valid');
             }

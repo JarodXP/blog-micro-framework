@@ -52,6 +52,7 @@ h2{
 
 .imageDiv{
     box-shadow: 5px 5px 10px gray;
+    background-size: contain;
 }
 
 footer{
@@ -351,6 +352,11 @@ select {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.network-item{
+    border-bottom: 1px solid darkgray;
+    padding-bottom: 5px;
 }
 
 /******************FRONT********************/

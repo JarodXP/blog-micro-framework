@@ -8,6 +8,7 @@ use Core\Manager;
 use Entities\SocialNetwork;
 use PDO;
 use PDOStatement;
+use Services\ListConfigurator;
 
 class NetworkManager extends Manager
 {
@@ -57,6 +58,29 @@ class NetworkManager extends Manager
         $this->bindAllFields($q,$network);
 
         return $q->execute();
+    }
+
+    /**
+     * Gets the username and avatar fileName for the connected user
+     * @param null $conditions
+     * @param null $options
+     * @return array
+     */
+    public function findNetworksAndIcons($conditions = null, $options = null)
+    {
+        //Sets the parameters with the ListConfigurator Service
+        $listConfigurator = new ListConfigurator($this);
+
+        $requestParameters = $listConfigurator->getRequestParameters($conditions,$options);
+
+        $q = $this->dao->prepare(
+            'SELECT social_networks.*,uploads.file_name AS fileName,uploads.original_name AS originalName
+                            FROM social_networks 
+                            INNER JOIN uploads ON social_networks.upload_id = uploads.id'.' '.$requestParameters);
+
+        $q->execute();
+
+        return $q->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
