@@ -1,0 +1,92 @@
+{% extends 'mainAdmin.html.twig' %}
+
+{% block title %}Admin - Ajouter Réseau Social{% endblock %}
+
+{% block mainContent %}
+
+    <div class="row admin-content">
+
+        {% block h1Title %}<h1 class="col-12 text-center">Modifier un réseau existant</h1>{% endblock %}
+
+        <form action="{{ '/admin/networks/?register='~register }}" method="post" id="socialForm"
+              class="col-12 col-md-10 offset-md-1 admin-form" enctype="multipart/form-data">
+
+            <div id="networksList" class="row form-section">
+
+                <h3 class="col-12 text-center my-4">Réseaux enregistrés</h3>
+
+                {% for network in networks %}
+
+                    <div class="col-12 col-md-4 offset-md-4 my-2">
+                        <div class="row align-items-center network-item my-3">
+                            <div class="col-12 col-md-1 admin-social-icon my-0 text-center"
+                                 style="background-image: url({{ '/assets/uploads/'~network.file_name }})"></div>
+                            <p class="col-12 col-md-9 text-center my-0">{{ network.name }}</p>
+                            <div class="col-12 col-md-1 text-center my-0 modif-icon">
+                                <div class="d-flex flex-row justify-content-center">
+                                    <p class="modif-icon mx-2">
+                                        <a href = {{ '/admin/network/?update='~network.name }}>
+                                            <i class="far fa-edit"></i>
+                                        </a>
+                                    </p>
+                                    <p class="modif-icon mx-2">
+                                        <a href = {{ '/admin/network/?remove='~network.name }}>
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="socialSectionName" class="row">
+                {% block h3Title %}<h3 class="col-12 text-center my-4">Modifier {{ updateNetwork.name }}</h3>{% endblock %}
+                <div class="col-12 my-2">
+                    <div class="row">
+                        <label for="networkName" class="col-12">Nom du réseau social</label>
+                        <input id="networkName" type="text" name="name" class="col-md-8 offset-md-2 form-control "
+                               value="{{ updateNetwork.name }}">
+                    </div>
+                </div>
+            </div>
+
+            <div id="iconSectionMainImage" class="row form-section d-flex align-items-center ">
+
+                <div class="col-12 col-md-2">
+                    <div class="row">
+                        <p class="col-12">Icone du reseau</p>
+                        <div id="networkIcon" class="col-12 imageDiv"
+                             style="background-image: url({{ '/assets/uploads/'~updateNetwork.fileName }}); background-size: cover">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-10">
+                    <div class="form-group col-12 col-md-10 offset-md-1">
+                        <label for="networkIconFile" class="col-12">Télécharger un fichier</label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
+                        <input id="networkIconFile" name="networkIconFile" type="file" class="col-12 form-control">
+                        <div id="networkIconFile" class="col-12">Fichier actuel : {{ updateNetwork.originalName }}</div>
+                    </div>
+                    <div class="form-group col-12 col-md-10 offset-md-1">
+                        <label for="networkIconAlt" class="col-12">Balise Alt</label>
+                        <input id="networkIconAlt" class="col-12 form-control" type="text" name="alt" value="{{ updateNetwork.alt }}">
+                    </div>
+                </div>
+            </div>
+
+            <div id="professionalSectionButtons" class="row form-section">
+                <div class="col-10 offset-1">
+                    <div class="form-submit">
+                        <p><button type="submit" class="btn btn-success">Enregistrer</button></p>
+                        <p><button type="submit" class="btn btn-secondary" formaction="/admin/professional">Retour</button></p>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

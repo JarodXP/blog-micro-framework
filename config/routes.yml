@@ -117,15 +117,15 @@
   controller: professional
   action: displayProfessional
 -
-  uri: ^/admin/professional/social$
+  uri: ^/admin/networks[/]?$
   package: admin
   controller: professional
   action: displayNetworks
 -
-  uri: ^/admin/professional/social/add=([0-9]+)$
+  uri: ^/admin/networks/\?register=[a-zA-Z0-9\-\s]{5,30}$
   package: admin
   controller: professional
-  action: addNetwork
+  action: registerNetwork
 -
   uri: ^/admin/professional/social/remove=([0-9]+)$
   package: admin
