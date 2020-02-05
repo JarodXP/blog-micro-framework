@@ -43,7 +43,7 @@ class NetworkManager extends Manager
      * @param SocialNetwork $network
      * @return bool
      */
-    public function updateSocialNetwork(SocialNetwork $network)
+    public function updateSocialNetwork(SocialNetwork $network):bool
     {
         //Checks if the name is unique
         $this->checkUniqueFields([
@@ -95,6 +95,7 @@ class NetworkManager extends Manager
         $findNoLinks ? $findNull = 'OR users.id IS NULL' : $findNull = '';
 
         $q = $this->dao->prepare('SELECT
+                            social_networks.id,                     
                             network_links.link, 
                             network_links.id AS linkId,
                             social_networks.name AS networkName,

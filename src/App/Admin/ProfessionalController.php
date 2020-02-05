@@ -5,9 +5,11 @@ namespace Admin;
 
 
 use Core\Controller;
+use Entities\NetworkLink;
 use Entities\SocialNetwork;
 use Exceptions\EntityAttributeException;
 use Exceptions\UploadException;
+use Models\LinkManager;
 use Models\NetworkManager;
 use Models\UploadManager;
 use Models\UserManager;
@@ -39,6 +41,46 @@ class ProfessionalController extends Controller
     public function registerProfessionalAction()
     {
         //Gets the list of networks
+        $networkManager = new NetworkManager();
+
+        $networks = $networkManager->findNetworksAndLinks($_SESSION['user']->getId(),true);
+
+        //Creates or updates a network link for each network
+        $linkManager = new LinkManager();
+
+        try
+        {
+            foreach ($networks as $network)
+            {
+                if(isset($this->httpParameters[$network['networkName']]))
+                {
+                    //Creates an instance of Link
+                    $link = new NetworkLink([
+                        'networkId' => $network['id'],
+                        'link' => $this->httpParameters[$network['networkName']],
+                        'userId' => $_SESSION['user']->getId()
+                    ]);
+
+                    //inserts or updates link
+                    if(is_null($network['linkId']))
+                    {
+                        $linkManager->insertNetworkLink($link);
+                    }
+                    else
+                    {
+                        $link->setId($network['linkId']);
+
+                        $linkManager->updateNetworkLink($link);
+                    }
+                }
+            }
+        }
+        catch (PDOException | EntityAttributeException $e)
+        {
+            $this->response->redirect('/admin/professional',$e->getMessage());
+        }
+
+        $this->response->redirect('/admin/professional','Les informations ont été mises à jour');
     }
 
     public function displayNetworksAction()
