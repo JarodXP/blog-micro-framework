@@ -24,6 +24,11 @@
   controller: profile
   action: displayContactForm
 -
+  uri: ^/contact/thank-you$
+  package: front
+  controller: profile
+  action: contactThankYou
+-
   uri: ^/contact/send?$
   package: front
   controller: profile

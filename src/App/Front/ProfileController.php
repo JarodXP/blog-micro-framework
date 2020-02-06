@@ -8,13 +8,12 @@ use App\Application;
 use Core\Controller;
 use Entities\Upload;
 use Entities\User;
+use Exceptions\MailException;
 use Models\UploadManager;
 use Models\UserManager;
 use Services\ListPaginator;
+use Services\MailHandler;
 use Services\SidebarBuilder;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class ProfileController extends Controller
 {
@@ -66,25 +65,36 @@ class ProfileController extends Controller
 
     public function displayContactFormAction()
     {
-        try
-        {
-            echo $this->twigEnvironment->render('/frontContact.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+        $this->twigRender('/frontContact.html.twig');
     }
 
     public function sendContactFormAction()
     {
         try
         {
-            echo $this->twigEnvironment->render('/frontThankYouContact.html.twig');
+            //Use of MailHandler service to send the mail
+            $mailHandler = new MailHandler($_SESSION['user'],$this->httpParameters);
+
+            $mailHandler->sendMail(MailHandler::CONTACT_MAIL);
+
+            $this->response->redirect('/contact/thank-you');
         }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
+        catch (MailException $e)
         {
-            print_r($e->getMessage());
+            $this->response->redirect('/contact',$e->getMessage());
         }
+    }
+
+    public function contactThankYouAction()
+    {
+        $this->templateVars['h1'] = 'Merci pour votre demande de contact!';
+
+        $this->templateVars['content'] = 'Votre demande a bien été envoyée, 
+        je m\'efforce d\'y répondre dans les plus brefs délais.';
+
+        //Sets the link for "back" button
+        $this->templateVars['previousPage'] = '/';
+
+        $this->twigRender('/frontThankYou.html.twig');
     }
 }
