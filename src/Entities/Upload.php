@@ -65,7 +65,7 @@ class Upload extends Entity
      */
     public function setOriginalName(string $originalName): void
     {
-        if(preg_match('~^[a-zA-Z0-9-._]{2,100}.(pdf|jpg|jpeg|png)$~',$originalName) == 0)
+        if(preg_match('~^[a-zA-Z0-9-._\s]{2,100}.(pdf|jpg|jpeg|png)$~',$originalName) == 0)
         {
             throw new EntityAttributeException('File name : '.$originalName.' is not valid');
         }
@@ -78,7 +78,7 @@ class Upload extends Entity
      */
     public function setAlt(string $alt = null): void
     {
-        if(!is_null($alt))
+        if(!is_null($alt) && !empty($alt))
         {
             if(!preg_match('~^[a-zA-Z0-9-._\s]{2,30}$~',$alt))
             {

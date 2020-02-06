@@ -50,6 +50,7 @@ class ProfessionalController extends Controller
 
         try
         {
+            //Registers the network links
             foreach ($networks as $network)
             {
                 if(isset($this->httpParameters[$network['networkName']]))
@@ -60,6 +61,8 @@ class ProfessionalController extends Controller
                         'link' => $this->httpParameters[$network['networkName']],
                         'userId' => $_SESSION['user']->getId()
                     ]);
+
+                    $link->isValid();
 
                     //inserts or updates link
                     if(is_null($network['linkId']))
@@ -74,9 +77,38 @@ class ProfessionalController extends Controller
                     }
                 }
             }
+
+            //Checks if $_FILES['resumeFile'] contains a file
+            if($_FILES['resumeFile']['error'] != 4)
+            {
+                //Uses FileUploader service to upload the resume and get an Upload object
+                $resume = $this->uploadPDF('resumeFile');
+
+                //Stores the current resume id
+                if(!is_null($_SESSION['user']->getResumeId()))
+                {
+                    $currentResumeId = $_SESSION['user']->getResumeId();
+                }
+
+                //Sets the new resume id property to the $_SESSION['user']
+                $_SESSION['user']->setResumeId($resume->getId());
+
+                //Updates user
+                $userManager = new UserManager();
+
+                $userManager->updateUser($_SESSION['user']);
+
+                //Removes former resume
+                if(isset($currentResumeId))
+                {
+                    $this->removeFile($currentResumeId);
+
+                }
+            }
         }
-        catch (PDOException | EntityAttributeException $e)
+        catch (PDOException | UploadException | EntityAttributeException $e)
         {
+
             $this->response->redirect('/admin/professional',$e->getMessage());
         }
 
@@ -173,7 +205,7 @@ class ProfessionalController extends Controller
             $this->response->redirect('/admin/networks');
 
         }
-        catch (EntityAttributeException $e)
+        catch (PDOException | UploadException | EntityAttributeException $e)
         {
             //If a file has been created during process, removes the former one
             if(isset($icon) && isset($network) && !is_null($network->getId()) && isset($currentIconId))

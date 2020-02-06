@@ -5,11 +5,8 @@ namespace Core;
 
 
 
-use Entities\Upload;
-use Errors\UnauthorizedFileUpload;
-use Errors\UploadError;
+
 use Exceptions\UploadException;
-use finfo;
 
 class File
 {
@@ -92,14 +89,18 @@ class File
      */
     private function checkErrorCode(int $errorCode):bool
     {
-        if($errorCode != 0)
+        switch ($errorCode)
         {
-            throw new UploadException('Une erreur est survenue lors du téléchargement du fichier');
-        }
+            case 0: return true;
 
-        else
-        {
-            return true;
+            case 1;
+
+            case 2:  throw new UploadException('La taille du fichier ne doit pas dépasser 300 ko');
+
+            default:
+                error_log('Upload file error. $_FILES[error] = '.$errorCode);
+
+                throw new UploadException('Une erreur est survenue lors du téléchargement du fichier.');
         }
     }
 

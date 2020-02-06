@@ -69,6 +69,6 @@ class NetworkLink extends Entity
      */
     protected function setMandatoryProperties()
     {
-        $this->mandatoryProperties = ['network_id','user_id','link'];
+        $this->mandatoryProperties = ['networkId','userId','link'];
     }
 }
