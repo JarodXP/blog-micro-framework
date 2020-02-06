@@ -23,6 +23,8 @@ class ProfessionalController extends Controller
 
     public const NETWORK_NAME = 'name', NEW_NETWORK = 'new-network', REGISTER = 'register';
 
+    //Links and resume
+
     public function displayProfessionalAction()
     {
         //Get the networks list and corresponding user links
@@ -114,6 +116,26 @@ class ProfessionalController extends Controller
 
         $this->response->redirect('/admin/professional','Les informations ont été mises à jour');
     }
+
+    public function removeResumeAction()
+    {
+        //Gets the resume Id from the current user
+        $resumeId = $_SESSION['user']->getResumeId();
+
+        //Sets the user's resume id to null on database
+        $_SESSION['user']->setResumeId(null);
+
+        $userManager = new UserManager();
+
+        $userManager->updateUser($_SESSION['user']);
+
+        //Removes file in server and database
+        $this->removeFile($resumeId);
+
+        $this->response->redirect('/admin/professional', 'Le résumé a bien été supprimé');
+    }
+
+    //Social Networks
 
     public function displayNetworksAction()
     {
