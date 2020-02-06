@@ -20,7 +20,7 @@ class File
         if($this->checkErrorCode($file['error']))
         {
             //Checks if file _size doesn't exceeds allowed
-            if($this->checkFileSize($file['size']))
+            if($this->checkFileSize($file['size'],$file['type']))
             {
                 //Sets the files properties
                 $this->_originalName = $file['name'];
@@ -107,16 +107,25 @@ class File
     /**
      * Checks the file _size and throws an exception in case of problem
      * @param int $size
+     * @param string $type
      * @return bool
      */
-    private function checkFileSize(int $size):bool
+    private function checkFileSize(int $size, string $type):bool
     {
-        //Gets the max _size allowed for files in config
-        $maxSize = $GLOBALS['config']['MAX_SIZE'];
+        //Sets a variable for the maximum allowed file size
+        if(strpos($type,'image') !== false)
+        {
+            $maxSize = $GLOBALS['config']['MAX_SIZE_IMAGE'];
+        }
+        else
+        {
+            $maxSize = $GLOBALS['config']['MAX_SIZE_PDF'];
+        }
 
+        //Checks if file exceeds maxSize
         if($size > $maxSize)
         {
-            throw new UploadException('La taille du fichier ne doit pas être supérieure à '.($maxSize/1000).' Ko');
+            throw new UploadException('Le fichier ne doit pas dépasser '.($maxSize / 1000).' ko');
         }
         else
         {

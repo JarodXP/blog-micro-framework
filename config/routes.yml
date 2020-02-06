@@ -2,7 +2,7 @@
 ---
 
 -
-  uri: ^/not-found$
+  uri: ^/not-found[/]?$
   package: front
   controller: blog
   action: notFound
@@ -83,7 +83,7 @@
   controller: posts
   action: editPost
 -
-  uri: ^/admin/posts/new-post$
+  uri: ^/admin/posts/new-post[/]?$
   package: admin
   controller: posts
   action: displayNewPost
@@ -100,7 +100,7 @@
 
   #PROFILE
 -
-  uri: ^/admin/my-profile$
+  uri: ^/admin/my-profile[/]?$
   package: admin
   controller: profile
   action: editProfile
@@ -112,7 +112,7 @@
 
   #PROFESSIONAL
 -
-  uri: ^/admin/professional$
+  uri: ^/admin/professional[/]?$
   package: admin
   controller: professional
   action: displayProfessional
