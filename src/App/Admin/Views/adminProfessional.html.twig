@@ -8,16 +8,16 @@
 
         <h1 class="col-12 text-center">Renseignements professionnels</h1>
 
-        <form action="/admin/professional" method="post" id="professionalForm" class="col-12 col-md-10 offset-md-1 admin-form" enctype="multipart/form-data">
+        <form action="/admin/professional/register" method="post" id="professionalForm" class="col-12 col-md-10 offset-md-1 admin-form" enctype="multipart/form-data">
 
             <div id="professionalSectionSocial" class="row form-section">
-                {% for network in profile %}
+                {% for network in networks %}
                     <div class="col-12 col-md-8 offset-md-2 my-2">
                         <div class="row">
                             <label for="{{ network.networkName }}" class="col-12">{{ network.networkName }}</label>
                             <div class="col-12 col-md-1 admin-social-icon mt-2 text-center" style="background-image: url({{ '/assets/uploads/'~network.iconFileName }})"></div>
                             <input id="{{ network.networkName }}" type="url" name="{{ network.networkName }}" class="col-12 col-md-10 form-control mt-2" value="{{ network.link }}">
-                            <p class="col-12 col-md-1 text-center mt-2 modif-icon"><a href = "{{ '/admin/networks/link/remove/?='~network.linkId }}"><i class="far fa-trash-alt"></i></a></p>
+                            <p class="col-12 col-md-1 text-center mt-2 modif-icon"><a href = "{{ '/admin/professional/remove/?link='~network.linkId }}"><i class="far fa-trash-alt"></i></a></p>
                         </div>
                     </div>
                 {% endfor %}
@@ -31,20 +31,21 @@
                 <div class="col-12 col-md-10 offset-md-1">
                     <div class="row flex-column-reverse flex-md-row">
                         <p class="col-12 col-md-3 text-center">Fichier actuel: <br>
-                            <a href={{ '/assets/uploads/'~profile.0.resumeFileName }}
-                               target="_blank">{{ profile.0.resumeOriginalName }}</a></p>
-
+                            <a href={{ '/assets/uploads/'~resume.file_name }}
+                               target="_blank">{{ resume.original_name }}</a>
+                        </p>
                         <div class="form-group col-12 col-md-9">
                             <label for="resumeFile" class="col-12">Télécharger votre CV en PDF</label>
                             <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
                             <input id="resumeFile" name="resumeFile" type="file" class="col-12 form-control">
                         </div>
+                        <p class="col-12 text-center"><a href="/admin/professional/remove-resume" class="btn btn-danger">Supprimer CV</a></p>
                     </div>
                 </div>
 
-                {% if profile.0.resumeFileName is not null %}
+                {% if resume.file_name is not null %}
                     <iframe id="resumePdf" class="col-12 col-md-10 offset-md-1 mt-4 mt-md-5"
-                            src={{ '/assets/uploads/'~profile.0.resumeFileName }}></iframe>
+                            src={{ '/assets/uploads/'~resume.file_name }}></iframe>
                 {% endif %}
             </div>
 

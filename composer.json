@@ -17,6 +17,7 @@
     "ezyang/htmlpurifier": "^4.12",
     "ext-exif": "*",
     "ext-gd": "*",
-    "cocur/slugify": "^4.0"
+    "cocur/slugify": "^4.0",
+    "ext-fileinfo": "*"
   }
 }

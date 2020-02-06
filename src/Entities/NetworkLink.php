@@ -64,4 +64,11 @@ class NetworkLink extends Entity
         $this->link = $link;
     }
 
+    /**
+     * Sets an array with the mandatory fields
+     */
+    protected function setMandatoryProperties()
+    {
+        $this->mandatoryProperties = ['networkId','userId','link'];
+    }
 }

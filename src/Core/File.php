@@ -5,11 +5,8 @@ namespace Core;
 
 
 
-use Entities\Upload;
-use Errors\UnauthorizedFileUpload;
-use Errors\UploadError;
+
 use Exceptions\UploadException;
-use finfo;
 
 class File
 {
@@ -19,23 +16,19 @@ class File
 
     public function __construct(array $file)
     {
-        //Checks if no upload errors occurred
-        if($this->checkErrorCode($file['error']))
+        //Checks if no upload errors occurred && if file _size doesn't exceeds allowed
+        if($this->checkErrorCode($file['error']) && $this->checkFileSize($file['size'],$file['type']))
         {
-            //Checks if file _size doesn't exceeds allowed
-            if($this->checkFileSize($file['size']))
-            {
-                //Sets the files properties
-                $this->_originalName = $file['name'];
+            //Sets the files properties
+            $this->_originalName = $file['name'];
 
-                $this->_tempFile = $file['tmp_name'];
+            $this->_tempFile = $file['tmp_name'];
 
-                $this->_size = $file['size'];
+            $this->_size = $file['size'];
 
-                $this->_mimeType = $file['type'];
+            $this->_mimeType = $file['type'];
 
-                $this->setFileName();
-            }
+            $this->setFileName();
         }
     }
 
@@ -92,30 +85,43 @@ class File
      */
     private function checkErrorCode(int $errorCode):bool
     {
-        if($errorCode != 0)
+        switch ($errorCode)
         {
-            throw new UploadException('Une erreur est survenue lors du téléchargement du fichier');
-        }
+            case 0: return true;
 
-        else
-        {
-            return true;
+            case 1;
+
+            case 2:  throw new UploadException('La taille du fichier ne doit pas dépasser 300 ko');
+
+            default:
+                error_log('Upload file error. $_FILES[error] = '.$errorCode);
+
+                throw new UploadException('Une erreur est survenue lors du téléchargement du fichier.');
         }
     }
 
     /**
      * Checks the file _size and throws an exception in case of problem
      * @param int $size
+     * @param string $type
      * @return bool
      */
-    private function checkFileSize(int $size):bool
+    private function checkFileSize(int $size, string $type):bool
     {
-        //Gets the max _size allowed for files in config
-        $maxSize = $GLOBALS['config']['MAX_SIZE'];
+        //Sets a variable for the maximum allowed file size
+        if(strpos($type,'image') !== false)
+        {
+            $maxSize = $GLOBALS['config']['MAX_SIZE_IMAGE'];
+        }
+        else
+        {
+            $maxSize = $GLOBALS['config']['MAX_SIZE_PDF'];
+        }
 
+        //Checks if file exceeds maxSize
         if($size > $maxSize)
         {
-            throw new UploadException('La taille du fichier ne doit pas être supérieure à '.($maxSize/1000).' Ko');
+            throw new UploadException('Le fichier ne doit pas dépasser '.($maxSize / 1000).' ko');
         }
         else
         {

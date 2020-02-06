@@ -2,7 +2,7 @@
 ---
 
 -
-  uri: ^/not-found$
+  uri: ^/not-found[/]?$
   package: front
   controller: blog
   action: notFound
@@ -83,7 +83,7 @@
   controller: posts
   action: editPost
 -
-  uri: ^/admin/posts/new-post$
+  uri: ^/admin/posts/new-post[/]?$
   package: admin
   controller: posts
   action: displayNewPost
@@ -100,7 +100,7 @@
 
   #PROFILE
 -
-  uri: ^/admin/my-profile$
+  uri: ^/admin/my-profile[/]?$
   package: admin
   controller: profile
   action: editProfile
@@ -112,15 +112,30 @@
 
   #PROFESSIONAL
 -
-  uri: ^/admin/professional$
+  uri: ^/admin/professional[/]?$
   package: admin
   controller: professional
   action: displayProfessional
+-
+  uri: ^/admin/professional/register$
+  package: admin
+  controller: professional
+  action: registerProfessional
 -
   uri: ^/admin/networks[/]?$
   package: admin
   controller: professional
   action: displayNetworks
+-
+  uri: ^/admin/professional/remove-resume$
+  package: admin
+  controller: professional
+  action: removeResume
+-
+  uri: ^/admin/professional/remove/\?link=[0-9]{1,100}$
+  package: admin
+  controller: professional
+  action: removeLink
 -
   uri: ^/admin/networks/\?update=[a-zA-Z0-9\-\s]{5,30}$
   package: admin

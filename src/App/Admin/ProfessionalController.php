@@ -5,9 +5,11 @@ namespace Admin;
 
 
 use Core\Controller;
+use Entities\NetworkLink;
 use Entities\SocialNetwork;
 use Exceptions\EntityAttributeException;
 use Exceptions\UploadException;
+use Models\LinkManager;
 use Models\NetworkManager;
 use Models\UploadManager;
 use Models\UserManager;
@@ -21,20 +23,149 @@ class ProfessionalController extends Controller
 
     public const NETWORK_NAME = 'name', NEW_NETWORK = 'new-network', REGISTER = 'register';
 
+    //Links and resume
+
     public function displayProfessionalAction()
     {
+        //Get the networks list and corresponding user links
+        $networkManager = new NetworkManager();
+
+        $this->templateVars['networks'] = $networkManager->findNetworksAndLinks($_SESSION['user']->getId(),true);
+
         //Gets the resume and sends it to the twig template
         $userManager = new UserManager();
 
-        $this->templateVars['profile'] = $userManager->findProfile(['users.id' => $_SESSION['user']->getId()]);
+        $this->templateVars['resume'] = $userManager->findUserResume($_SESSION['user']->getId());
 
         $this->twigRender('/adminProfessional.html.twig');
     }
 
     public function registerProfessionalAction()
     {
+        //Gets the list of networks
+        $networkManager = new NetworkManager();
 
+        $networks = $networkManager->findNetworksAndLinks($_SESSION['user']->getId(),true);
+
+        //Creates or updates a network link for each network
+        $linkManager = new LinkManager();
+
+        try
+        {
+            //Registers the network links
+            foreach ($networks as $network)
+            {
+                if(isset($this->httpParameters[$network['networkName']]))
+                {
+                    //Creates an instance of Link
+                    $link = new NetworkLink([
+                        'networkId' => $network['id'],
+                        'link' => $this->httpParameters[$network['networkName']],
+                        'userId' => $_SESSION['user']->getId()
+                    ]);
+
+                    $link->isValid();
+
+                    //inserts or updates link
+                    if(is_null($network['linkId']))
+                    {
+                        $linkManager->insertNetworkLink($link);
+                    }
+                    else
+                    {
+                        $link->setId($network['linkId']);
+
+                        $linkManager->updateNetworkLink($link);
+                    }
+                }
+            }
+
+            //Checks if $_FILES['resumeFile'] contains a file
+            if($_FILES['resumeFile']['error'] != 4)
+            {
+                //Uses FileUploader service to upload the resume and get an Upload object
+                $resume = $this->uploadPDF('resumeFile');
+
+                //Stores the current resume id
+                if(!is_null($_SESSION['user']->getResumeId()))
+                {
+                    $currentResumeId = $_SESSION['user']->getResumeId();
+                }
+
+                //Sets the new resume id property to the $_SESSION['user']
+                $_SESSION['user']->setResumeId($resume->getId());
+
+                //Updates user
+                $userManager = new UserManager();
+
+                $userManager->updateUser($_SESSION['user']);
+
+                //Removes former resume
+                if(isset($currentResumeId))
+                {
+                    $this->removeFile($currentResumeId);
+
+                }
+            }
+        }
+        catch (PDOException | UploadException | EntityAttributeException $e)
+        {
+
+            $this->response->redirect('/admin/professional',$e->getMessage());
+        }
+
+        $this->response->redirect('/admin/professional','Les informations ont été mises à jour');
     }
+
+    public function removeLinkAction()
+    {
+        //Checks if the link id is set
+        if(isset($this->httpParameters['link']))
+        {
+            $linkManager = new LinkManager();
+
+            //Checks if the id matches with an existing link
+            $link = $linkManager->findOneBy(['id' => $this->httpParameters['link']]);
+
+            if(!empty($link))
+            {
+                //Removes the link
+                $linkManager->removeElement($link['id']);
+
+                $notification = 'Le lien a bien été supprimé';
+            }
+            else
+            {
+                $notification = 'L\'identifiant du lien n\'existe pas';
+            }
+        }
+        else
+        {
+            $notification = 'Aucun idntifiant de lien n\'a été transmis';
+        }
+
+        $this->response->redirect('/admin/professional',$notification);
+    }
+
+    public function removeResumeAction()
+    {
+        //Gets the resume Id from the current user
+        $resumeId = $_SESSION['user']->getResumeId();
+
+        //Sets the user's resume id to null on database
+        $_SESSION['user']->setResumeId(null);
+
+        $userManager = new UserManager();
+
+        $userManager->updateUser($_SESSION['user']);
+
+        //Removes file in server and database
+        $this->removeFile($resumeId);
+
+        $this->response->redirect('/admin/professional', 'Le CV a bien été supprimé');
+    }
+
+    //Social Networks
 
     public function displayNetworksAction()
     {
@@ -126,7 +257,7 @@ class ProfessionalController extends Controller
             $this->response->redirect('/admin/networks');
 
         }
-        catch (EntityAttributeException $e)
+        catch (PDOException | UploadException | EntityAttributeException $e)
         {
             //If a file has been created during process, removes the former one
             if(isset($icon) && isset($network) && !is_null($network->getId()) && isset($currentIconId))
