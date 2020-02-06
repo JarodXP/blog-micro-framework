@@ -25,6 +25,9 @@ class BlogController extends Controller
 
         //Sets the sidebar widget "last posts" list
         $this->sidebarPostsWidgetList(3);
+
+        //Sets the sidebar widget "networks" list
+        $this->sidebarNetworksList();
     }
 
     public function postListAction()
