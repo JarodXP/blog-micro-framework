@@ -16,23 +16,19 @@ class File
 
     public function __construct(array $file)
     {
-        //Checks if no upload errors occurred
-        if($this->checkErrorCode($file['error']))
+        //Checks if no upload errors occurred && if file _size doesn't exceeds allowed
+        if($this->checkErrorCode($file['error']) && $this->checkFileSize($file['size'],$file['type']))
         {
-            //Checks if file _size doesn't exceeds allowed
-            if($this->checkFileSize($file['size'],$file['type']))
-            {
-                //Sets the files properties
-                $this->_originalName = $file['name'];
+            //Sets the files properties
+            $this->_originalName = $file['name'];
 
-                $this->_tempFile = $file['tmp_name'];
+            $this->_tempFile = $file['tmp_name'];
 
-                $this->_size = $file['size'];
+            $this->_size = $file['size'];
 
-                $this->_mimeType = $file['type'];
+            $this->_mimeType = $file['type'];
 
-                $this->setFileName();
-            }
+            $this->setFileName();
         }
     }
 
