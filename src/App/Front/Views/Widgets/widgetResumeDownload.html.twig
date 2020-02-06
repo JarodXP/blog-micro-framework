@@ -1,4 +1,6 @@
-<div class="card my-4">
-    <h5 class="card-header">Télécharger CV
-        <a href="/assets/uploads/resume.pdf" target="_blank"><i id="eyeUpload" class="fas fa-eye"></i></a></h5>
-</div>
+{% if resume is not null %}
+    <div class="card my-4">
+        <h5 class="card-header">Télécharger CV
+            <a href={{ '/assets/uploads/'~resume.fileName }} target="_blank"><i id="eyeUpload" class="fas fa-eye"></i></a></h5>
+    </div>
+{%  endif %}

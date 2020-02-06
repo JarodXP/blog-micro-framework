@@ -8,6 +8,7 @@ use Entities\Post;
 use Entities\User;
 use Models\NetworkManager;
 use Models\PostManager;
+use Models\UploadManager;
 use Models\UserManager;
 
 trait SidebarBuilder
@@ -33,12 +34,27 @@ trait SidebarBuilder
 
     public function sidebarNetworksList()
     {
+        //Gets the admin data
         $userManager = new UserManager();
 
         $admin = $userManager->findOneBy(['role' => User::ROLE_ADMIN]);
 
+        //Sends the list of networks links corresponding to the admin user to the twig template
         $networkManager = new NetworkManager();
 
         $this->templateVars['networks'] = $networkManager->findNetworksAndLinks($admin['id'],false);
+    }
+
+    public function sidebarResume()
+    {
+        //Gets the admin data
+        $userManager = new UserManager();
+
+        $admin = $userManager->findOneBy(['role' => User::ROLE_ADMIN]);
+
+        //Sends the list of networks links corresponding to the admin user to the twig template
+        $uploadManager = new UploadManager();
+
+        $this->templateVars['resume'] = $uploadManager->findOneBy(['id'=>$admin['resume_id']]);
     }
 }

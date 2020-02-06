@@ -25,10 +25,13 @@ class ProfileController extends Controller
         parent::__construct($app, $httpParameters);
 
         //Sets the sidebar widget "last posts" list
-       $this->sidebarPostsWidgetList(3);
+        $this->sidebarPostsWidgetList(3);
 
         //Sets the sidebar widget "networks" list
         $this->sidebarNetworksList();
+
+        //Sets the sidebar widget "resume"
+        $this->sidebarResume();
     }
 
     public function displayProfileAction()
