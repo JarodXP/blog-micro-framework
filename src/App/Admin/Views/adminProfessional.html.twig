@@ -17,7 +17,7 @@
                             <label for="{{ network.networkName }}" class="col-12">{{ network.networkName }}</label>
                             <div class="col-12 col-md-1 admin-social-icon mt-2 text-center" style="background-image: url({{ '/assets/uploads/'~network.iconFileName }})"></div>
                             <input id="{{ network.networkName }}" type="url" name="{{ network.networkName }}" class="col-12 col-md-10 form-control mt-2" value="{{ network.link }}">
-                            <p class="col-12 col-md-1 text-center mt-2 modif-icon"><a href = "{{ '/admin/networks/link/remove/?='~network.linkId }}"><i class="far fa-trash-alt"></i></a></p>
+                            <p class="col-12 col-md-1 text-center mt-2 modif-icon"><a href = "{{ '/admin/professional/remove/?link='~network.linkId }}"><i class="far fa-trash-alt"></i></a></p>
                         </div>
                     </div>
                 {% endfor %}

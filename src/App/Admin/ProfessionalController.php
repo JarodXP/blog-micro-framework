@@ -117,6 +117,36 @@ class ProfessionalController extends Controller
         $this->response->redirect('/admin/professional','Les informations ont été mises à jour');
     }
 
+    public function removeLinkAction()
+    {
+        //Checks if the link id is set
+        if(isset($this->httpParameters['link']))
+        {
+            $linkManager = new LinkManager();
+
+            //Checks if the id matches with an existing link
+            $link = $linkManager->findOneBy(['id' => $this->httpParameters['link']]);
+
+            if(!empty($link))
+            {
+                //Removes the link
+                $linkManager->removeElement($link['id']);
+
+                $notification = 'Le lien a bien été supprimé';
+            }
+            else
+            {
+                $notification = 'L\'identifiant du lien n\'existe pas';
+            }
+        }
+        else
+        {
+            $notification = 'Aucun idntifiant de lien n\'a été transmis';
+        }
+
+        $this->response->redirect('/admin/professional',$notification);
+    }
+
     public function removeResumeAction()
     {
         //Gets the resume Id from the current user
@@ -132,7 +162,7 @@ class ProfessionalController extends Controller
         //Removes file in server and database
         $this->removeFile($resumeId);
 
-        $this->response->redirect('/admin/professional', 'Le résumé a bien été supprimé');
+        $this->response->redirect('/admin/professional', 'Le CV a bien été supprimé');
     }
 
     //Social Networks

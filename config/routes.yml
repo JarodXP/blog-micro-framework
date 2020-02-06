@@ -132,6 +132,11 @@
   controller: professional
   action: removeResume
 -
+  uri: ^/admin/professional/remove/\?link=[0-9]{1,100}$
+  package: admin
+  controller: professional
+  action: removeLink
+-
   uri: ^/admin/networks/\?update=[a-zA-Z0-9\-\s]{5,30}$
   package: admin
   controller: professional
