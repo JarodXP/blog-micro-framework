@@ -1,6 +1,3 @@
-#First time Setup
-SETUP : false
-
 #Application Env
 # dev : Development, prod: Production
 APP_ENV : dev
