@@ -6,3 +6,6 @@
 composer.phar
 vendor/
 vendor/**
+
+# Database config
+config/db-config.yml

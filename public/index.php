@@ -58,6 +58,10 @@ $routes = yaml_parse_file($configDirectory.'/routes.yml');
 //Sets a global variable for the config parsed file
 $config = yaml_parse_file($configDirectory.'/config.yml');
 
+//Sets a global var for the database information
+$dbConfig = yaml_parse_file( __DIR__ . '/../config/db-config.yml');
+
+
 //Global environment variables for Twig Views
 $locale = $config['APP_LOCALE'];
 $charset = $config['APP_CHARSET'];

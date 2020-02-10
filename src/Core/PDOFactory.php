@@ -14,7 +14,7 @@ abstract class PDOFactory
      */
     public static function createMySQLConnection(): PDO
     {
-        $databaseInfo = $GLOBALS['config'];
+        $databaseInfo = $GLOBALS['dbConfig'];
 
         $dao = new PDO('mysql:host='.$databaseInfo['DATABASE_HOST'].';port='.$databaseInfo['DATABASE_PORT'].';dbname='
             .$databaseInfo['DATABASE_NAME'],

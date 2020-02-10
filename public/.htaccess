@@ -1,6 +1,0 @@
-RewriteEngine On
-
-
-# Redirects to index except if the file exists (ie: for public images)
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php [QSA,L]
