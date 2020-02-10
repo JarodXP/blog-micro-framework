@@ -1,7 +1,6 @@
 RewriteEngine On
 
 
-# Si le fichier auquel on tente d'accéder existe (si on veut accéder à une image par exemple).
+# Redirects to index except if the file exists (ie: for public images)
 RewriteCond %{REQUEST_FILENAME} !-f
-
 RewriteRule ^(.*)$ index.php [QSA,L]
