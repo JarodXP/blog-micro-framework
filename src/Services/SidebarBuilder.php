@@ -55,6 +55,8 @@ trait SidebarBuilder
         //Sends the list of networks links corresponding to the admin user to the twig template
         $uploadManager = new UploadManager();
 
-        $this->templateVars['resume'] = $uploadManager->findOneBy(['id'=>$admin['resume_id']]);
+        ! is_null($admin['resume_id'])
+        ? $this->templateVars['resume'] = $uploadManager->findOneBy(['id'=>$admin['resume_id']])
+        : $this->templateVars['resume'] = null;
     }
 }

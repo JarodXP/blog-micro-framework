@@ -12,21 +12,25 @@
 
         <h2 class="col-12 text-center">Articles</h2>
 
-        {% for post in posts %}
-            <!-- Blog Post -->
-            <div class="card mb-4">
-                <img class="card-img-top post-list-header" src="{{ '/assets/uploads/'~post.fileName }}" alt="{{ post.alt }}">
-                <div class="card-body">
-                    <h2 class="card-title">{{ post.title }}</h2>
-                    <p class="card-text">{{ post.extract }}</p>
-                    <a href="{{ '/blog/'~post.slug }}" class="btn btn-primary">Lire plus &rarr;</a>
+        {% if posts is not empty %}
+            {% for post in posts %}
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                    <img class="card-img-top post-list-header" src="{{ '/assets/uploads/'~post.fileName }}" alt="{{ post.alt }}">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.title }}</h2>
+                        <p class="card-text">{{ post.extract }}</p>
+                        <a href="{{ '/blog/'~post.slug }}" class="btn btn-primary">Lire plus &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Publié le {{ post.date_added | date("d/m/Y") }} par
+                        <a href="/profile">{{ post.author }}</a>
+                    </div>
                 </div>
-                <div class="card-footer text-muted">
-                    Publié le {{ post.date_added | date("d/m/Y") }} par
-                    <a href="/profile">{{ post.author }}</a>
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <p>Aucun article n'est disponible.</p>
+        {% endif %}
 
         <!-- Pagination -->
         <p class="col-12 text-center">Page : {{ page }}</p>

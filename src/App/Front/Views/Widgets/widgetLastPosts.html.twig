@@ -1,8 +1,12 @@
 <div class="card my-4">
     <h5 class="card-header">Derniers articles</h5>
     <div class="card-body">
-        {% for post in lastPosts %}
-            <p><a href="{{ '/blog/'~post.slug }}">{{ post.title }}</a></p>
-        {% endfor %}
+        {%  if lastPosts is not empty %}
+            {% for post in lastPosts %}
+                <p><a href="{{ '/blog/'~post.slug }}">{{ post.title }}</a></p>
+            {% endfor %}
+        {% else %}
+            <p>Aucun article disponible</p>
+        {% endif %}
     </div>
 </div>

@@ -6,7 +6,9 @@
         </p>
         <div class="col-10 col-md-3 offset-md-7 d-flex justify-content-end">
             <p>{{ connectedUser.username }}</p>
-            <div class="mx-4" id=avatarHeader style="background-image:url({{ '/assets/uploads/'~connectedUser.avatarFileName }})"></div>
+            <div class="mx-4" id=avatarHeader
+                 style="background-image:url({{ ('/assets/uploads/'~connectedUser.avatarFileName) | defaultAvatar }})">
+            </div>
             <p><a class="header-link" href="/auth/">Déconnexion</a></p>
         </div>
     </div>
