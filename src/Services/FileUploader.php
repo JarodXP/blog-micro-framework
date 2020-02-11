@@ -40,7 +40,7 @@ trait FileUploader
             $imageConverter = new GDImageConverter($imageType);
 
             $imageConverter->copyUploadImage($this->file->getTempFile(),
-                $GLOBALS['uploadDirectory'].'\\'.$this->file->getFileName());
+                $GLOBALS['uploadDirectory'].'\/'.$this->file->getFileName());
 
             //registers the Upload object in database
             $image->isValid();
