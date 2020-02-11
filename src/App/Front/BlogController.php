@@ -10,9 +10,11 @@ use Core\HttpResponse;
 use Entities\Comment;
 use Entities\Post;
 use Exceptions\EntityAttributeException;
+use Exceptions\MailException;
 use Models\CommentManager;
 use Models\PostManager;
 use Services\ListPaginator;
+use Services\MailHandler;
 use Services\SidebarBuilder;
 
 class BlogController extends Controller
@@ -95,8 +97,12 @@ class BlogController extends Controller
             $commentManager = new CommentManager();
 
             $commentManager->insertComment($comment);
+
+            $mailHandler = new MailHandler($this->httpParameters);
+
+            $mailHandler->sendMail(MailHandler::COMMENT_MAIL);
         }
-        catch(EntityAttributeException $e)
+        catch(EntityAttributeException | MailException $e)
         {
             //Redirects to post
             $this->response->redirect($_SESSION['previousUri'],$e->getMessage());

@@ -77,6 +77,8 @@ class ProfileController extends Controller
 
             $mailHandler->sendMail(MailHandler::CONTACT_MAIL);
 
+            $mailHandler->sendMail(MailHandler::CONFIRMATION_MAIL);
+
             $this->response->redirect('/contact/thank-you');
         }
         catch (MailException $e)
