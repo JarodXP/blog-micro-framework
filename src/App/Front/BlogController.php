@@ -98,6 +98,12 @@ class BlogController extends Controller
 
             $commentManager->insertComment($comment);
 
+            //Gets the post title for the mail
+            $postManager = new PostManager();
+
+            //Adds the post title to the httpParameters
+            $this->httpParameters['postTitle'] = $postManager->findOneBy(['id' => $this->httpParameters['postId']])['title'];
+
             $mailHandler = new MailHandler($this->httpParameters);
 
             $mailHandler->sendMail(MailHandler::COMMENT_MAIL);
