@@ -40,7 +40,7 @@ trait FileUploader
             $imageConverter = new GDImageConverter($imageType);
 
             $imageConverter->copyUploadImage($this->file->getTempFile(),
-                $GLOBALS['uploadDirectory'].'\/'.$this->file->getFileName());
+                $GLOBALS['uploadDirectory'].'/'.$this->file->getFileName());
 
             //registers the Upload object in database
             $image->isValid();
@@ -103,7 +103,7 @@ trait FileUploader
         $fileName = $uploadToRemove->getFileName();
 
         //Removes file and corresponding upload
-        if(unlink($GLOBALS['uploadDirectory'].'\\'.$fileName))
+        if(unlink($GLOBALS['uploadDirectory'].'/'.$fileName))
         {
 
             $manager->removeElement($id);
