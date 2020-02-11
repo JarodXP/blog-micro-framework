@@ -7,6 +7,7 @@ namespace Services;
 use Core\Mail;
 use Entities\User;
 use Exceptions\MailException;
+use Models\UserManager;
 
 class MailHandler
 {
@@ -24,9 +25,9 @@ class MailHandler
         CONFIRMATION_MAIL = 'confirmation',
         COMMENT_MAIL = 'comment';
 
-    public function __construct(User $owner, array $emailParameters)
+    public function __construct(array $emailParameters)
     {
-        $this->owner = $owner;
+        $this->setOwner();
 
         $this->hydrate($emailParameters);
     }
@@ -170,6 +171,18 @@ class MailHandler
         }
 
         $this->message = $message;
+    }
+
+    /**
+     * Sets the admin owner
+     */
+    protected function setOwner()
+    {
+        $userManager = new UserManager();
+
+        $owner = $userManager->findOneBy(['role' => User::ROLE_ADMIN]);
+
+        $this->owner = new User($owner);
     }
 
     /**

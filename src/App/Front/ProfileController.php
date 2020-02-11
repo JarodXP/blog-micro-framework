@@ -73,7 +73,7 @@ class ProfileController extends Controller
         try
         {
             //Use of MailHandler service to send the mail
-            $mailHandler = new MailHandler($_SESSION['user'],$this->httpParameters);
+            $mailHandler = new MailHandler($this->httpParameters);
 
             $mailHandler->sendMail(MailHandler::CONTACT_MAIL);
 
