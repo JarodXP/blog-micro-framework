@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="form-group col-12">
                     <label for="contactMail" class="col-12">Email de contact</label>
-                    <input id="contactMail" type="email" name="mail" placeholder="Email" class="col-12 form-control">
+                    <input id="contactMail" type="email" name="mail" placeholder="Email" required class="col-12 form-control">
                 </div>
             </div>
 
@@ -20,14 +20,14 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <div class="row">
-                            <input id="female" type="radio" name="gender" class="form-control col-2" value=0>
+                            <input id="female" type="radio" name="gender" class="form-control col-2" value=1>
                             <label for="female" class="col-10">Mme</label>
                         </div>
                     </div>
 
                     <div class="form-group col-6">
                         <div class="row">
-                            <input id="male" type="radio" name="gender" class="form-control col-2" value=1>
+                            <input id="male" type="radio" name="gender" class="form-control col-2" value=0>
                             <label for="male" class="col-10">M.</label>
                         </div>
                     </div>
@@ -37,19 +37,19 @@
             <div class="row">
                 <div class="form-group col-12 text-center">
                     <label for="contactFirstName" class="col-12">Prénom</label>
-                    <input id="contactFirstName" type="text" name="firstName" placeholder="Prénom" class="col-12 form-control">
+                    <input id="contactFirstName" type="text" name="firstName" placeholder="Prénom" required maxlength="30" class="col-12 form-control">
                 </div>
 
                 <div class="form-group col-12 text-center">
                     <label for="contactLastName" class="col-12">Nom</label>
-                    <input id="contactLastName" type="text" name="lastName" placeholder="Nom" class="col-12 form-control">
+                    <input id="contactLastName" type="text" name="lastName" placeholder="Nom" maxlength="30" class="col-12 form-control">
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-12">
                     <label for="contactMessage" class="col-12">Message</label>
-                    <textarea id="contactMessage" name="message" class="col-12 form-control"></textarea>
+                    <textarea id="contactMessage" name="message" required maxlength="1000" class="col-12 form-control"></textarea>
                 </div>
 
                 <div class="form-group col-12">

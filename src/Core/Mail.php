@@ -50,6 +50,8 @@ class Mail
         $this->headers =[
             'From' => $this->from,
             'Reply-To' => $this->from,
+            'Content-Type' => 'text/html; charset="UTF-8"',
+            'Mime-Version' => '1.0',
             'X-Mailer' => 'PHP/' . phpversion()
         ];
     }

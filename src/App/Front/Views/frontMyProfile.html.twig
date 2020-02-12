@@ -9,17 +9,17 @@
 
     <!-- Profile Content Column -->
     <div class="row front-content">
-        <div id="avatar" class="col-4 offset-4" style="background-image: url({{ '/assets/uploads/'~avatar.fileName }});"></div>
+        <div id="avatar" class="col-4 offset-4" style="background-image: url({{ ('/assets/uploads/'~avatar.fileName) | defaultAvatar }});"></div>
 
-        <h1 id="ownerName" class="col-12 text-center">{{ profile.firstName }} {{ profile.lastName }}</h1>
+        <h1 id="ownerName" class="col-12 text-center">{{ profile.firstName }} {{ profile.lastName | defaultProfileName }}</h1>
 
         <h2 id="ownerTitle" class="col-12 text-center">{{ profile.title }}</h2>
 
-        <p id="baseline" class="col-12 text-center">{{ profile.baseline }}</p>
+        <p id="baseline" class="col-12 text-center">{{ profile.baseline | defaultBaseline}}</p>
 
         <h3 class="col-12 text-left">Présentation :</h3>
 
-        <p id="introduction" class="col-12">{{ profile.introduction | raw }}</p>
+        <p id="introduction" class="col-12">{{ profile.introduction | defaultIntroduction | raw }}</p>
 
         <p class="col-6 text-center link-btn"><a class="btn btn-primary" href="/contact" target="_blank">Contact</a></p>
 

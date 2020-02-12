@@ -8,6 +8,7 @@ require __DIR__ .'/../vendor/autoload.php';
 use App\Application;
 use Entities\User;
 use Keradus\Psr4Autoloader;
+use Services\CacheRemover;
 
 /*Autoloaders for classes, one per namespace*/
 
@@ -58,6 +59,10 @@ $routes = yaml_parse_file($configDirectory.'/routes.yml');
 //Sets a global variable for the config parsed file
 $config = yaml_parse_file($configDirectory.'/config.yml');
 
+//Sets a global var for the database information
+$dbConfig = yaml_parse_file( __DIR__ . '/../config/db-config.yml');
+
+
 //Global environment variables for Twig Views
 $locale = $config['APP_LOCALE'];
 $charset = $config['APP_CHARSET'];
@@ -74,6 +79,11 @@ if(!isset($_SESSION['user']))
 {
     //Avoid session resetting (in case of admin session already set)
     $_SESSION['user'] = $sessionUser;
+
+    //Removes cache
+    $cacheRemover = new CacheRemover();
+
+    $cacheRemover->clearCache();
 }
 
 

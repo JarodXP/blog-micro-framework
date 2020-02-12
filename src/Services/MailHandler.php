@@ -7,6 +7,7 @@ namespace Services;
 use Core\Mail;
 use Entities\User;
 use Exceptions\MailException;
+use Models\UserManager;
 
 class MailHandler
 {
@@ -19,14 +20,17 @@ class MailHandler
     protected ?string $postTitle;
     protected ?string $pseudo;
     protected ?string $content;
+    protected string $signature;
 
     public const CONTACT_MAIL = 'contact',
         CONFIRMATION_MAIL = 'confirmation',
         COMMENT_MAIL = 'comment';
 
-    public function __construct(User $owner, array $emailParameters)
+    public function __construct(array $emailParameters)
     {
-        $this->owner = $owner;
+        $this->setOwner();
+
+        $this->setSignature();
 
         $this->hydrate($emailParameters);
     }
@@ -173,18 +177,67 @@ class MailHandler
     }
 
     /**
+     * Sets the post title for the comment mail
+     * @param string $title
+     */
+    protected function setPostTitle(string $title):void
+    {
+        $this->postTitle = $title;
+    }
+
+    /**
+     * Sets the comment content
+     * @param string $content
+     */
+    protected function setContent(string $content):void
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Sets the comment pseudo
+     * @param string $pseudo
+     */
+    protected function setPseudo(string $pseudo):void
+    {
+        $this->pseudo = $pseudo;
+    }
+
+    /**
+     * Sets the admin owner
+     */
+    protected function setOwner()
+    {
+        $userManager = new UserManager();
+
+        $owner = $userManager->findOneBy(['role' => User::ROLE_ADMIN]);
+
+        $this->owner = new User($owner);
+    }
+
+    protected function setSignature()
+    {
+        $this->signature = '<p style="font-weight: bold; color: darkorange">'.$this->owner->getFirstName().
+                                ' '.$this->owner->getLastName().'</p>
+                            <p style="font-style: italic">'.$this->owner->getTitle().'</p>
+                            <p>'.$this->owner->getPhone().'</p>
+                            <p>'.$this->owner->getEmail().'</p>
+                            <p><a href="https://developer.jarod-xp.com">developer.jarod-xp.com</a></p>';
+    }
+
+    /**
      * Builds the message attribute
      * @return string
      */
     private function buildContactMessage():string
     {
         //Splits the message as it can't have more than 70 characters / line
-        $formatedMessage = wordwrap($this->message, 70, "\r\n");
-
-        //Builds the message
-        return 'Vous avez reçu une nouvelle demande de contact de la part de '
-            .$this->gender.' '.$this->firstName.' '.$this->lastName.'.\r\n'.
-            ' Email : '.$this->mail.'r\n'.$formatedMessage;
+        return
+            '<p>Vous avez reçu une nouvelle demande de contact de la part de :'
+            .$this->gender.' '.$this->firstName.' '.$this->lastName.'</p>
+            <p>Email: '.$this->mail.'</p>
+            <p>Message: </p>
+            <p style="font-style: italic">'.wordwrap($this->message, 70, "<br>").'</p>';
     }
 
     /**
@@ -193,15 +246,27 @@ class MailHandler
      */
     private function buildConfirmationMessage():string
     {
+        //Builds the confirmation name
+        if($this->firstName != '')
+        {
+            $name = $this->firstName;
+        }
+        elseif($this->lastName != '' && !is_null($this->gender))
+        {
+            $name = $this->gender.' '.$this->lastName;
+        }
+        else
+        {
+            $name = '';
+        }
+
         //Builds the message
-
-        $finalMessage = 'Bonjour, \r\n 
-            Vous avez envoyé le message suivant: \r\n'
-            .$this->message.
-            'Je vous remercie pour votre demande de contact et vous confirme sa bonne réception. \r\n
-        Je ferai mon possible pour vous répondre dans les plus brefs délais.';
-
-        return $finalMessage;
+        return '<p>Bonjour '.$name.', </p>
+            <p>Vous avez envoyé le message suivant: <br>
+            <span style="font-style: italic">'.$this->message.'</span></p>
+            <p>Je vous remercie pour votre demande de contact et vous confirme sa bonne réception. </p>
+            <p>Je ferai mon possible pour vous répondre dans les plus brefs délais.</p>'
+            .$this->signature;
     }
 
     /**
@@ -211,8 +276,16 @@ class MailHandler
     private function buildCommentsMessage():string
     {
         //Builds the message
-        return 'Vous avez reçu un nouveau commentaire pour l\'article '.$this->postTitle.'.\r\n'
-            .'Pseudo : '.$this->pseudo.'\r\n'
-            .'Commentaire : '.$this->content;
+        return
+            '<p>Bonjour '.$this->owner->getUsername().'</p>
+            <p>Vous avez reçu un nouveau commentaire pour l\'article :</p> 
+            <p><strong>'.$this->postTitle.'</strong></p>
+            <p>
+                <ul>
+                    <li>'.'Pseudo : '.$this->pseudo.'</li>
+                    <li>Commentaire : '.$this->content.'</li>
+                </ul>
+            </p>
+            <p>Aller aux commentaires : <a href="https://developer.jarod-xp.com/admin/comments">Commentaires</a></p>';
     }
 }

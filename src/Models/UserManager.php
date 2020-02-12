@@ -88,7 +88,7 @@ class UserManager extends Manager
         $q = $this->dao->prepare(
             'SELECT users.username AS username, uploads.file_name AS avatarFileName
                             FROM users 
-                            INNER JOIN uploads ON users.avatar_id = uploads.id
+                            LEFT JOIN uploads ON users.avatar_id = uploads.id
                             WHERE users.id = :id');
 
         $q->bindValue(':id',$id,PDO::PARAM_INT);
