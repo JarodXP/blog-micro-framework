@@ -217,7 +217,8 @@ class MailHandler
 
     protected function setSignature()
     {
-        $this->signature = '<p><strong>'.$this->owner->getFirstName().' '.$this->owner->getLastName().'</strong></p>
+        $this->signature = '<p style="font-weight: bold; color: darkorange">'.$this->owner->getFirstName().
+                                ' '.$this->owner->getLastName().'</p>
                             <p style="font-style: italic">'.$this->owner->getTitle().'</p>
                             <p>'.$this->owner->getPhone().'</p>
                             <p>'.$this->owner->getEmail().'</p>
@@ -261,11 +262,12 @@ class MailHandler
 
         //Builds the message
 
-        return '<p>Bonjour '.$name.', </p>> 
+        return '<p>Bonjour '.$name.', </p>
             <p>Vous avez envoyé le message suivant: <br>
             <span style="font-style: italic">'.$this->message.'</span></p>
             <p>Je vous remercie pour votre demande de contact et vous confirme sa bonne réception. </p>
-            <p>Je ferai mon possible pour vous répondre dans les plus brefs délais.</p>';
+            <p>Je ferai mon possible pour vous répondre dans les plus brefs délais.</p>'
+            .$this->signature;
     }
 
     /**
