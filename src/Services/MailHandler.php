@@ -174,6 +174,33 @@ class MailHandler
     }
 
     /**
+     * Sets the post title for the comment mail
+     * @param string $title
+     */
+    protected function setPostTitle(string $title):void
+    {
+        $this->postTitle = $title;
+    }
+
+    /**
+     * Sets the comment content
+     * @param string $content
+     */
+    protected function setContent(string $content):void
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Sets the comment pseudo
+     * @param string $pseudo
+     */
+    protected function setPseudo(string $pseudo):void
+    {
+        $this->pseudo = $pseudo;
+    }
+
+    /**
      * Sets the admin owner
      */
     protected function setOwner()
@@ -192,12 +219,12 @@ class MailHandler
     private function buildContactMessage():string
     {
         //Splits the message as it can't have more than 70 characters / line
-        $formatedMessage = wordwrap($this->message, 70, "\r\n");
+        $formatedMessage = wordwrap($this->message, 70, "<br>");
 
         //Builds the message
         return 'Vous avez reçu une nouvelle demande de contact de la part de '
-            .$this->gender.' '.$this->firstName.' '.$this->lastName.'.\r\n'.
-            ' Email : '.$this->mail.'r\n'.$formatedMessage;
+            .$this->gender.' '.$this->firstName.' '.$this->lastName.'<br>'.
+            ' Email : '.$this->mail.'<br>'.$formatedMessage;
     }
 
     /**
@@ -208,13 +235,11 @@ class MailHandler
     {
         //Builds the message
 
-        $finalMessage = 'Bonjour, \r\n 
-            Vous avez envoyé le message suivant: \r\n'
+        return 'Bonjour, <br> 
+            Vous avez envoyé le message suivant: <br>'
             .$this->message.
-            'Je vous remercie pour votre demande de contact et vous confirme sa bonne réception. \r\n
+            'Je vous remercie pour votre demande de contact et vous confirme sa bonne réception. <br>
         Je ferai mon possible pour vous répondre dans les plus brefs délais.';
-
-        return $finalMessage;
     }
 
     /**
@@ -224,8 +249,8 @@ class MailHandler
     private function buildCommentsMessage():string
     {
         //Builds the message
-        return 'Vous avez reçu un nouveau commentaire pour l\'article '.$this->postTitle.'.\r\n'
-            .'Pseudo : '.$this->pseudo.'\r\n'
+        return 'Vous avez reçu un nouveau commentaire pour l\'article '.$this->postTitle.'<br>'
+            .'Pseudo : '.$this->pseudo.'<br>'
             .'Commentaire : '.$this->content;
     }
 }
