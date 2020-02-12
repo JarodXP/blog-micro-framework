@@ -20,6 +20,7 @@ class MailHandler
     protected ?string $postTitle;
     protected ?string $pseudo;
     protected ?string $content;
+    protected string $signature;
 
     public const CONTACT_MAIL = 'contact',
         CONFIRMATION_MAIL = 'confirmation',
@@ -28,6 +29,8 @@ class MailHandler
     public function __construct(array $emailParameters)
     {
         $this->setOwner();
+
+        $this->setSignature();
 
         $this->hydrate($emailParameters);
     }
@@ -212,6 +215,15 @@ class MailHandler
         $this->owner = new User($owner);
     }
 
+    protected function setSignature()
+    {
+        $this->signature = '<p><strong>'.$this->owner->getFirstName().' '.$this->owner->getLastName().'</strong></p>
+                            <p style="font-style: italic">'.$this->owner->getTitle().'</p>
+                            <p>'.$this->owner->getPhone().'</p>
+                            <p>'.$this->owner->getEmail().'</p>
+                            <p><a href="https://developer.jarod-xp.com">developer.jarod-xp.com</a></p>';
+    }
+
     /**
      * Builds the message attribute
      * @return string
@@ -219,12 +231,12 @@ class MailHandler
     private function buildContactMessage():string
     {
         //Splits the message as it can't have more than 70 characters / line
-        $formatedMessage = wordwrap($this->message, 70, "<br>");
-
-        //Builds the message
-        return 'Vous avez reçu une nouvelle demande de contact de la part de '
-            .$this->gender.' '.$this->firstName.' '.$this->lastName.'<br>'.
-            ' Email : '.$this->mail.'<br>'.$formatedMessage;
+        return
+            '<p>Vous avez reçu une nouvelle demande de contact de la part de :'
+            .$this->gender.' '.$this->firstName.' '.$this->lastName.'</p>
+            <p>Email: '.$this->mail.'</p>
+            <p>Message: </p>
+            <p style="font-style: italic">'.wordwrap($this->message, 70, "<br>").'</p>';
     }
 
     /**
@@ -233,13 +245,27 @@ class MailHandler
      */
     private function buildConfirmationMessage():string
     {
+        //Builds the confirmation name
+        if(!is_null($this->firstName))
+        {
+            $name = $this->firstName;
+        }
+        elseif(!is_null($this->lastName) && !is_null($this->gender))
+        {
+            $name = $this->gender.' '.$this->lastName;
+        }
+        else
+        {
+            $name = '';
+        }
+
         //Builds the message
 
-        return 'Bonjour, <br> 
-            Vous avez envoyé le message suivant: <br>'
-            .$this->message.
-            'Je vous remercie pour votre demande de contact et vous confirme sa bonne réception. <br>
-        Je ferai mon possible pour vous répondre dans les plus brefs délais.';
+        return '<p>Bonjour '.$name.', </p>> 
+            <p>Vous avez envoyé le message suivant: <br>
+            <span style="font-style: italic">'.$this->message.'</span></p>
+            <p>Je vous remercie pour votre demande de contact et vous confirme sa bonne réception. </p>
+            <p>Je ferai mon possible pour vous répondre dans les plus brefs délais.</p>';
     }
 
     /**
@@ -249,8 +275,16 @@ class MailHandler
     private function buildCommentsMessage():string
     {
         //Builds the message
-        return 'Vous avez reçu un nouveau commentaire pour l\'article '.$this->postTitle.'<br>'
-            .'Pseudo : '.$this->pseudo.'<br>'
-            .'Commentaire : '.$this->content;
+        return
+            '<p>Bonjour '.$this->owner->getUsername().'</p>
+            <p>Vous avez reçu un nouveau commentaire pour l\'article :</p> 
+            <p><strong>'.$this->postTitle.'</strong></p>
+            <p>
+                <ul>
+                    <li>'.'Pseudo : '.$this->pseudo.'</li>
+                    <li>Commentaire : '.$this->content.'</li>
+                </ul>
+            </p>
+            <p>Aller aux commentaires : <a href="https://developer.jarod-xp.com/admin/comments">Commentaires</a></p>';
     }
 }

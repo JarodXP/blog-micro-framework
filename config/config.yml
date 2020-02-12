@@ -5,12 +5,6 @@ APP_ENV : prod
 APP_LOCALE : fr
 APP_CHARSET : utf-8
 
-#Mailer
-MAILER_TRANSPORT : smtp
-MAILER_HOST : ~
-MAILER_USER : ~
-MAILER_PASSWORD : ~
-
 #Uploads
 ACCEPTED_TYPES: png,jpeg,pdf
 MAX_SIZE_IMAGE: 300000
