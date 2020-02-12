@@ -8,6 +8,7 @@ require __DIR__ .'/../vendor/autoload.php';
 use App\Application;
 use Entities\User;
 use Keradus\Psr4Autoloader;
+use Services\CacheRemover;
 
 /*Autoloaders for classes, one per namespace*/
 
@@ -78,6 +79,11 @@ if(!isset($_SESSION['user']))
 {
     //Avoid session resetting (in case of admin session already set)
     $_SESSION['user'] = $sessionUser;
+
+    //Removes cache
+    $cacheRemover = new CacheRemover();
+
+    $cacheRemover->clearCache();
 }
 
 
