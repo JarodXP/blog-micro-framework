@@ -247,11 +247,11 @@ class MailHandler
     private function buildConfirmationMessage():string
     {
         //Builds the confirmation name
-        if(!is_null($this->firstName))
+        if($this->firstName != '')
         {
             $name = $this->firstName;
         }
-        elseif(!is_null($this->lastName) && !is_null($this->gender))
+        elseif($this->lastName != '' && !is_null($this->gender))
         {
             $name = $this->gender.' '.$this->lastName;
         }
@@ -261,7 +261,6 @@ class MailHandler
         }
 
         //Builds the message
-
         return '<p>Bonjour '.$name.', </p>
             <p>Vous avez envoyé le message suivant: <br>
             <span style="font-style: italic">'.$this->message.'</span></p>
