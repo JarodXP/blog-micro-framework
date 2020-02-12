@@ -3,17 +3,32 @@
 
 This project aims to set the basis for a personal blog.
 
-<strong>Main criterias:</strong>
+###Main criterias:
 - Pure PHP (no framework)
 - MVC structure
 - Use of Twig as template engine
 - External libraries through Composer
 - Automated code review tool : Codeclimate (Maintainability) and Sonar Cloud (security) used.
 
-<strong>Project setup:</strong>
-1. Download files
-2. On your folder, do a composer install to get the dependencies.
-3. Create database and set database connection information in src/config/blog-config.yml<br>
-A data set is available for testing : dataSet.sql.
-You can upload your file directly on your database.
-4. Change server temp directory in the config file.
+###Project setup:
+1. Clone repository
+2. Create a database and import tables with the blog.sql script
+3. Change the database info in the "config/db-config.yml" file with your own info
+4. If php < 7.4:
+4.1 Install php 7.4 (for ubuntu: https://www.cloudbooklet.com/upgrade-php-version-to-php-7-4-on-ubuntu/)
+4.2 Install extensions (yaml, gd and mbstring are needed)
+5. Create an .htaccess file or update your server config file with the following lines:
+
+<blockquote><span style="font-style: italic">
+#Redirects every request to the index.php except the public existing files (ie : images, styles and js)<br>
+RewriteCond %{REQUEST_FILENAME} !-f<br>
+RewriteRule ^(.*)$ /index.php [QSA,L]</span>
+</blockquote>
+
+6. On your host folder, do a composer install to get the dependencies.
+7. At the first visit of the blog, you will be asked for a login and password.
+You will be the first (and only) user registered as Admin.
+For the moment, no other users are handled.
+8. That's all folks! Enjoy
+
+

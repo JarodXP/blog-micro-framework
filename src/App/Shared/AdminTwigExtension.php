@@ -171,11 +171,9 @@ class AdminTwigExtension extends AbstractExtension
      */
     public function defaultIntroduction(string $introduction = null):string
     {
-        if(is_null($introduction))
+        if(is_null($introduction) || $introduction == '')
         {
-            return '
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a nibh eget eros bibendum aliquet. Nullam hendrerit a orci eu porta. Phasellus pharetra feugiat nunc nec ultricies. Sed lacus ante, posuere id sapien at, convallis venenatis quam. Aliquam molestie augue ut laoreet accumsan. Nulla facilisi. Aliquam quis arcu eros. Fusce feugiat ipsum lacus, sed cursus lorem elementum quis. Nullam eu libero nisi. Donec lacinia laoreet auctor. Aliquam erat volutpat.
+            return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a nibh eget eros bibendum aliquet. Nullam hendrerit a orci eu porta. Phasellus pharetra feugiat nunc nec ultricies. Sed lacus ante, posuere id sapien at, convallis venenatis quam. Aliquam molestie augue ut laoreet accumsan. Nulla facilisi. Aliquam quis arcu eros. Fusce feugiat ipsum lacus, sed cursus lorem elementum quis. Nullam eu libero nisi. Donec lacinia laoreet auctor. Aliquam erat volutpat.
 
 Ut sollicitudin dapibus metus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer tristique, erat sed fringilla convallis, massa magna rhoncus metus, eget gravida dui arcu vel mi. Sed cursus, nisi sed aliquet pretium, enim urna fringilla dolor, pharetra ultricies sem libero ut lectus. Phasellus congue, sem sollicitudin mattis consectetur, neque ipsum auctor mi, eget molestie nunc justo sed nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec egestas risus sapien, non tincidunt urna ultricies quis. Nam hendrerit sem quis urna tempor luctus.
 

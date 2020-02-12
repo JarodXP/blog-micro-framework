@@ -9,6 +9,7 @@
 
     <!-- Profile Content Column -->
     <div class="row front-content">
+
         <div id="avatar" class="col-4 offset-4" style="background-image: url({{ ('/assets/uploads/'~avatar.fileName) | defaultAvatar }});"></div>
 
         <h3 id="ownerName" class="col-12 text-center">{{ profile.firstName }} {{ profile.lastName | defaultProfileName }}</h3>
