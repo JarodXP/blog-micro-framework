@@ -30,12 +30,12 @@
                     <form class="col-12" action="{{ '/blog/'~post.slug~'/send-comment' }}" method="post">
                         <input type="hidden" name="postId" value="{{ post.id }}">
                         <div class="form-group">
-                            <label for="pseudo">Pseudo</label>
-                            <input id="pseudo" type="text" name="pseudo" class="form-control" placeholder="Pseudo">
+                            <label for="pseudo">Pseudo (max: 20 caractères: lettres, chiffres, tirets et espaces)</label>
+                            <input id="pseudo" type="text" name="pseudo" maxlength="20" pattern="[a-zA-Z0-9\-\s]{3,20}" class="form-control" placeholder="Pseudo">
                         </div>
                         <div class="form-group">
                             <label for="content">Commentaire</label>
-                            <textarea id="content" name="content" class="form-control" rows="3"></textarea>
+                            <textarea id="content" name="content" class="form-control" rows="3" maxlength="300"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Soumettre</button>
                     </form>
