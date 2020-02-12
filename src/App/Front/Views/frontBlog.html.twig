@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <h2 class="card-title">{{ post.title }}</h2>
                         <p class="card-text">{{ post.extract }}</p>
-                        <a href="{{ '/blog/'~post.slug }}" class="btn btn-primary">Lire plus &rarr;</a>
+                        <a href="{{ '/blog/'~post.slug }}" class="btn btn-blog">Lire plus &rarr;</a>
                     </div>
                     <div class="card-footer text-muted">
                         Publié le {{ post.date_added | date("d/m/Y") }} par

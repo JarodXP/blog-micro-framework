@@ -105,6 +105,16 @@ select {
     padding-left: 0;
 }
 
+.btn-blog{
+    background-color: darkorange!important;
+    border: darkorange!important;
+    color: white!important;
+}
+
+.btn-blog:hover{
+    background-color: orangered!important;
+    border: orangered!important;
+}
 /*********FRONT***************************/
 .front-content{
     padding-top: 30px;
@@ -188,7 +198,7 @@ select {
 }
 
 #ownerName {
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 #ownerTitle {
@@ -196,7 +206,12 @@ select {
 }
 
 #baseline{
+    font-size: 1.3rem;
     font-style: italic;
+}
+
+#introduction>h1{
+    color: darkorange;
 }
 
 #eyeUpload{
@@ -205,6 +220,11 @@ select {
 
 #thanksRow{
     height: 100%;
+}
+
+.orange-card-header{
+    background-color: darkorange !important;
+    color: white !important;
 }
 
 /******************ADMIN************************/
