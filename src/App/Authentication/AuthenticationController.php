@@ -11,9 +11,6 @@ use Entities\User;
 use Exceptions\EntityAttributeException;
 use Models\UserManager;
 use Services\AuthenticationHandler;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class AuthenticationController extends Controller
 {
@@ -30,14 +27,7 @@ class AuthenticationController extends Controller
 
     public function displayAdminFormAction()
     {
-        try
-        {
-            echo $this->twigEnvironment->render('authRegisterAdmin.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+        $this->twigRender('authRegisterAdmin.html.twig');
     }
 
     public function registerAdminAction()
@@ -77,14 +67,7 @@ class AuthenticationController extends Controller
 
     public function displaySigninFormAction()
     {
-        try
-        {
-            echo $this->twigEnvironment->render('authSignIn.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+        $this->twigRender('authSignIn.html.twig');
     }
 
     public function signInAction()
@@ -113,14 +96,7 @@ class AuthenticationController extends Controller
 
     public function displayChangePasswordFormAction()
     {
-        try
-        {
-            echo $this->twigEnvironment->render('/authChangePassword.html.twig');
-        }
-        catch (LoaderError | RuntimeError | SyntaxError $e)
-        {
-            print_r($e->getMessage());
-        }
+        $this->twigRender('/authChangePassword.html.twig');
     }
 
     public function changePasswordAction()
