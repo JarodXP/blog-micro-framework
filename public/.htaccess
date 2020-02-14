@@ -1,0 +1,5 @@
+RewriteEngine on
+
+#Redirects every request to the index.php except the public existing files (ie : images, styles and js)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /index.php [QSA,L]
