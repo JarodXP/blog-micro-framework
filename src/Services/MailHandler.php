@@ -45,21 +45,21 @@ class MailHandler
     {
         switch ($type)
         {
-            case self::CONTACT_MAIL : $mail = new Mail(
+            case self::CONTACT_MAIL : $mailObject = new Mail(
                 $this->mail,
                 $this->owner->getEmail(),
                 'Demande de contact',
                 $this->buildContactMessage());
             break;
 
-            case self::CONFIRMATION_MAIL : $mail = new Mail(
+            case self::CONFIRMATION_MAIL : $mailObject = new Mail(
                 $this->owner->getEmail(),
                 $this->mail,
                 'Merci pour votre demande de contact',
                 $this->buildConfirmationMessage());
             break;
 
-            case self::COMMENT_MAIL : $mail = new Mail(
+            case self::COMMENT_MAIL : $mailObject = new Mail(
                 'comment@jarod-xp.com',
                 $this->owner->getEmail(),
                 'Nouveau commentaire',
@@ -70,9 +70,9 @@ class MailHandler
             break;
         }
 
-        if(isset($mail))
+        if(isset($mailObject))
         {
-            return $mail->sendMail();
+            return $mailObject->sendMail();
         }
         else
         {

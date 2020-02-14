@@ -84,7 +84,7 @@ class BlogController extends Controller
     public function sendCommentAction()
     {
         //Sets a variable for previous page uri
-        $_SESSION['previousUri'] = '/blog/'.$this->httpParameters['postSlug'];
+        $_SESSION[Controller::PREVIOUS_URI] = '/blog/'.$this->httpParameters['postSlug'];
 
         try
         {
@@ -111,7 +111,7 @@ class BlogController extends Controller
         catch(EntityAttributeException | MailException $e)
         {
             //Redirects to post
-            $this->response->redirect($_SESSION['previousUri'],$e->getMessage());
+            $this->response->redirect($_SESSION[Controller::PREVIOUS_URI],$e->getMessage());
         }
 
         $this->response->redirect('/blog/thank-you');
@@ -125,7 +125,7 @@ class BlogController extends Controller
         je m\'efforce de le modérer dans les plus brefs délais.';
 
         //Sets the link for "back" button
-        $this->templateVars['previousPage'] = $_SESSION['previousUri'];
+        $this->templateVars['previousPage'] = $_SESSION[Controller::PREVIOUS_URI];
 
         $this->twigRender('/frontThankYou.html.twig');
     }

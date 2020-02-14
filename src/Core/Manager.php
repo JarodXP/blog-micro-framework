@@ -95,15 +95,11 @@ abstract class Manager
             //Looks for elements with the same criteria
             $existing = $this->findOneBy([$field => $value]);
 
-            //If other element exists
-            if(!empty($existing))
+            //Checks if other element exists and if it's not the same in case of update
+            if(!empty($existing) && (($update && (int)$existing['id'] != $id) || !$update))
             {
-                //Checks if it's not the same in case of update
-                if(($update == true && (int)$existing['id'] != $id) || $update == false)
-                {
-                    //If not throws exception
-                    throw new EntityAttributeException('La valeur '.$value.' existe déjà.');
-                }
+                //If not throws exception
+                throw new EntityAttributeException('La valeur '.$value.' existe déjà.');
             }
         }
     }

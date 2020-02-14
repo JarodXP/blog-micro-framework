@@ -25,6 +25,8 @@ abstract class Controller
     protected HttpResponse $response;
     protected ?array $templateVars;//The variables array to be sent to twig render
 
+    public const PREVIOUS_URI = 'previousUri';
+
     public function __construct(Application $app, array $httpParameters)
     {
         $this->app = $app;

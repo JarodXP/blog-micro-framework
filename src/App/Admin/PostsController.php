@@ -21,7 +21,8 @@ class PostsController extends Controller
 
     protected array $table = [];
 
-    public const POST_SLUG = 'postSlug',
+    public const POSTS_PAGE = '/admin/posts/',
+        POST_SLUG = 'postSlug',
         NEW_POST = 'new-post';
 
     public function postListAction()
@@ -122,7 +123,7 @@ class PostsController extends Controller
             }
 
             //Redirects to the post
-            $this->response->redirect('/admin/posts/'.$post->getSlug());
+            $this->response->redirect(self::POSTS_PAGE.$post->getSlug());
 
         }
         catch (EntityAttributeException $e)
@@ -134,7 +135,7 @@ class PostsController extends Controller
             }
 
             //Redirects either to the edit post page or the new post page
-            $this->response->redirect('/admin/posts/'.$this->httpParameters[self::POST_SLUG],$e->getMessage());
+            $this->response->redirect(self::POSTS_PAGE.$this->httpParameters[self::POST_SLUG],$e->getMessage());
         }
     }
 
@@ -187,7 +188,7 @@ class PostsController extends Controller
         catch (PDOException | UploadException $e)
         {
             //Redirects to the admin edit post page in case of failure
-            $this->response->redirect('/admin/posts/'.$post['slug'], $e->getMessage());
+            $this->response->redirect(self::POSTS_PAGE.$post['slug'], $e->getMessage());
         }
 
         //Redirects to the admin post list in case of success
