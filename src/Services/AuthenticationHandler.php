@@ -15,7 +15,7 @@ trait AuthenticationHandler
     /**
      * Checks if the $_SESSION is related to an authenticated user
      */
-    public function isAuthenticated()
+    public function isAuthenticated():void
     {
         if(is_null($_SESSION['user']->getId()))
         {
@@ -27,17 +27,10 @@ trait AuthenticationHandler
      * Checks if current user has admin role
      * @return bool
      */
-    public function authenticatedAsAdmin()
+    public function authenticatedAsAdmin():bool
     {
         //Checks if $_SESSION['user'] is set with role admin
-        if(!isset($_SESSION['user']) || $_SESSION['user']->getRole() != User::ROLE_ADMIN )
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return !isset($_SESSION['user']) || $_SESSION['user']->getRole() != User::ROLE_ADMIN;
     }
 
     /**
@@ -70,7 +63,7 @@ trait AuthenticationHandler
      * @param string $redirectUriError
      * @return bool
      */
-    public function passwordFieldCheck(string $password, string $passwordCheck, string $redirectUriError)
+    public function passwordFieldCheck(string $password, string $passwordCheck, string $redirectUriError):bool
     {
         //Compares fields
         if($password != $passwordCheck)

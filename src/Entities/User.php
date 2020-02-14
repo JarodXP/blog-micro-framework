@@ -192,12 +192,9 @@ class User extends Entity
      */
     public function setUsername(string $username = null): void
     {
-        if(!is_null($username))
+        if(!is_null($username) && !preg_match('~^[a-zA-Z0-9]{3,20}$~',$username))
         {
-            if(!preg_match('~^[a-zA-Z0-9]{3,20}$~',$username))
-            {
-                throw new EntityAttributeException('Username is not valid');
-            }
+            throw new EntityAttributeException('Username is not valid');
         }
 
         $this->username = $username;
@@ -208,13 +205,11 @@ class User extends Entity
      */
     public function setEmail(string $email = null): void
     {
-        if(!is_null($email))
+        if(!is_null($email) && !preg_match('~^[a-zA-Z0-9.\-_]+@[a-zA-Z0-9\-_]+(\.[([a-z]{2,}){1,3}$~',$email))
         {
-            if(!preg_match('~^[a-zA-Z0-9.\-_]+@[a-zA-Z0-9\-_]+(\.[([a-z]{2,}){1,3}$~',$email))
-            {
-                throw new EntityAttributeException('Email is not valid');
-            }
+            throw new EntityAttributeException('Email is not valid');
         }
+
         $this->email = $email;
     }
 
@@ -277,12 +272,9 @@ class User extends Entity
      */
     public function setPhone(string $phone = null): void
     {
-        if(!is_null($phone))
+        if(!is_null($phone) && !preg_match('~^[a-zA-Z0-9.\-\s]{4,20}$~',$phone))
         {
-            if(!preg_match('~^[a-zA-Z0-9.\-\s]{4,20}$~',$phone))
-            {
-                throw new EntityAttributeException('Phone number is not valid');
-            }
+            throw new EntityAttributeException('Phone number is not valid');
         }
 
         $this->phone = $phone;

@@ -18,6 +18,7 @@ body{
 #leftBrand{
     margin-right: 0;
     margin-left: 1rem;
+    font-size: 1rem;
 }
 
 .under-header{
@@ -193,10 +194,6 @@ select {
     width: 30px;
 }
 
-#leftBrand{
-    font-size: 1rem;
-}
-
 #ownerName {
     font-size: 1.8rem;
 }
@@ -247,6 +244,8 @@ select {
 /*Header*/
 #header-back{
     height: 40px;
+    color: white;
+    background-color: #343a40;
 }
 
 #header-back>p{
@@ -292,11 +291,6 @@ select {
 
 .fa-bars{
     padding: 1px 3px;
-}
-
-#header-back{
-    color: white;
-    background-color: #343a40;
 }
 
 /*Admin tables*/

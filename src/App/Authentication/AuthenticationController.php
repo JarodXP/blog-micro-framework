@@ -142,16 +142,12 @@ class AuthenticationController extends Controller
             : $newPasswordCheck = '';
 
 
-        //Checks if typed password matches user's password
-        if($this->passwordMatch($currentPassword,$_SESSION['user'],'/admin/change-password-form'))
+        //Checks if typed password matches user's password and Checks if newPassword matches newPasswordCheck
+        if($this->passwordMatch($currentPassword,$_SESSION['user'],'/admin/change-password-form')
+        && $this->passwordFieldCheck($newPassword,$newPasswordCheck,'/admin/change-password-form'))
         {
-            //Checks if newPassword matches newPasswordCheck
-            if($this->passwordFieldCheck($newPassword,$newPasswordCheck,
-                '/admin/change-password-form'))
-            {
-                //Sets the new password to the session user
-                $_SESSION['user']->setPassword($this->httpParameters['newPassword']);
-            }
+            //Sets the new password to the session user
+            $_SESSION['user']->setPassword($this->httpParameters['newPassword']);
         }
 
         //updates the user in database

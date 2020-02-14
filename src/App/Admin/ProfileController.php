@@ -58,7 +58,7 @@ class ProfileController extends Controller
             $currentAvatarId = null;
 
             //Checks if $_FILES['avatarImageFile'] contains a file
-            if(($_FILES['avatarImageFile']['error'] != 4))
+            if($_FILES['avatarImageFile']['error'] != 4)
             {
                 //Uses FileUploader service to upload the avatar image and get an Upload object
                 $avatar = $this->uploadImage('avatarImageFile','avatar');

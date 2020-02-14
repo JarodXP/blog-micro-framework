@@ -171,8 +171,8 @@ class ListConfigurator
     protected function setDirection(string $direction = null): void
     {
         //Checks if direction is valid
-        if ((!is_null($direction) && strtolower($direction) != self::DIRECTION_DESC &&
-            strtolower($direction) != self::DIRECTION_ASC))
+        if (!is_null($direction) && strtolower($direction) != self::DIRECTION_DESC &&
+            strtolower($direction) != self::DIRECTION_ASC)
         {
             throw new ListException('Direction parameter is not valid');
         }

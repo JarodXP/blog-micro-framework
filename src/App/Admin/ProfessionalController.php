@@ -21,7 +21,10 @@ class ProfessionalController extends Controller
 {
     use FileUploader;
 
-    public const NETWORK_NAME = 'name', NEW_NETWORK = 'new-network', REGISTER = 'register';
+    public const PROFESSIONAL_PAGE = '/admin/professional',
+        NETWORK_NAME = 'name',
+        NEW_NETWORK = 'new-network',
+        REGISTER = 'register';
 
     //Links and resume
 
@@ -111,10 +114,10 @@ class ProfessionalController extends Controller
         catch (PDOException | UploadException | EntityAttributeException $e)
         {
 
-            $this->response->redirect('/admin/professional',$e->getMessage());
+            $this->response->redirect(self::PROFESSIONAL_PAGE,$e->getMessage());
         }
 
-        $this->response->redirect('/admin/professional','Les informations ont été mises à jour');
+        $this->response->redirect(self::PROFESSIONAL_PAGE,'Les informations ont été mises à jour');
     }
 
     public function removeLinkAction()
@@ -144,7 +147,7 @@ class ProfessionalController extends Controller
             $notification = 'Aucun idntifiant de lien n\'a été transmis';
         }
 
-        $this->response->redirect('/admin/professional',$notification);
+        $this->response->redirect(self::PROFESSIONAL_PAGE,$notification);
     }
 
     public function removeResumeAction()
@@ -162,7 +165,7 @@ class ProfessionalController extends Controller
         //Removes file in server and database
         $this->removeFile($resumeId);
 
-        $this->response->redirect('/admin/professional', 'Le CV a bien été supprimé');
+        $this->response->redirect(self::PROFESSIONAL_PAGE, 'Le CV a bien été supprimé');
     }
 
     //Social Networks
