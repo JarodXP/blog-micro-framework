@@ -30,7 +30,7 @@ trait AuthenticationHandler
     public function authenticatedAsAdmin():bool
     {
         //Checks if $_SESSION['user'] is set with role admin
-        return !isset($_SESSION['user']) || $_SESSION['user']->getRole() != User::ROLE_ADMIN;
+        return isset($_SESSION['user']) && $_SESSION['user']->getRole() == User::ROLE_ADMIN;
     }
 
     /**

@@ -126,7 +126,7 @@ class PostsController extends Controller
             $this->response->redirect(self::POSTS_PAGE.$post->getSlug());
 
         }
-        catch (EntityAttributeException $e)
+        catch (UploadException | EntityAttributeException $e)
         {
             //If a file has been created during process, removes it
             if(isset($postHeader) && !is_null($postHeader->getId()))

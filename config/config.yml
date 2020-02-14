@@ -1,6 +1,6 @@
 #Application Env
 # dev : Development, prod: Production
-APP_ENV : prod
+APP_ENV : dev
 
 APP_LOCALE : fr
 APP_CHARSET : utf-8
