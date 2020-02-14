@@ -20,8 +20,14 @@
 
         <p class="col-6 text-center link-btn"><a class="btn btn-blog" href="/contact" target="_blank">Contact</a></p>
 
-        <p class="col-6 text-center link-btn"><a class="btn btn-blog" href={{ resume.fileName }} target="_blank">CV</a></p>
+        <p class="col-6 text-center link-btn">
 
+                {% if resume is not null %}
+                    <a class="btn btn-blog" href="/assets/uploads/{{ resume.fileName }}" target="_blank">CV</a>
+                {% else %}
+                    <a class="btn btn-secondary">CV</a>
+                {% endif %}
+        </p>
     </div>
 
 {% endblock %}
