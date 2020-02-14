@@ -92,7 +92,6 @@ if(isset($_GET['notif']) && $_GET['notif'] = 'close')
     $_SESSION['user']->setNotification('');
 }
 
-
 //Sends the application environment for the Twig Environment instance
 $app = new Application($env);
 
