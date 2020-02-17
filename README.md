@@ -3,14 +3,14 @@
 
 This project aims to set the basis for a personal blog.
 
-###Main criterias:
+### Main criterias:
 - Pure PHP (no framework)
 - MVC structure
 - Use of Twig as template engine
 - External libraries through Composer
 - Automated code review tool : Codeclimate (Maintainability) and Sonar Cloud (security) used.
 
-###Project setup:
+### Project setup:
 1. Clone repository
 2. Create a database and import tables with the blog.sql script
 3. Change the database info in the "config/db-config.yml" file with your own info
