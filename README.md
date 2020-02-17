@@ -14,8 +14,8 @@ This project aims to set the basis for a personal blog.
 1. Clone repository
 2. Create a database and import tables with the blog.sql script
 3. Change the database info in the "config/db-config.yml" file with your own info
-4. If php < 7.4:
-4.1 Install php 7.4 (for ubuntu: https://www.cloudbooklet.com/upgrade-php-version-to-php-7-4-on-ubuntu/)
+4. If php < 7.4:<br>
+4.1 Install php 7.4 (for ubuntu: https://www.cloudbooklet.com/upgrade-php-version-to-php-7-4-on-ubuntu/)<br>
 4.2 Install extensions (yaml, gd and mbstring are needed)
 5. Create an .htaccess file or update your server config file with the following lines:
 
